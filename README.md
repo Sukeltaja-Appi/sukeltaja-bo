@@ -9,7 +9,7 @@ This repository contains the frontend for the back office functionality. The bac
 
 ## Installation
 
-Installation will be through App Store (iOS) or Play Store (Android). Links to be added in future.
+Installation is done by including the build of this frontend in the backend installation.
 
 ## Documentation
 
