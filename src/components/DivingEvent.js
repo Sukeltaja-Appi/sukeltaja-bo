@@ -5,7 +5,7 @@ const DivingEvent = (props) => {
   return (
     <>
       <tr>
-        <td colSpan="6">{props.divingEvent.content}</td>
+        <td colSpan="6">{props.divingEvent.title}</td>
       </tr>
       <tr>
         <td>Alkuaika</td>

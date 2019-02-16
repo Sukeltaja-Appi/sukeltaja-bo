@@ -8,7 +8,7 @@ const FilterForm = (props) => {
         <tr>
           <td>Hae vain tapahtumia, joissa:</td>
           <td>
-            <input value={props.contentFilter} onChange={props.handleContentFiltering} />
+            <input value={props.titleFilter} onChange={props.handleTitleFiltering} />
           </td>
           <td>Hae vain käyttäjiä, joissa:</td>
           <td>
