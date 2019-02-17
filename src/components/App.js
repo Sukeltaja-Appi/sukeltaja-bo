@@ -6,6 +6,7 @@ import FilterForm from './FilterForm'
 const App = () => {
   const [divingEvents, setDivingEvents] = useState([])
   const [titleFilter, setTitleFilter] = useState('')
+  const [targetFilter, setTargetFilter] = useState('')
   const [userFilter, setUserFilter] = useState('')
 
   useEffect(() => {
@@ -17,11 +18,12 @@ const App = () => {
   }, [])
 
   const handleTitleFiltering = (event) => {
-    //console.log("Filter:", event.target.value)
     setTitleFilter(event.target.value)
   }
+  const handleTargetFiltering = (event) => {
+    setTargetFilter(event.target.value)
+  }
   const handleUserFiltering = (event) => {
-    //console.log("Filter:", event.target.value)
     setUserFilter(event.target.value)
   }
 
@@ -31,12 +33,16 @@ const App = () => {
       <FilterForm
         titleFilter={titleFilter}
         handleTitleFiltering={handleTitleFiltering}
+        targetFilter={targetFilter}
+        handleTargetFiltering={handleTargetFiltering}
         userFilter={userFilter}
         handleUserFiltering={handleUserFiltering}
       />
-      <table id="divingevents">
-        <DivingEvents divingEvents={divingEvents} titleFilter={titleFilter} userFilter={userFilter} />
-      </table>
+      <DivingEvents
+        divingEvents={divingEvents}
+        titleFilter={titleFilter}
+        targetFilter={targetFilter}
+        userFilter={userFilter} />
     </div>
   )
 

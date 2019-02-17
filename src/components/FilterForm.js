@@ -10,6 +10,10 @@ const FilterForm = (props) => {
           <td>
             <input value={props.titleFilter} onChange={props.handleTitleFiltering} />
           </td>
+          <td>Rajaa kohteen nimen osalla:</td>
+          <td>
+            <input value={props.targetFilter} onChange={props.handleTargetFiltering} />
+          </td>
           <td>Rajaa käyttäjänimen osalla:</td>
           <td>
             <input value={props.userFilter} onChange={props.handleUserFiltering} />

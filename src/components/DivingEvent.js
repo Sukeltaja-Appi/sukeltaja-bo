@@ -1,6 +1,7 @@
 import React from 'react'
 import Togglable from './Togglable'
 import Target from './Target'
+import Dives from './Dives'
 
 const DivingEvent = (props) => {
 
@@ -26,6 +27,7 @@ const DivingEvent = (props) => {
               <td colSpan="6">{props.divingEvent.description}</td>
             </tr>
             <Target target={props.divingEvent.target}/>
+            <Dives dives={props.divingEvent.dives}/>
           </tbody>
         </table>
       </td>

@@ -48,6 +48,11 @@ code {
   background-color: #ccccee;
 }
 
+#caption {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
 #detailshidden {
   display: none;
 }
