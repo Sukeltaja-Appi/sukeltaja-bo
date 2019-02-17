@@ -36,3 +36,18 @@ code {
 
 #divingevents tr:hover {background-color: #ddd;}
 
+#eventdetailsshown table {
+  border: none;
+  background-color: #ccccee;
+  width: 100%;
+}
+
+#eventdetailsshown tr td {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border: none;
+  background-color: #ccccee;
+}
+
+#detailshidden {
+  display: none;
+}

@@ -5,8 +5,8 @@ const Togglable = React.forwardRef((props, ref) => {
 
   const [visible, setVisible] = useState(false)
 
-  const hideWhenVisible = { display: visible ? 'none' : '' }
-  const showWhenVisible = { display: visible ? '' : 'none' }
+  const hidden = (visible ? 'detailshidden' : props.shownStyle)
+  const shown = (visible ? props.shownStyle : 'detailshidden')
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -17,30 +17,19 @@ const Togglable = React.forwardRef((props, ref) => {
       toggleVisibility
     }
   })
-
+  //id="divingevents"
   return (
     <>
-      <tr style={hideWhenVisible} onClick={toggleVisibility}>
-        {props.eventHeader}
+      <tr id={hidden} onClick={toggleVisibility}>
+        {props.showAlways}
       </tr>
-      <tr style={showWhenVisible} onClick={toggleVisibility}>
-        {props.eventHeader}
+      <tr id={shown} onClick={toggleVisibility}>
+        {props.showAlways}
       </tr>
-      <tr style={showWhenVisible} onClick={toggleVisibility}>
+      <tr id={shown} onClick={toggleVisibility}>
         {props.children}
       </tr>
     </>
-    /*
-        <div>
-          <div style={hideWhenVisible}>
-            <button onClick={toggleVisibility}>{props.buttonLabel}</button>
-          </div>
-          <div style={showWhenVisible}>
-            {props.children}
-            <button onClick={toggleVisibility}>Piilota</button>
-          </div>
-        </div>
-      */
   )
 })
 

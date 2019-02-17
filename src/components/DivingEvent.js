@@ -1,5 +1,6 @@
 import React from 'react'
 import Togglable from './Togglable'
+import Target from './Target'
 
 const DivingEvent = (props) => {
 
@@ -17,8 +18,17 @@ const DivingEvent = (props) => {
   }
 
   return (
-    <Togglable eventHeader={EventHeader()} ref={toggRef}>
-        <td colSpan="6">{props.divingEvent.description}</td>
+    <Togglable showAlways={EventHeader()} shownStyle="eventdetailsshown" ref={toggRef}>
+      <td colSpan="6">
+        <table width="100%">
+          <tbody>
+            <tr>
+              <td colSpan="6">{props.divingEvent.description}</td>
+            </tr>
+            <Target target={props.divingEvent.target}/>
+          </tbody>
+        </table>
+      </td>
     </Togglable>
   )
 
