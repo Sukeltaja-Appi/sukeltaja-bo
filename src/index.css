@@ -19,19 +19,20 @@ code {
   width: 100%;
 }
 
-#divingevents td, #divingevents th {
+#divingevents th {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  text-align: left;
+  background-color: #66CC66;
+  color: white;
+}
+
+#divingevents td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 4px;
 }
 
 #divingevents tr:nth-child(even){background-color: #f2f2f2;}
 
-#divingevents tr:hover {background-color: #ddd;} */
+#divingevents tr:hover {background-color: #ddd;}
 
-#divingevents th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #4CAF50;
-  color: white;
-}

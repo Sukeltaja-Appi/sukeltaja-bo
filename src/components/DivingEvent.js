@@ -1,21 +1,25 @@
 import React from 'react'
+import Togglable from './Togglable'
 
 const DivingEvent = (props) => {
 
-  return (
-    <>
-      <tr>
-        <td colSpan="6">{props.divingEvent.title}</td>
-      </tr>
-      <tr>
-        <td>Alkuaika</td>
+  const toggRef = React.createRef()
+
+  const EventHeader = () => {
+    return (
+      <>
         <td>{props.divingEvent.startdate}</td>
-        <td>Loppuaika</td>
         <td>{props.divingEvent.enddate}</td>
-        <td>Käyttäjä</td>
         <td>{props.divingEvent.user.username}</td>
-      </tr>
-    </>
+        <td colSpan="3">{props.divingEvent.title}</td>
+      </>
+    )
+  }
+
+  return (
+    <Togglable eventHeader={EventHeader()} ref={toggRef}>
+        <td colSpan="6">{props.divingEvent.description}</td>
+    </Togglable>
   )
 
 }

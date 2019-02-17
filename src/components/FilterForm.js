@@ -6,11 +6,11 @@ const FilterForm = (props) => {
     <table>
       <tbody>
         <tr>
-          <td>Hae vain tapahtumia, joissa:</td>
+          <td>Rajaa tapahtuman nimen osalla:</td>
           <td>
             <input value={props.titleFilter} onChange={props.handleTitleFiltering} />
           </td>
-          <td>Hae vain käyttäjiä, joissa:</td>
+          <td>Rajaa käyttäjänimen osalla:</td>
           <td>
             <input value={props.userFilter} onChange={props.handleUserFiltering} />
           </td>
