@@ -2,6 +2,7 @@ import React from 'react'
 import Togglable from './Togglable'
 import Target from './Target'
 import Dives from './Dives'
+import { formatDate } from '../utils/dates'
 
 const DivingEvent = (props) => {
 
@@ -10,10 +11,10 @@ const DivingEvent = (props) => {
   const EventHeader = () => {
     return (
       <>
-        <td>{props.divingEvent.startdate}</td>
-        <td>{props.divingEvent.enddate}</td>
-        <td>{props.divingEvent.user.username}</td>
-        <td colSpan="3">{props.divingEvent.title}</td>
+        <td width="15%">{formatDate(props.divingEvent.startdate)}</td>
+        <td width="15%">{formatDate(props.divingEvent.enddate)}</td>
+        <td width="15%">{props.divingEvent.creator.username}</td>
+        <td width="55%" colSpan="3">{props.divingEvent.title}</td>
       </>
     )
   }

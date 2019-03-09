@@ -12,11 +12,13 @@ coverage/
 
 # dependencies
 /node_modules
+/node_modules.nosync
 /.pnp
 .pnp.js
 
 # testing
 /coverage
+/src/requests
 
 # production
 /build

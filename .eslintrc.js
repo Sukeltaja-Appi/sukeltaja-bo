@@ -5,12 +5,15 @@ module.exports = {
   ],
   "parser": "babel-eslint",
   "env": {
+    "browser": true,
     "jest": true,
   },
   "plugins": [
+    "react",
     "react-hooks"
   ],
   "rules": {
+    "no-console": 0,
     "no-use-before-define": "off",
     "react/jsx-filename-extension": "off",
     "react/prop-types": "off",

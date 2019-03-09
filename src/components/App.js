@@ -1,51 +1,78 @@
-import React, { useState, useEffect } from 'react'
-import divingEventService from '../services/divingEventService'
+import React from 'react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { Navbar, Nav, Container } from 'react-bootstrap'
+import Notification from './Notification'
+import Login from './Login'
+import Logout from './Logout'
+import Home from './Home'
 import DivingEvents from './DivingEvents'
-import FilterForm from './FilterForm'
 
-const App = () => {
-  const [divingEvents, setDivingEvents] = useState([])
-  const [titleFilter, setTitleFilter] = useState('')
-  const [targetFilter, setTargetFilter] = useState('')
-  const [userFilter, setUserFilter] = useState('')
+const App = (props) => {
 
-  useEffect(() => {
-    divingEventService
-      .getAll()
-      .then(divingEvents => {
-        setDivingEvents(divingEvents)
-      })
-  }, [])
-
-  const handleTitleFiltering = (event) => {
-    setTitleFilter(event.target.value)
-  }
-  const handleTargetFiltering = (event) => {
-    setTargetFilter(event.target.value)
-  }
-  const handleUserFiltering = (event) => {
-    setUserFilter(event.target.value)
+  const haveUser = () => {
+    return (props.loggedUser !== undefined && props.loggedUser !== null)
   }
 
-  return (
-    <div>
-      <h2>Sukellustapahtumat</h2>
-      <FilterForm
-        titleFilter={titleFilter}
-        handleTitleFiltering={handleTitleFiltering}
-        targetFilter={targetFilter}
-        handleTargetFiltering={handleTargetFiltering}
-        userFilter={userFilter}
-        handleUserFiltering={handleUserFiltering}
-      />
-      <DivingEvents
-        divingEvents={divingEvents}
-        titleFilter={titleFilter}
-        targetFilter={targetFilter}
-        userFilter={userFilter} />
-    </div>
-  )
+  // Define preferred link style in Nav
+  const navLinkStyle = { }
 
+  if (!haveUser()) {
+    return (
+      <Container>
+        <div className="justify-content-sm-center">
+          &nbsp;
+        </div>
+        <div className="justify-content-sm-center">
+          <Notification />
+        </div>
+        <div className="justify-content-sm-center">
+          <Login />
+        </div>
+      </Container>
+    )
+  } else {
+    return (
+      <Container>
+        <Router>
+          <div>
+            <div>
+              <Navbar collapseOnSelect expand="lg" bg="warning" variant="dark">
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                  <Nav>
+                    <Nav.Link as="span">
+                      <Link style={navLinkStyle} to="/">Alkuun</Link>
+                    </Nav.Link>
+                    <Nav.Link as="span">
+                      <Link style={navLinkStyle} to="/events">Sukellustapahtumat</Link>
+                    </Nav.Link>
+                    <Navbar.Text as="span">
+                      <Logout />
+                    </Navbar.Text>
+                  </Nav>
+                </Navbar.Collapse>
+              </Navbar>
+            </div>
+            <div>
+              <div>
+                <Notification />
+                <Route exact path="/" render={() => <Home />} />
+                <Route exact path="/events" render={() => <DivingEvents />} />
+              </div>
+            </div>
+          </div>
+        </Router>
+      </Container>
+    )
+  }
 }
 
-export default App
+const mapStateToProps = (state) => {
+  return {
+    events: state.events,
+    loggedUser: state.authentication.loggedUser
+  }
+}
+
+export default connect(mapStateToProps, null)(App)
