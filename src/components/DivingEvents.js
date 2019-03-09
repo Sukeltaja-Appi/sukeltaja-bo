@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import eventService from '../services/eventService'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { initializeEvents } from '../reducers/eventReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import DivingEvent from './DivingEvent'
 import FilterForm from './FilterForm'
 
-const DivingEvents = () => {
+const DivingEvents = (props) => {
 
   const [divingEvents, setDivingEvents] = useState([])
   const [titleFilter, setTitleFilter] = useState('')
@@ -11,12 +14,22 @@ const DivingEvents = () => {
   const [targetFilter, setTargetFilter] = useState('')
   const [userFilter, setUserFilter] = useState('')
 
+  const haveEvents = () => {
+    return (props.events !== undefined && props.events !== null)
+  }
+  const haveUser = () => {
+    return (props.loggedUser !== undefined && props.loggedUser !== null)
+  }
+
+  const initStuff = async () => {
+    await props.initializeEvents()
+    console.log("Stuff initialized", props.events)
+    await setDivingEvents(props.events)
+    console.log("Events:", props.events.length)
+  }
+
   useEffect(() => {
-    eventService
-      .getAll()
-      .then(divingEvents => {
-        setDivingEvents(divingEvents)
-      })
+    initStuff()
   }, [])
 
   const handleTitleFiltering = (event) => {
@@ -89,5 +102,21 @@ const DivingEvents = () => {
     </>
   )
 }
+DivingEvents.propTypes = {
+  setNotification: PropTypes.func.isRequired,
+  loggedUser: PropTypes.object
+}
 
-export default DivingEvents
+const mapStateToProps = (state) => {
+  return {
+    events: state.events,
+    loggedUser: state.authentication.loggedUser
+  }
+}
+
+const mapDispatchToProps = {
+  setNotification,
+  initializeEvents
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DivingEvents)
