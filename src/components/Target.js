@@ -11,15 +11,23 @@ const Target = (props) => {
       <>
         <tr>
           <td id="caption" width="10%">Kohde:</td>
-          <td width="60%" colSpan="3">{target.name}: {target.type} ({target.material})</td>
-          <td width="30%" colSpan="2"><a href={linkToKyppi(target.mj_id)}>kyppi.fi kohde {target.mj_id}</a></td>
+          <td width="60%" colSpan="2">{target.name}</td>
+          <td width="30%" colSpan="3"><a href={linkToKyppi(target.mj_id)}>{linkToKyppi(target.mj_id)}</a></td>
+        </tr>
+        <tr>
+          <td id="caption" width="10%">Tyyppi:</td>
+          <td width="60%" colSpan="2">{target.type}</td>
+          <td width="30%" colSpan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td id="caption" width="10%">Materiaali:</td>
+          <td width="60%" colSpan="2">{target.material}</td>
+          <td width="30%" colSpan="3">&nbsp;</td>
         </tr>
         <tr>
           <td id="caption" width="10%">Sijainti:</td>
-          <td width="40%">{target.latitude}, {target.longitude}</td>
-          <td id="caption" width="10%">&nbsp;</td>
-          <td width="10%">&nbsp;</td>
-          <td width="30%" colSpan="2">&nbsp;</td>
+          <td width="40%" colSpan="2">{target.latitude}, {target.longitude}</td>
+          <td width="30%" colSpan="3">&nbsp;</td>
         </tr>
       </>
     )

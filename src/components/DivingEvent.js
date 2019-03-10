@@ -1,4 +1,5 @@
 import React from 'react'
+import { Table } from 'react-bootstrap'
 import Togglable from './Togglable'
 import Target from './Target'
 import Dives from './Dives'
@@ -22,7 +23,7 @@ const DivingEvent = (props) => {
   return (
     <Togglable showAlways={EventHeader()} shownStyle="eventdetailsshown" ref={toggRef}>
       <td colSpan="6">
-        <table width="100%">
+        <Table size="sm" width="100%">
           <tbody>
             <tr>
               <td colSpan="6">{props.divingEvent.description}</td>
@@ -30,7 +31,7 @@ const DivingEvent = (props) => {
             <Target target={props.divingEvent.target}/>
             <Dives dives={props.divingEvent.dives}/>
           </tbody>
-        </table>
+        </Table>
       </td>
     </Togglable>
   )

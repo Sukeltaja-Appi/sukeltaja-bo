@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { Table } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import { initializeEvents } from '../reducers/eventReducer'
 import { setNotification } from '../reducers/notificationReducer'
@@ -8,24 +9,13 @@ import FilterForm from './FilterForm'
 
 const DivingEvents = (props) => {
 
-  const [divingEvents, setDivingEvents] = useState([])
   const [titleFilter, setTitleFilter] = useState('')
   const [descriptionFilter, setDescriptionFilter] = useState('')
   const [targetFilter, setTargetFilter] = useState('')
   const [userFilter, setUserFilter] = useState('')
 
-  const haveEvents = () => {
-    return (props.events !== undefined && props.events !== null)
-  }
-  const haveUser = () => {
-    return (props.loggedUser !== undefined && props.loggedUser !== null)
-  }
-
   const initStuff = async () => {
     await props.initializeEvents()
-    console.log("Stuff initialized", props.events)
-    await setDivingEvents(props.events)
-    console.log("Events:", props.events.length)
   }
 
   useEffect(() => {
@@ -45,15 +35,11 @@ const DivingEvents = (props) => {
     setUserFilter(event.target.value)
   }
 
-
-
-  let filteredEvents = divingEvents
-
   // Eslint warnings disabled from the following. It doesn't like && combined with ||.
   // We could perhaps make it more elegant but for now it works.
   // Have to be careful with comparing items that could be null.
   // eslint-disable-next-line
-  filteredEvents = divingEvents.filter(divingEvent =>
+  const filteredEvents = props.events.filter(divingEvent =>
     ((!(divingEvent.title) && titleFilter.length === 0) ||
       (divingEvent.title && divingEvent.title.toUpperCase().includes(titleFilter.toUpperCase()))) &&
     ((!(divingEvent.description) && descriptionFilter.length === 0) ||
@@ -81,24 +67,22 @@ const DivingEvents = (props) => {
         userFilter={userFilter}
         handleUserFiltering={handleUserFiltering}
       />
-      <table>
-        <tbody>
-          <tr>
-            <td>Näytetään {eventsToDisplay().length}/{divingEvents.length} tapahtumaa</td>
-          </tr>
-        </tbody>
-      </table>
-      <table id="divingevents">
-        <tbody>
+      <div id="caption">
+        Näytetään {filteredEvents.length}/{props.events.length} tapahtumaa
+      </div>
+      <Table striped bordered hover size="sm">
+        <thead>
           <tr>
             <th>Alkuaika</th>
             <th>Loppuaika</th>
             <th>Perustaja</th>
             <th colSpan="3">Tapahtuma</th>
           </tr>
+        </thead>
+        <tbody>
           {eventsToDisplay()}
         </tbody>
-      </table>
+      </Table>
     </>
   )
 }
