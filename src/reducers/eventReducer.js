@@ -19,7 +19,7 @@ export const clearEvents = () => {
 const eventReducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_EVENTS':
-      return action.data.sort((a, b) => b.startdate - a.startdate)
+      return action.data.sort((a, b) => new Date(b.startdate) - new Date(a.startdate))
     case 'CLEAR_EVENTS':
       return null
     default:

@@ -12,10 +12,10 @@ const DivingEvent = (props) => {
   const EventHeader = () => {
     return (
       <>
-        <td width="15%">{formatDate(props.divingEvent.startdate)}</td>
-        <td width="15%">{formatDate(props.divingEvent.enddate)}</td>
+        <td width="17.5%">{formatDate(props.divingEvent.startdate)}</td>
+        <td width="17.5%">{formatDate(props.divingEvent.enddate)}</td>
         <td width="15%">{props.divingEvent.creator.username}</td>
-        <td width="55%" colSpan="3">{props.divingEvent.title}</td>
+        <td width="50%" colSpan="3">{props.divingEvent.title}</td>
       </>
     )
   }

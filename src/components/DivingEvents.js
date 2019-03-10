@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Table } from 'react-bootstrap'
+import { DateTime, Settings } from 'luxon'
 import PropTypes from 'prop-types'
 import { initializeEvents } from '../reducers/eventReducer'
 import { setNotification } from '../reducers/notificationReducer'
@@ -9,6 +10,12 @@ import FilterForm from './FilterForm'
 
 const DivingEvents = (props) => {
 
+  Settings.defaultLocale = 'fi'
+
+  const [startFilter, setStartFilter] = useState('')
+  const [useStart, setUseStart] = useState('')
+  const [endFilter, setEndFilter] = useState('')
+  const [useEnd, setUseEnd] = useState('')
   const [titleFilter, setTitleFilter] = useState('')
   const [descriptionFilter, setDescriptionFilter] = useState('')
   const [targetFilter, setTargetFilter] = useState('')
@@ -21,6 +28,34 @@ const DivingEvents = (props) => {
   useEffect(() => {
     initStuff()
   }, [])
+
+  function isValidDate(d) {
+    return d instanceof Date && !isNaN(d);
+  }
+
+  const handleStartFiltering = (event) => {
+    try {
+      let startdate = DateTime.fromFormat(event.target.value, 'd.M.yyyy', 'fi-FI').toJSDate()
+      if (isValidDate(startdate)) {
+        setUseStart(startdate)
+      }
+      setStartFilter(event.target.value)
+    } catch (error) {
+      console.log("Error with startdate", event.target.value)
+    }
+  }
+  const handleEndFiltering = (event) => {
+    try {
+      let enddate = DateTime.fromFormat(event.target.value, 'd.M.yyyy', 'fi-FI')
+        .plus({ days: 1 }).plus({ minutes: -1 }).toJSDate()
+      if (isValidDate(enddate)) {
+        setUseEnd(enddate)
+      }
+      setEndFilter(event.target.value)
+    } catch (error) {
+      console.log("Error with enddate", event.target.value)
+    }
+  }
 
   const handleTitleFiltering = (event) => {
     setTitleFilter(event.target.value)
@@ -40,6 +75,10 @@ const DivingEvents = (props) => {
   // Have to be careful with comparing items that could be null.
   // eslint-disable-next-line
   const filteredEvents = props.events.filter(divingEvent =>
+    ((startFilter.length === 0) ||
+      (new Date(divingEvent.startdate) >= new Date(useStart))) &&
+    ((endFilter.length === 0) ||
+      (new Date(divingEvent.enddate) <= new Date(useEnd))) &&
     ((!(divingEvent.title) && titleFilter.length === 0) ||
       (divingEvent.title && divingEvent.title.toUpperCase().includes(titleFilter.toUpperCase()))) &&
     ((!(divingEvent.description) && descriptionFilter.length === 0) ||
@@ -58,6 +97,10 @@ const DivingEvents = (props) => {
     <>
       <h2>Sukellustapahtumat</h2>
       <FilterForm
+        startFilter={startFilter}
+        handleStartFiltering={handleStartFiltering}
+        endFilter={endFilter}
+        handleEndFiltering={handleEndFiltering}
         titleFilter={titleFilter}
         handleTitleFiltering={handleTitleFiltering}
         descriptionFilter={descriptionFilter}
