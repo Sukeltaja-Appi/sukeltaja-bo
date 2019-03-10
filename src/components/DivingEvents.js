@@ -51,7 +51,7 @@ const DivingEvents = (props) => {
   )
 
   const eventsToDisplay = () => filteredEvents.map(divingEvent =>
-    <DivingEvent key={divingEvent.id} divingEvent={divingEvent} />
+    <DivingEvent key={divingEvent._id} divingEvent={divingEvent} />
   )
 
   return (
