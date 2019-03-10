@@ -94,7 +94,7 @@ const DivingEvents = (props) => {
   )
 
   return (
-    <>
+    <div>
       <h2>Sukellustapahtumat</h2>
       <FilterForm
         startFilter={startFilter}
@@ -126,7 +126,7 @@ const DivingEvents = (props) => {
           {eventsToDisplay()}
         </tbody>
       </Table>
-    </>
+    </div>
   )
 }
 DivingEvents.propTypes = {

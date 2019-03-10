@@ -1,5 +1,6 @@
 import React from 'react'
 import { kyppiUrl } from '../utils/config'
+import decimalToDMS from '../utils/coordinates'
 
 const Target = (props) => {
 
@@ -26,7 +27,10 @@ const Target = (props) => {
         </tr>
         <tr>
           <td id="caption" width="10%">Sijainti:</td>
-          <td width="40%" colSpan="2">{target.latitude}, {target.longitude}</td>
+          <td width="40%" colSpan="2">
+            {`${decimalToDMS(target.latitude)}`}{target.latitude > 0 ? ' N ' : ' S '} 
+            {`${decimalToDMS(target.longitude)}`}{target.longitude > 0 ? ' E ' : ' W '}
+          </td>
           <td width="30%" colSpan="3">&nbsp;</td>
         </tr>
       </>

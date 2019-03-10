@@ -37,7 +37,7 @@ const App = (props) => {
         <Router>
           <div>
             <div>
-              <Navbar collapseOnSelect expand="lg" bg="warning" variant="dark">
+              <Navbar fixed="top" collapseOnSelect expand="md" bg="warning" variant="dark">
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                   <Nav>
