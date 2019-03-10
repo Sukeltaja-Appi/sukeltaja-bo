@@ -12,14 +12,16 @@ const FilterForm = (props) => {
         <Row>
           <Col>
             <Form.Label>Alkaen</Form.Label>
-            <Form.Control type="text" value={props.startFilter} onChange={props.handleStartFiltering} />
+            <Form.Control type="text" placeholder="pp.kk.vvvv"
+              value={props.startFilter} onChange={props.handleStartFiltering} />
             <Form.Text className="text-muted">
               Rajaa tapahtuman alkupäivän mukaan
             </Form.Text>
           </Col>
           <Col>
             <Form.Label>Päättyen</Form.Label>
-            <Form.Control type="text" value={props.endFilter} onChange={props.handleEndFiltering} />
+            <Form.Control type="text" placeholder="pp.kk.vvvv"
+              value={props.endFilter} onChange={props.handleEndFiltering} />
             <Form.Text className="text-muted">
               Rajaa tapahtuman loppupäivän mukaan
             </Form.Text>

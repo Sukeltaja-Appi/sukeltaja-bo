@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Table } from 'react-bootstrap'
 import { DateTime, Settings } from 'luxon'
+import { CSVLink } from 'react-csv'
 import PropTypes from 'prop-types'
 import { initializeEvents } from '../reducers/eventReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import DivingEvent from './DivingEvent'
 import FilterForm from './FilterForm'
+
+const eventHeaders = require('../utils/eventHeaders.json') 
 
 const DivingEvents = (props) => {
 
@@ -111,7 +114,15 @@ const DivingEvents = (props) => {
         handleUserFiltering={handleUserFiltering}
       />
       <div id="caption">
-        Näytetään {filteredEvents.length}/{props.events.length} tapahtumaa
+        Näytetään {filteredEvents.length}/{props.events.length} tapahtumaa.
+        &nbsp;
+        <CSVLink
+          data={filteredEvents}
+          headers={eventHeaders}
+          filename={"Sukellustapahtumat.csv"}
+          separator={";"}>
+         Lataa CSV
+        </CSVLink>
       </div>
       <Table striped bordered hover size="sm">
         <thead>
