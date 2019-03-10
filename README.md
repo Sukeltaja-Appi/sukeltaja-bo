@@ -1,6 +1,5 @@
 # Sukeltaja App
 
-
 **STATUS: Development in progress.**
 
 Mobile app for divers diving in Finland.
@@ -19,14 +18,14 @@ Folder containing all the documentation and logs can be found on this [Google Dr
 
 ## Definition of Done
 ### User Story is considered done, when it is
-  * approved by Product Owner
-  * programmed according to the plan
-  * documented and refactored
-  * tested succesfully
-  * peer reviewed
-  * integrated into the software
+* approved by Product Owner
+* programmed according to the plan
+* documented and refactored
+* tested succesfully
+* peer reviewed
+* integrated into the software
 
 ### Sprint is considered done, when
-  * Definition of Done is met on every User Story included in the Sprint
-  * all tests are passing
-  * backlog is updated
+* Definition of Done is met on every User Story included in the Sprint
+* all tests are passing
+* backlog is updated
