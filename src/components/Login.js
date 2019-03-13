@@ -29,10 +29,11 @@ const Login = (props) => {
   }
 
   useEffect(() => {
-    console.log("Checking if we have a token...")
+    // First check from local storage if user is already logged
     const user = storageUserToUser()
     if (user !== undefined && user !== null) {
-      console.log("Storage user was", user)
+      // A user token was found
+      // console.log("Storage user was", user)
       props.reLoginUser(user)
       fillTanks()
     }

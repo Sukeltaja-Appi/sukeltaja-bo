@@ -1,4 +1,5 @@
 import React from 'react'
+import decimalToDMS from '../utils/coordinates'
 
 const Dive = (props) => {
 
@@ -7,7 +8,10 @@ const Dive = (props) => {
     return (
       <tr>
         <td width="20%">{dive.user}</td>
-        <td width="30%">{dive.latitude}, {dive.longitude}</td>
+        <td width="30%">
+          {`${decimalToDMS(dive.latitude)}`}{dive.latitude > 0 ? ' N ' : ' S '}
+          {`${decimalToDMS(dive.longitude)}`}{dive.longitude > 0 ? ' E ' : ' W '}
+        </td>
         <td id="caption" width="10%">&nbsp;</td>
         <td id="caption" width="10%">&nbsp;</td>
         <td width="15%">&nbsp;</td>

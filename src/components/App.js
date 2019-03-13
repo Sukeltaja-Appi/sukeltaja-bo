@@ -17,6 +17,9 @@ const App = (props) => {
   // Define preferred link style in Nav
   const navLinkStyle = { }
 
+  // This is to prevent the top of the page to be hiding behind the Navbar
+  const topPadding = { "paddingTop": "70px" }
+
   if (!haveUser()) {
     return (
       <Container>
@@ -33,7 +36,7 @@ const App = (props) => {
     )
   } else {
     return (
-      <Container>
+      <Container style={topPadding}>
         <Router>
           <div>
             <div>

@@ -20,6 +20,11 @@ const DivingEvent = (props) => {
     )
   }
 
+// The following belongs after <Target... It is commented out because autopopulating
+// dives in the backend maybe spills out multiple dives with the same id and after
+// all a dive should only belong to a single event
+// <Dives dives={props.divingEvent.dives} />
+
   return (
     <Togglable showAlways={EventHeader()} shownStyle="eventdetailsshown" ref={toggRef}>
       <td colSpan="6">
@@ -28,8 +33,7 @@ const DivingEvent = (props) => {
             <tr>
               <td colSpan="6">{props.divingEvent.description}</td>
             </tr>
-            <Target target={props.divingEvent.target}/>
-            <Dives dives={props.divingEvent.dives}/>
+            <Target target={props.divingEvent.target} />
           </tbody>
         </Table>
       </td>

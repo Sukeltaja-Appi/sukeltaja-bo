@@ -9,7 +9,23 @@ import { setNotification } from '../reducers/notificationReducer'
 import DivingEvent from './DivingEvent'
 import FilterForm from './FilterForm'
 
-const eventHeaders = require('../utils/eventHeaders.json') 
+//const eventHeaders = require('../utils/eventHeaders.json') 
+
+const eventHeaders = [
+  { "label": "Tapahtuma", "key": "title" },
+  { "label": "Kuvaus", "key": "description" },
+  { "label": "Alkupäivä", "key": "startdate" },
+  { "label": "Loppupäivä", "key": "enddate" },
+  { "label": "Perustaja", "key": "creator.username" },
+  { "label": "Pääkäyttäjät", "key": "admins.username" },
+  { "label": "Osallistujat", "key": "participants.username" },
+  //{ "label": "Kohde", "key": "target.name" },
+  //{ "label": "Tyyppi", "key": "target.type" },
+  //{ "label": "Materiaali", "key": "target.material" },
+  //{ "label": "MJ-tunnus", "key": "target.mj_id" },
+  //{ "label": "Leveyspiiri", "key": "target.latitude" },
+  //{ "label": "Pituuspiiri", "key": "target.longitude" }
+]
 
 const DivingEvents = (props) => {
 
@@ -73,28 +89,63 @@ const DivingEvents = (props) => {
     setUserFilter(event.target.value)
   }
 
+  const filterByStartdate = (divingEvent) => {
+    return ((startFilter.length === 0) ||
+      (new Date(divingEvent.startdate) >= new Date(useStart)))
+  }
+  const filterByEnddate = (divingEvent) => {
+    return ((endFilter.length === 0) ||
+      (new Date(divingEvent.enddate) <= new Date(useEnd)))
+  }
+  const filterByTitle = (divingEvent) => {
+    return ((!(divingEvent.title) && titleFilter.length === 0) ||
+      (divingEvent.title && divingEvent.title.toUpperCase().includes(titleFilter.toUpperCase())))
+  }
+  const filterByDescription = (divingEvent) => {
+    return ((!(divingEvent.description) && descriptionFilter.length === 0) ||
+      (divingEvent.description && divingEvent.description.toUpperCase().includes(descriptionFilter.toUpperCase())))
+  }
+  const filterByTarget = (divingEvent) => {
+    return ((!(divingEvent.target) && targetFilter.length === 0) ||
+      (divingEvent.target && divingEvent.target.name.toUpperCase().includes(targetFilter.toUpperCase())))
+  }
+  const filterByUsername = (divingEvent) => {
+    return ((!(divingEvent.creator.username) && userFilter.length === 0) || (divingEvent.creator.username === undefined) ||
+      (divingEvent.creator && divingEvent.creator.username.toUpperCase().includes(userFilter.toUpperCase())))
+  }
+
   // Eslint warnings disabled from the following. It doesn't like && combined with ||.
   // We could perhaps make it more elegant but for now it works.
   // Have to be careful with comparing items that could be null.
   // eslint-disable-next-line
   const filteredEvents = props.events.filter(divingEvent =>
-    ((startFilter.length === 0) ||
-      (new Date(divingEvent.startdate) >= new Date(useStart))) &&
-    ((endFilter.length === 0) ||
-      (new Date(divingEvent.enddate) <= new Date(useEnd))) &&
-    ((!(divingEvent.title) && titleFilter.length === 0) ||
-      (divingEvent.title && divingEvent.title.toUpperCase().includes(titleFilter.toUpperCase()))) &&
-    ((!(divingEvent.description) && descriptionFilter.length === 0) ||
-      (divingEvent.description && divingEvent.description.toUpperCase().includes(descriptionFilter.toUpperCase()))) &&
-    ((!(divingEvent.target) && targetFilter.length === 0) ||
-      (divingEvent.target && divingEvent.target.name.toUpperCase().includes(targetFilter.toUpperCase()))) &&
-    ((!(divingEvent.creator.username) && userFilter.length === 0) ||
-      (divingEvent.creator && divingEvent.creator.username.toUpperCase().includes(userFilter.toUpperCase())))
+    filterByStartdate(divingEvent) &&
+    filterByEnddate(divingEvent) &&
+    filterByTitle(divingEvent) &&
+    filterByDescription(divingEvent) &&
+    filterByTarget(divingEvent) &&
+    filterByUsername(divingEvent)
   )
 
   const eventsToDisplay = () => filteredEvents.map(divingEvent =>
     <DivingEvent key={divingEvent._id} divingEvent={divingEvent} />
   )
+
+  const csvlink = () => {
+    if (filteredEvents !== undefined && filteredEvents !== null) {
+      return (
+        <CSVLink
+          data={filteredEvents}
+          headers={eventHeaders}
+          filename={"Sukellustapahtumat.csv"}
+          separator={";"}>
+          Lataa CSV
+      </CSVLink>
+      )
+    } else {
+      return null
+    }
+  }
 
   return (
     <div>
@@ -116,13 +167,7 @@ const DivingEvents = (props) => {
       <div id="caption">
         Näytetään {filteredEvents.length}/{props.events.length} tapahtumaa.
         &nbsp;
-        <CSVLink
-          data={filteredEvents}
-          headers={eventHeaders}
-          filename={"Sukellustapahtumat.csv"}
-          separator={";"}>
-         Lataa CSV
-        </CSVLink>
+        {csvlink()}
       </div>
       <Table striped bordered hover size="sm">
         <thead>
