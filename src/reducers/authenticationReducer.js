@@ -8,7 +8,8 @@ export const loginUser = (username, password) => {
       password: password
     })
     await window.localStorage.setItem(storageKeyUser, JSON.stringify(user))
-    dispatch({
+    console.log("Reducer:", user)
+    await dispatch({
       type: 'LOGIN_USER',
       data: {
         loggedUser: user
@@ -43,7 +44,7 @@ export const logoutUser = () => {
 const authenticationReducer = (state = { loggedUser: null }, action) => {
   switch (action.type) {
     case 'LOGIN_USER':
-      return action.data
+    return action.data
     case 'RELOGIN_USER':
       return action.data
     case 'LOGOUT_USER':

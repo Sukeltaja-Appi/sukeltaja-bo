@@ -1,14 +1,14 @@
 import React from 'react'
-import { render, cleanup, fireEvent, getByPlaceholderText, getByText } from 'react-testing-library'
+import { render, cleanup, fireEvent, getByPlaceholderText, getByText, waitForElement } from 'react-testing-library'
 import App from '../components/App'
 import Login from '../components/Login'
 import { Provider } from 'react-redux'
 import store from '../store'
 import 'jest-dom/extend-expect'
 jest.mock('../services/loginService')
-import { storageKeyUser } from '../utils/config'
+import { correctUsername, correctPassword } from '../services/__mocks__/loginService'
 
-afterEach(cleanup)
+//afterEach(cleanup)
 
 const handleLogin = jest.fn()
 const state = {
@@ -20,6 +20,7 @@ const Wrapper = (props) => {
   const onChange = (event) => {
     props.state.username = event.target.username
     props.state.password = event.target.password
+    props.store = store
   }
   return (
     <Provider store={store}>
@@ -53,10 +54,8 @@ describe('Testing Login component', () => {
 
   test('Login unsuccessful with invalid credentials', async () => {
 
-    await window.localStorage.clear()
-
-    const component = render(
-      <Wrapper handleLogin={handleLogin} state={state} />
+    let component = render(
+      <Wrapper handleLogin={handleLogin} state={state} store={store} />
     )
 
     const username = getByPlaceholderText(component.container, 'Syötä käyttäjätunnus')
@@ -67,28 +66,46 @@ describe('Testing Login component', () => {
     fireEvent.change(password, { target: { value: 'incorrect' } })
     fireEvent.click(button)
 
-    expect(window.localStorage.getItem(storageKeyUser)).toBeFalsy()
+    component.rerender(
+      <Wrapper handleLogin={handleLogin} state={state} store={store} />
+    )
+    await waitForElement(
+      () => component.container.querySelector('.alert-danger')
+    )
+
+    expect(component.container).toHaveTextContent('virheellinen')
+    expect(component.container).toHaveTextContent('Käyttäjätunnus')
+    expect(component.container).toHaveTextContent('Salasana')
 
   })
 
   test('Login successful with correct credentials', async () => {
 
-    await window.localStorage.clear()
-
-    const component = render(
-      <Wrapper handleLogin={handleLogin} state={state} />
+    let component = render(
+      <Wrapper handleLogin={handleLogin} state={state} store={store} />
     )
 
     const username = getByPlaceholderText(component.container, 'Syötä käyttäjätunnus')
     const password = getByPlaceholderText(component.container, 'Syötä salasana')
     const button = getByText(component.container, 'Kirjaudu')
 
-    fireEvent.change(username, { target: { value: 'correct' } })
-    fireEvent.change(password, { target: { value: 'correct' } })
+    fireEvent.change(username, { target: { value: correctUsername } })
+    fireEvent.change(password, { target: { value: correctPassword } })
     fireEvent.click(button)
 
-    expect(window.localStorage.getItem(storageKeyUser)).toBeTruthy()
+    component.rerender(
+      <Wrapper handleLogin={handleLogin} state={state} store={store} />
+    )
+    
+    await waitForElement(
+      () => component.container.querySelector('.alert-success')
+    )
+
+    expect(component.container).toHaveTextContent('Tervetuloa')
+    expect(component.container).toHaveTextContent(correctUsername)
+    expect(component.container).toHaveTextContent('Kirjaudu ulos')
     
   })
 
+  
 })
