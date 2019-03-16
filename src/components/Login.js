@@ -24,7 +24,7 @@ const Login = (props) => {
   const fillTanks = async () => {
     await console.log("Filling tanks...")
     // Any initializations at login should be done here async at login if necessary
-    //await props.initializeBlogs()
+    //await props.initializeEvents()
     //await props.initializeUsers()
   }
 
@@ -52,9 +52,9 @@ const Login = (props) => {
     try {
       await props.loginUser(username, password)
       fillTanks()
-      props.setNotification('success', 'Tervetuloa! Muista hengittää rauhallisesti!', 5)
+      await props.setNotification('success', 'Tervetuloa! Muista hengittää rauhallisesti!', 5)
     } catch (exception) {
-      props.setNotification('danger', 'Käyttäjätunnus tai salasana on virheellinen', 5)
+      await props.setNotification('danger', 'Käyttäjätunnus tai salasana on virheellinen', 5)
     }
   }
 

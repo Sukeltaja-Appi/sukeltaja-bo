@@ -14,7 +14,10 @@ const localStorageMock = {
     savedItems[key] = item
   },
   getItem: (key) => savedItems[key],
-  clear: savedItems = {}
+  clear: () => savedItems = {},
+  getAll: () => {
+    savedItems
+  }
 }
 
 window.localStorage = localStorageMock

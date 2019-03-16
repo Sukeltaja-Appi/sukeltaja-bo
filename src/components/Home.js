@@ -19,7 +19,7 @@ const Home = (props) => {
   const fillTanks = async () => {
     await console.log("Filling tanks...")
     // Any initializations at login should be done here async at login if necessary
-    //await props.initializeBlogs()
+    //await props.initializeEvents()
     //await props.initializeUsers()
   }
 

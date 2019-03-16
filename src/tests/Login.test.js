@@ -1,12 +1,20 @@
 import React from 'react'
 import { render, cleanup, fireEvent, getByPlaceholderText, getByText } from 'react-testing-library'
+import App from '../components/App'
 import Login from '../components/Login'
 import { Provider } from 'react-redux'
 import store from '../store'
 import 'jest-dom/extend-expect'
 jest.mock('../services/loginService')
+import { storageKeyUser } from '../utils/config'
 
 afterEach(cleanup)
+
+const handleLogin = jest.fn()
+const state = {
+  username: '',
+  password: ''
+}
 
 const Wrapper = (props) => {
   const onChange = (event) => {
@@ -15,11 +23,12 @@ const Wrapper = (props) => {
   }
   return (
     <Provider store={store}>
-      <Login
+      <App
         username={props.state.username}
         password={props.state.password}
-        onSubmit={props.onSubmit}
+        handleLogin={props.handleLogin}
         handleChange={onChange}
+        state={state}
       />
     </Provider>
   )
@@ -42,16 +51,12 @@ describe('Testing Login component', () => {
 
   })
 
-  test('Login unsuccessful with invalid credentials', () => {
+  test('Login unsuccessful with invalid credentials', async () => {
 
-    const onSubmit = jest.fn()
-    const state = {
-      username: '',
-      password: ''
-    }
+    await window.localStorage.clear()
 
     const component = render(
-      <Wrapper onSubmit={onSubmit} state={state} />
+      <Wrapper handleLogin={handleLogin} state={state} />
     )
 
     const username = getByPlaceholderText(component.container, 'Syötä käyttäjätunnus')
@@ -62,18 +67,16 @@ describe('Testing Login component', () => {
     fireEvent.change(password, { target: { value: 'incorrect' } })
     fireEvent.click(button)
 
+    expect(window.localStorage.getItem(storageKeyUser)).toBeFalsy()
+
   })
 
-  test('Login successful with correct credentials', () => {
+  test('Login successful with correct credentials', async () => {
 
-    const onSubmit = jest.fn()
-    const state = {
-      username: '',
-      password: ''
-    }
+    await window.localStorage.clear()
 
     const component = render(
-      <Wrapper onSubmit={onSubmit} state={state} />
+      <Wrapper handleLogin={handleLogin} state={state} />
     )
 
     const username = getByPlaceholderText(component.container, 'Syötä käyttäjätunnus')
@@ -84,6 +87,8 @@ describe('Testing Login component', () => {
     fireEvent.change(password, { target: { value: 'correct' } })
     fireEvent.click(button)
 
+    expect(window.localStorage.getItem(storageKeyUser)).toBeTruthy()
+    
   })
 
 })
