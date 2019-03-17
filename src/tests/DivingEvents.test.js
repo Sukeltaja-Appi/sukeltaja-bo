@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, fireEvent, getByPlaceholderText, getByText, waitForDomChange } from 'react-testing-library'
+import { render, cleanup, fireEvent, getByPlaceholderText } from 'react-testing-library'
 import DivingEvents from '../components/DivingEvents'
 import { Provider } from 'react-redux'
 import store from '../store'
@@ -7,7 +7,6 @@ import 'jest-dom/extend-expect'
 jest.mock('../services/eventService')
 import { allEvents } from '../services/__mocks__/eventService'
 import { formatDate } from '../utils/dates'
-import { all } from 'q';
 
 describe('Testing DivingEvents component', () => {
 
