@@ -1,6 +1,6 @@
 import axios from 'axios'
-const baseURL = 'api/events/unauth'
-//const baseURL = 'https://sukeltaja.herokuapp.com/api/events/unauth'
+//const baseURL = 'api/events/unauth'
+const baseURL = 'https://sukeltaja.herokuapp.com/api/events/unauth'
 
 const getAll = async () => {
   const response = await axios.get(baseURL)
