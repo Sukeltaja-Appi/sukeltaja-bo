@@ -8,7 +8,7 @@ import 'jest-dom/extend-expect'
 jest.mock('../services/loginService')
 import { correctUsername, correctPassword } from '../services/__mocks__/loginService'
 
-//afterEach(cleanup)
+afterEach(cleanup)
 
 const handleLogin = jest.fn()
 const state = {

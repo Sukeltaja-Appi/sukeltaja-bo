@@ -12,11 +12,11 @@ import FilterForm from './FilterForm'
 //const eventHeaders = require('../utils/eventHeaders.json') 
 
 const eventHeaders = [
+  { "label": "Alkuaika", "key": "startdate" },
+  { "label": "Loppuaika", "key": "enddate" },
+  { "label": "Perustaja", "key": "creator.username" },
   { "label": "Tapahtuma", "key": "title" },
   { "label": "Kuvaus", "key": "description" },
-  { "label": "Alkupäivä", "key": "startdate" },
-  { "label": "Loppupäivä", "key": "enddate" },
-  { "label": "Perustaja", "key": "creator.username" },
   { "label": "Pääkäyttäjät", "key": "admins.username" },
   { "label": "Osallistujat", "key": "participants.username" },
   //{ "label": "Kohde", "key": "target.name" },
