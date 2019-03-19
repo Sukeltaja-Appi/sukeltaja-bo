@@ -35,12 +35,15 @@ const Home = (props) => {
   /*****************************************************/
 
 
+
   /*****************************************************/
 
   if (props.loggedUser !== undefined || props.loggedUser !== null) {
     return (
       <div>
         <h2>Sukeltaja Back Office</h2>
+        <div>
+        </div>
       </div >
     )
   } else {

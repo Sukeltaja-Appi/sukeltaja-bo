@@ -8,6 +8,7 @@ import { initializeEvents } from '../reducers/eventReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import DivingEvent from './DivingEvent'
 import FilterForm from './FilterForm'
+import { JsonToCSV } from '../utils/JsonToCSV'
 
 //const eventHeaders = require('../utils/eventHeaders.json') 
 
@@ -168,6 +169,8 @@ const DivingEvents = (props) => {
         Näytetään {filteredEvents.length}/{props.events.length} tapahtumaa.
         &nbsp;
         {csvlink()}
+        &nbsp;
+        <JsonToCSV />
       </div>
       <Table striped bordered hover size="sm">
         <thead>
