@@ -2,31 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Table } from 'react-bootstrap'
 import { DateTime, Settings } from 'luxon'
-import { CSVLink } from 'react-csv'
 import PropTypes from 'prop-types'
 import { initializeEvents } from '../reducers/eventReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import DivingEvent from './DivingEvent'
 import FilterForm from './FilterForm'
-import { JsonToCSV } from '../utils/JsonToCSV'
-
-//const eventHeaders = require('../utils/eventHeaders.json') 
-
-const eventHeaders = [
-  { "label": "Alkuaika", "key": "startdate" },
-  { "label": "Loppuaika", "key": "enddate" },
-  { "label": "Perustaja", "key": "creator.username" },
-  { "label": "Tapahtuma", "key": "title" },
-  { "label": "Kuvaus", "key": "description" },
-  { "label": "Pääkäyttäjät", "key": "admins.username" },
-  { "label": "Osallistujat", "key": "participants.username" },
-  //{ "label": "Kohde", "key": "target.name" },
-  //{ "label": "Tyyppi", "key": "target.type" },
-  //{ "label": "Materiaali", "key": "target.material" },
-  //{ "label": "MJ-tunnus", "key": "target.mj_id" },
-  //{ "label": "Leveyspiiri", "key": "target.latitude" },
-  //{ "label": "Pituuspiiri", "key": "target.longitude" }
-]
+import JsonToCSV from '../utils/JsonToCSV'
 
 const DivingEvents = (props) => {
 
@@ -132,16 +113,10 @@ const DivingEvents = (props) => {
     <DivingEvent key={divingEvent._id} divingEvent={divingEvent} />
   )
 
-  const csvlink = () => {
+  const jsonToCSV = () => {
     if (filteredEvents !== undefined && filteredEvents !== null) {
       return (
-        <CSVLink
-          data={filteredEvents}
-          headers={eventHeaders}
-          filename={"Sukellustapahtumat.csv"}
-          separator={";"}>
-          Lataa CSV
-      </CSVLink>
+        <JsonToCSV sep={';'} dec={','} filename={'sukellustapahtumat.csv'} />
       )
     } else {
       return null
@@ -168,9 +143,7 @@ const DivingEvents = (props) => {
       <div id="caption">
         Näytetään {filteredEvents.length}/{props.events.length} tapahtumaa.
         &nbsp;
-        {csvlink()}
-        &nbsp;
-        <JsonToCSV />
+        {jsonToCSV()}
       </div>
       <Table striped bordered hover size="sm">
         <thead>

@@ -31,7 +31,8 @@ const Target = (props) => {
             {`${decimalToDMS(target.latitude)}`}{target.latitude > 0 ? ' N ' : ' S '} 
             {`${decimalToDMS(target.longitude)}`}{target.longitude > 0 ? ' E ' : ' W '}
           </td>
-          <td width="30%" colSpan="3">&nbsp;</td>
+          <td id="caption" width="10%">Syvyys:</td>
+          <td width="20%" colSpan="2">{target.depth}</td>
         </tr>
       </>
     )
