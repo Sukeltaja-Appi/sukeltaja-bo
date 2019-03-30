@@ -3,6 +3,7 @@ import eventService from '../services/eventService'
 export const initializeEvents = () => {
   return async dispatch => {
     const events = await eventService.getAll()
+    console.log('Initialized events')
     dispatch({
       type: 'INIT_EVENTS',
       data: events

@@ -7,7 +7,7 @@ const Dive = (props) => {
     const dive = props.dive
     return (
       <tr>
-        <td width="20%">{dive.user}</td>
+        <td width="20%">{dive.username}</td>
         <td width="30%">
           {`${decimalToDMS(dive.latitude)}`}{dive.latitude > 0 ? ' N ' : ' S '}
           {`${decimalToDMS(dive.longitude)}`}{dive.longitude > 0 ? ' E ' : ' W '}

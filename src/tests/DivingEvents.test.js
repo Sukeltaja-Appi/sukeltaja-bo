@@ -14,7 +14,7 @@ describe('Testing DivingEvents component', () => {
   const state = {
     titleFilter: ''
   }
-  
+
   const Wrapper = (props) => {
     const onChange = (event) => {
       props.state.titleFilter = event.target.titleFilter
@@ -67,6 +67,7 @@ describe('Testing DivingEvents component', () => {
 
   test('Makes link for downloading events', () => {
 
+
     component.rerender(
       <Provider store={store}>
         <DivingEvents />
@@ -74,19 +75,8 @@ describe('Testing DivingEvents component', () => {
     )
 
     const dlLink = component.container.querySelector('a')
-    const dlLinkHref = dlLink.getAttribute('href')
-
-    allEvents.map(event => {
-    // We need to have escape characters in the CSV file:
-    // eslint-disable-next-line
-    const delim = '\";\"', beglim = '\"'
-    const content = beglim
-        .concat(event.startdate).concat(delim)
-        .concat(event.enddate).concat(delim)
-        .concat('').concat(delim)
-        .concat(event.title).concat(delim)
-      expect(dlLinkHref).toContain(content)
-    })
+    const dlLinkHref = dlLink.getAttribute('download')
+    expect(dlLinkHref).toContain('sukellustapahtumat.csv')
 
   })
 
@@ -99,7 +89,7 @@ describe('Testing DivingEvents component', () => {
     // Last word from the first event's title:
     const notToContainInEnd = allEvents[0].title.split(" ").splice(-1)[0]
     // Last word from the first event title that doesn't include value of notToContainInEnd
-    const toContainInEnd = (allEvents.filter(event => 
+    const toContainInEnd = (allEvents.filter(event =>
       !event.title.toUpperCase().includes(notToContainInEnd.toUpperCase())))[0]
       .title.split(" ").splice(-1)[0]
 
@@ -115,7 +105,7 @@ describe('Testing DivingEvents component', () => {
 
     expect(component.container).not.toHaveTextContent(notToContainInEnd)
     expect(component.container).toHaveTextContent(toContainInEnd)
-    
+
   })
 
 })

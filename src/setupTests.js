@@ -20,4 +20,12 @@ const localStorageMock = {
   }
 }
 
+// This is needed as a workaround for this:
+// let urlForCSV = window.URL.createObjectURL(blob)
+// (https://github.com/jsdom/jsdom/issues/1721)
+function noOp () { }
+if (typeof window.URL.createObjectURL === 'undefined') {
+  Object.defineProperty(window.URL, 'createObjectURL', { value: noOp})
+}
+
 window.localStorage = localStorageMock

@@ -21,8 +21,8 @@ const Login = (props) => {
     }
   }
 
-  const fillTanks = async () => {
-    await console.log("Filling tanks...")
+  const initializeAtStartUp = async () => {
+    //console.log('Initialize at Login')
     // Any initializations at login should be done here async at login if necessary
     //await props.initializeEvents()
     //await props.initializeUsers()
@@ -35,7 +35,7 @@ const Login = (props) => {
       // A user token was found
       // console.log("Storage user was", user)
       props.reLoginUser(user)
-      fillTanks()
+      initializeAtStartUp()
     }
   }, [])
 
@@ -51,7 +51,7 @@ const Login = (props) => {
     event.preventDefault()
     try {
       await props.loginUser(username, password)
-      fillTanks()
+      initializeAtStartUp()
       await props.setNotification('success', 'Tervetuloa! Muista hengittää rauhallisesti!', 5)
     } catch (exception) {
       await props.setNotification('danger', 'Käyttäjätunnus tai salasana on virheellinen', 5)

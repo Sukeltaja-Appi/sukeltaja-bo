@@ -5,22 +5,8 @@ const baseURL = 'http://localhost:3001/api/events/unauth'
 
 const getAll = async () => {
   const response = await axios.get(baseURL)
+  console.log(response.data.length, 'events')
   return response.data
 }
-/*
-const create = newObject => {
-  const request = axios.post(baseURL, newObject)
-  return request.then(response => response.data)
-}
 
-const update = (id, newObject) => {
-  const request = axios.put(`${baseURL}/${id}`, newObject)
-  return request.then(response => response.data)
-}
-
-const remove = (id) => {
-  const request = axios.delete(`${baseURL}/${id}`)
-  return request.then(response => response.data)
-}
-*/
-export default { getAll } //, create, update, remove}
+export default { getAll }

@@ -4,12 +4,12 @@ import { Table } from 'react-bootstrap'
 import { DateTime, Settings } from 'luxon'
 import PropTypes from 'prop-types'
 import { setNotification } from '../reducers/notificationReducer'
-import DivingEvent from './DivingEvent'
-import FilterEventsForm from './FilterEventsForm'
+import Target from './Target'
+import FilterTargetsForm from './FilterTargetsForm'
 import JsonToCSV from '../utils/JsonToCSV'
 import Paginator from './Paginator'
 
-const DivingEvents = (props) => {
+const TargetDives = (props) => {
 
   Settings.defaultLocale = 'fi'
 
@@ -92,42 +92,42 @@ const DivingEvents = (props) => {
     return ((!(divingEvent.description) && descriptionFilter.length === 0) ||
       (divingEvent.description && divingEvent.description.toUpperCase().includes(descriptionFilter.toUpperCase())))
   }
-  const filterByTarget = (divingEvent) => {
-    return ((!(divingEvent.target) && targetFilter.length === 0) ||
-      (divingEvent.target && divingEvent.target.name.toUpperCase().includes(targetFilter.toUpperCase())))
+  const filterByTarget = (target) => {
+    return ((targetFilter.length === 0) ||
+      (target && target.name.toUpperCase().includes(targetFilter.toUpperCase())))
   }
   const filterByCreator = (divingEvent) => {
     return ((!(divingEvent.creator.username) && creatorFilter.length === 0) || (divingEvent.creator.username === undefined) ||
       (divingEvent.creator && divingEvent.creator.username.toUpperCase().includes(creatorFilter.toUpperCase())))
   }
 
-  const filteredEvents = props.events.filter(divingEvent =>
-    filterByStartdate(divingEvent) &&
-    filterByEnddate(divingEvent) &&
-    filterByTitle(divingEvent) &&
-    filterByDescription(divingEvent) &&
-    filterByTarget(divingEvent) &&
-    filterByCreator(divingEvent)
+  const filteredTargets = props.targets.filter(target =>
+    //filterByStartdate(target) &&
+    //filterByEnddate(target) &&
+    //filterByTitle(target) &&
+    //filterByDescription(target) &&
+    filterByTarget(target) //&&
+    //filterByCreator(target)
   )
 
   const itemsOnPage = 20
-  const pages = Math.ceil(filteredEvents.length / itemsOnPage)
+  const pages = Math.ceil(filteredTargets.length / itemsOnPage)
 
-  const eventsToDisplay = () => {
+  const targetsToDisplay = () => {
     var offset = (currentPage - 1) * itemsOnPage
     return (
-      filteredEvents.map((divingEvent, index) => {
+      filteredTargets.map((target, index) => {
         if (index >= offset && index < (offset + itemsOnPage)) {
-          return <DivingEvent key={divingEvent._id} divingEvent={divingEvent} />
+          return <Target key={target._id} target={target} elementID={target._id} />
         }
       })
     )
   }
 
   const jsonToCSV = () => {
-    if (filteredEvents !== undefined && filteredEvents !== null) {
+    if (filteredTargets !== undefined && filteredTargets !== null) {
       return (
-        <JsonToCSV content={filteredEvents} sep={';'} dec={','} filename={'sukellustapahtumat.csv'} />
+        <JsonToCSV content={filteredTargets} sep={';'} dec={','} filename={'kohteidensukellukset.csv'} />
       )
     } else {
       return null
@@ -136,8 +136,8 @@ const DivingEvents = (props) => {
 
   return (
     <div>
-      <h2>Sukellustapahtumat</h2>
-      <FilterEventsForm
+      <h2>Kohteiden sukellukset</h2>
+      <FilterTargetsForm
         startFilter={startFilter}
         handleStartFiltering={handleStartFiltering}
         endFilter={endFilter}
@@ -152,36 +152,34 @@ const DivingEvents = (props) => {
         handleCreatorFiltering={handleCreatorFiltering}
       />
       <div id="caption">
-        Näytetään {filteredEvents.length}/{props.events.length} tapahtumaa.
+        Näytetään {filteredTargets.length}/{props.targets.length} kohdetta.
         &nbsp;
         {jsonToCSV()}
       </div>
       <Table bordered hover size="sm">
         <thead>
-          <tr>
+          <tr id="target">
             <th width="2.5%"></th>
-            <th width="17.5%">Alkuaika</th>
-            <th width="17.5%">Loppuaika</th>
-            <th width="15%">Perustaja</th>
-            <th width="47.5%" colSpan="3">Tapahtuma</th>
+            <th width="40%" colSpan="2">Kohde</th>
+            <th width="57.5%" colSpan="4">Sijainti</th>
           </tr>
         </thead>
         <tbody>
-          {eventsToDisplay()}
+          {targetsToDisplay()}
         </tbody>
       </Table>
       <Paginator current={currentPage} pages={pages} handlePageSelect={handlePageSelect} />
     </div>
   )
 }
-DivingEvents.propTypes = {
+TargetDives.propTypes = {
   setNotification: PropTypes.func.isRequired,
   loggedUser: PropTypes.object
 }
 
 const mapStateToProps = (state) => {
   return {
-    events: state.events,
+    targets: state.targets,
     loggedUser: state.authentication.loggedUser
   }
 }
@@ -190,4 +188,4 @@ const mapDispatchToProps = {
   setNotification
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DivingEvents)
+export default connect(mapStateToProps, mapDispatchToProps)(TargetDives)
