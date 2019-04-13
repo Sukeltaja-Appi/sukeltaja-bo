@@ -36,7 +36,11 @@ const DivingEvents = (props) => {
   }
 
   const handlePageSelect = (event) => {
-    setCurrentPage(event.target.id)
+    try {
+      setCurrentPage(parseInt(event.target.id))
+    } catch (error) {
+      // Do nothing
+    }
   }
 
   const handleStartFiltering = (event) => {
@@ -119,6 +123,8 @@ const DivingEvents = (props) => {
       filteredEvents.map((divingEvent, index) => {
         if (index >= offset && index < (offset + itemsOnPage)) {
           return <DivingEvent key={divingEvent._id} divingEvent={divingEvent} />
+        } else {
+          return null
         }
       })
     )

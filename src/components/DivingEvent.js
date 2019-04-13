@@ -24,7 +24,9 @@ const DivingEvent = (props) => {
   // </Collapse>
 
   const divingEvent = props.divingEvent
-  const gotDescription = divingEvent.description !== undefined && divingEvent.description !== null && divingEvent.description != ''
+  const gotDescription = (
+    divingEvent.description !== undefined && divingEvent.description !== null && divingEvent.description !== ''
+  )
   const gotTarget = divingEvent.target !== undefined && divingEvent.target !== null
 
   const diveTarget = () => {

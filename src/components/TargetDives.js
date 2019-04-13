@@ -36,7 +36,11 @@ const TargetDives = (props) => {
   }
 
   const handlePageSelect = (event) => {
-    setCurrentPage(event.target.id)
+    try {
+      setCurrentPage(parseInt(event.target.id))
+    } catch (error) {
+      // Do nothing
+    }
   }
 
   const handleStartFiltering = (event) => {
@@ -119,6 +123,8 @@ const TargetDives = (props) => {
       filteredTargets.map((target, index) => {
         if (index >= offset && index < (offset + itemsOnPage)) {
           return <Target key={target._id} target={target} elementID={target._id} />
+        } else {
+          return null
         }
       })
     )
