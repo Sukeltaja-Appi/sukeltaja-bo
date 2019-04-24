@@ -4,18 +4,16 @@ import Dive from './Dive'
 const Dives = ({ dives }) => {
   if (dives && dives.length > 0) {
 
-    const rows = () => dives.map(dive =>
-      <Dive key={dive._id} dive={dive} />
+    const rows = () => dives.map((dive, index) =>
+      <Dive key={dive._id} dive={dive} odd={index%2} />
     )
     return (
       <>
-        <tr>
-          <td id="caption" width="20%">Sukeltajat</td>
-          <td id="caption" width="30%">Sijainti</td>
-          <td id="caption" width="10%">&nbsp;</td>
-          <td id="caption" width="10%">&nbsp;</td>
-          <td width="15%">&nbsp;</td>
-          <td width="15%">&nbsp;</td>
+        <tr width="100%">
+          <td width="2.5%"></td>
+          <td width="40%" colSpan="2" id="caption">Sukeltaja</td>
+          <td width="27.5%" colSpan="2" id="caption">Alkuaika</td>
+          <td width="30.0%" colSpan="2" id="caption">Loppuaika</td>
         </tr>
         {rows()}
       </>

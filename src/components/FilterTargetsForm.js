@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, Row, Col } from 'react-bootstrap'
-import { StartFilter, EndFilter, CreatorFilter, TitleFilter, DescriptionFilter, TargetFilter} from './FilterFields'
+import { StartFilter, EndFilter, HasDivesFilter, LocationFilter, TargetFilter} from './FilterFields'
 
 const FilterTargetsForm = (props) => {
 
@@ -19,18 +19,23 @@ const FilterTargetsForm = (props) => {
             <EndFilter value={props.endFilter} trigger={props.handleEndFiltering} />
           </Col>
           <Col>
-            <CreatorFilter value={props.creatorFilter} trigger={props.handleCreatorFiltering} />
+            <HasDivesFilter hasDives={props.hasDivesFilter} hasTrigger={props.handleHasDivesFiltering}
+              noDives={props.noDivesFilter} noTrigger={props.handleNoDivesFiltering} />
           </Col>
         </Row>
         <Row>
           <Col>
-            <TitleFilter value={props.titleFilter} trigger={props.handleTitleFiltering} />
-          </Col>
-          <Col>
-            <DescriptionFilter value={props.descriptionFilter} trigger={props.handleDescriptionFiltering} />
-          </Col>
-          <Col>
             <TargetFilter value={props.targetFilter} trigger={props.handleTargetFiltering} />
+          </Col>
+          <Col>
+            <LocationFilter title={'Alueen luoteisnurkka'} 
+              latitudeFilter={props.northFilter} latitudeTrigger={props.handleNorthFiltering}
+              longitudeFilter={props.westFilter} longitudeTrigger={props.handleWestFiltering} />
+          </Col>
+          <Col>
+            <LocationFilter title={'Alueen kaakkoisnurkka'}
+              latitudeFilter={props.southFilter} latitudeTrigger={props.handleSouthFiltering}
+              longitudeFilter={props.eastFilter} longitudeTrigger={props.handleEastFiltering} />
           </Col>
         </Row>
       </Form>

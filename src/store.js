@@ -5,6 +5,7 @@ import authenticationReducer from './reducers/authenticationReducer'
 import notificationReducer from './reducers/notificationReducer'
 import targetReducer from './reducers/targetReducer'
 import eventReducer from './reducers/eventReducer'
+import diveReducer from './reducers/diveReducer'
 //import userReducer from './reducers/userReducer'
 
 const reducer = combineReducers({
@@ -12,6 +13,7 @@ const reducer = combineReducers({
   notification: notificationReducer,
   targets: targetReducer,
   events: eventReducer,
+  dives: diveReducer
   //users: userReducer
 })
 

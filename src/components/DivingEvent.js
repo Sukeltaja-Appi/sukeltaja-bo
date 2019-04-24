@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
-import { Collapse, Table, Row, Col } from 'react-bootstrap'
-import Togglable from './Togglable'
+import { Collapse, Table } from 'react-bootstrap'
 import Target from './Target'
-//import Dives from './Dives'
+import Dives from './Dives'
 import { formatDate } from '../utils/dates'
 
 const DivingEvent = (props) => {
 
   const [showEventDetails, setShowEventDetails] = useState(false)
-
-  const toggRef = React.createRef()
 
   // The following belongs after <Target... It is commented out because we don't get all the data anymore
   // with Events.
@@ -28,6 +25,19 @@ const DivingEvent = (props) => {
     divingEvent.description !== undefined && divingEvent.description !== null && divingEvent.description !== ''
   )
   const gotTarget = divingEvent.target !== undefined && divingEvent.target !== null
+  const gotDives = (
+    divingEvent.dives !== undefined && divingEvent.dives !== null && divingEvent.dives.length > 0
+  )
+
+  const dives = () => {
+    if (gotDives) {
+      return (
+        <Dives dives={divingEvent.dives} />
+      )
+    } else {
+      return null
+    }
+  }
 
   const diveTarget = () => {
     if (gotTarget) {
@@ -76,6 +86,7 @@ const DivingEvent = (props) => {
                 <tbody>
                   {eventDescription()}
                   {diveTarget()}
+                  {dives()}
                 </tbody>
               </Table>
             </td>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Collapse } from 'react-bootstrap'
 import decimalToDMS from '../utils/coordinates'
-import TargetDetails from './TargetDetails';
+import TargetDetails from './TargetDetails'
+import Dives from './Dives'
 
 const Target = (props) => {
 
@@ -9,11 +10,22 @@ const Target = (props) => {
 
   if (props.target !== undefined && props.target !== null) {
     const target = props.target
+
+    const dives = () => {
+      if (target.dives !== undefined) {
+        return (
+            <Dives dives={target.dives} />
+        )
+      } else {
+        return null
+      }
+    }
+
     return (
       <>
         <tr onClick={() => setShowTargetDetails(!showTargetDetails)}
-            aria-controls={props.elementId}
-            aria-expanded={showTargetDetails} id="target">
+            aria-controls={props.elementId} aria-expanded={showTargetDetails}
+            style={target.dives !== undefined ? {backgroundColor: "#ddddff"} : {backgroundColor: "#ffffff"}} >
           <td>
             <i className={showTargetDetails? 'fas fa-caret-down' : 'fas fa-caret-right'}></i>
           </td>
@@ -25,13 +37,14 @@ const Target = (props) => {
             {`${decimalToDMS(target.longitude)}`}{target.longitude > 0 ? ' E ' : ' W '}
           </td>
         </tr>
-        <tr>
           <Collapse in={showTargetDetails}>
-            <td colSpan="7" id={props.elementId}>
-              <TargetDetails target={target}/>
-            </td>
+            <tr>
+              <td colSpan="7" id={props.elementId}>
+                <TargetDetails target={target} />
+              </td>
+            </tr>
           </Collapse>
-        </tr>
+          {dives()}
       </>
     )
   } else {

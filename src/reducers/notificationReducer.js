@@ -26,7 +26,6 @@ export const clearNotification = () => {
 const notificationReducer = (state = { notMessage: '', notClass: 'info' }, action) => {
   switch (action.type) {
     case 'SET_NOTIFICATION':
-      console.log("NOTSWITCH", action.data)
       return action.data
     case 'CLEAR_NOTIFICATION':
       return ''

@@ -49,6 +49,13 @@ code {
   background-color: #ccccee;
 }
 
+#dive table tr td {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border: none;
+  padding: none;
+  background-color: #0000ee;
+}
+
 #target table tr td {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border: none;

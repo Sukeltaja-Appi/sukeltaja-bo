@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Table } from 'react-bootstrap'
 import { DateTime, Settings } from 'luxon'
 import PropTypes from 'prop-types'
+import { addDivesToTargets } from '../reducers/targetReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import Target from './Target'
 import FilterTargetsForm from './FilterTargetsForm'
@@ -18,13 +19,16 @@ const TargetDives = (props) => {
   const [useStart, setUseStart] = useState('')
   const [endFilter, setEndFilter] = useState('')
   const [useEnd, setUseEnd] = useState('')
-  const [titleFilter, setTitleFilter] = useState('')
-  const [descriptionFilter, setDescriptionFilter] = useState('')
+  const [hasDivesFilter, setHasDivesFilter] = useState(true)
+  const [noDivesFilter, setNoDivesFilter] = useState(false)
   const [targetFilter, setTargetFilter] = useState('')
-  const [creatorFilter, setCreatorFilter] = useState('')
+  const [northFilter, setNorthFilter] = useState('')
+  const [westFilter, setWestFilter] = useState('')
+  const [southFilter, setSouthFilter] = useState('')
+  const [eastFilter, setEastFilter] = useState('')
 
   const initStuff = async () => {
-    //await props.initializeEvents()
+    await props.addDivesToTargets(props.events, props.targets)
   }
 
   useEffect(() => {
@@ -50,6 +54,7 @@ const TargetDives = (props) => {
         setUseStart(startdate)
       }
       setStartFilter(event.target.value)
+      setCurrentPage(1)
     } catch (error) {
       console.log("Error with startdate", event.target.value)
     }
@@ -62,56 +67,99 @@ const TargetDives = (props) => {
         setUseEnd(enddate)
       }
       setEndFilter(event.target.value)
+      setCurrentPage(1)
     } catch (error) {
       console.log("Error with enddate", event.target.value)
     }
   }
 
-  const handleTitleFiltering = (event) => {
-    setTitleFilter(event.target.value)
+  const handleHasDivesFiltering = () => {
+    setHasDivesFilter(!hasDivesFilter)
+    setCurrentPage(1)
   }
-  const handleDescriptionFiltering = (event) => {
-    setDescriptionFilter(event.target.value)
+  const handleNoDivesFiltering = () => {
+    setNoDivesFilter(!noDivesFilter)
+    setCurrentPage(1)
   }
   const handleTargetFiltering = (event) => {
     setTargetFilter(event.target.value)
+    setCurrentPage(1)
   }
-  const handleCreatorFiltering = (event) => {
-    setCreatorFilter(event.target.value)
+  const handleNorthFiltering = (event) => {
+    try {
+      setNorthFilter(Number(event.target.value))
+      setCurrentPage(1)
+    } catch (error) {
+      setNorthFilter(null)
+    }
+  }
+  const handleWestFiltering = (event) => {
+    try {
+      setWestFilter(Number(event.target.value))
+      setCurrentPage(1)
+    } catch (error) {
+      setWestFilter(null)
+    }
+  }
+  const handleSouthFiltering = (event) => {
+    try {
+      setSouthFilter(Number(event.target.value))
+      setCurrentPage(1)
+    } catch (error) {
+      setSouthFilter(null)
+    }
+  }
+  const handleEastFiltering = (event) => {
+    try {
+      setEastFilter(Number(event.target.value))
+      setCurrentPage(1)
+    } catch (error) {
+      setEastFilter(null)
+    }
   }
 
-  const filterByStartdate = (divingEvent) => {
+  const filterByDives = (target) => {
+    return ((hasDivesFilter === true && target.dives !== undefined) ||
+      (noDivesFilter === true && target.dives === undefined))
+  }
+  const filterByStartdate = (target) => {
     return ((startFilter.length === 0) ||
-      (new Date(divingEvent.startdate) >= new Date(useStart)))
+      ((target.dives !== undefined && new Date(target.firstDive) >= new Date(useStart))))
   }
-  const filterByEnddate = (divingEvent) => {
+  const filterByEnddate = (target) => {
     return ((endFilter.length === 0) ||
-      (new Date(divingEvent.enddate) <= new Date(useEnd)))
-  }
-  const filterByTitle = (divingEvent) => {
-    return ((!(divingEvent.title) && titleFilter.length === 0) ||
-      (divingEvent.title && divingEvent.title.toUpperCase().includes(titleFilter.toUpperCase())))
-  }
-  const filterByDescription = (divingEvent) => {
-    return ((!(divingEvent.description) && descriptionFilter.length === 0) ||
-      (divingEvent.description && divingEvent.description.toUpperCase().includes(descriptionFilter.toUpperCase())))
+    ((target.dives !== undefined && new Date(target.lastDive) >= new Date(useEnd))))
   }
   const filterByTarget = (target) => {
     return ((targetFilter.length === 0) ||
       (target && target.name.toUpperCase().includes(targetFilter.toUpperCase())))
   }
-  const filterByCreator = (divingEvent) => {
-    return ((!(divingEvent.creator.username) && creatorFilter.length === 0) || (divingEvent.creator.username === undefined) ||
-      (divingEvent.creator && divingEvent.creator.username.toUpperCase().includes(creatorFilter.toUpperCase())))
+  const filterByNorth = (target) => {
+    return ((northFilter !== null && northFilter.length === 0) ||
+      (target && target.latitude <= northFilter))
+  }
+  const filterByWest = (target) => {
+    return ((westFilter !== null && westFilter.length === 0) ||
+      (target && target.longitude >= westFilter))
+  }
+  const filterBySouth = (target) => {
+    return ((southFilter !== null && southFilter.length === 0) ||
+      (target && target.latitude >= southFilter))
+  }
+  const filterByEast = (target) => {
+    return ((eastFilter !== null && eastFilter.length === 0) ||
+      (target && target.longitude <= eastFilter))
   }
 
   const filteredTargets = props.targets.filter(target =>
-    //filterByStartdate(target) &&
-    //filterByEnddate(target) &&
-    //filterByTitle(target) &&
-    //filterByDescription(target) &&
-    filterByTarget(target) //&&
-    //filterByCreator(target)
+    filterByDives(target) &&
+    filterByStartdate(target) &&
+    filterByEnddate(target) &&
+    filterByTarget(target) &&
+    filterByNorth(target) &&
+    filterByWest(target) &&
+    filterBySouth(target) &&
+    filterByEast(target)
   )
 
   const itemsOnPage = 20
@@ -122,7 +170,7 @@ const TargetDives = (props) => {
     return (
       filteredTargets.map((target, index) => {
         if (index >= offset && index < (offset + itemsOnPage)) {
-          return <Target key={target._id} target={target} elementID={target._id} />
+          return <Target key={target._id} target={target} elementID={target._id} dives={target.dives}/>
         } else {
           return null
         }
@@ -148,14 +196,20 @@ const TargetDives = (props) => {
         handleStartFiltering={handleStartFiltering}
         endFilter={endFilter}
         handleEndFiltering={handleEndFiltering}
-        titleFilter={titleFilter}
-        handleTitleFiltering={handleTitleFiltering}
-        descriptionFilter={descriptionFilter}
-        handleDescriptionFiltering={handleDescriptionFiltering}
+        hasDivesFilter={hasDivesFilter}
+        handleHasDivesFiltering={handleHasDivesFiltering}
+        noDivesFilter={noDivesFilter}
+        handleNoDivesFiltering={handleNoDivesFiltering}
         targetFilter={targetFilter}
         handleTargetFiltering={handleTargetFiltering}
-        creatorFilter={creatorFilter}
-        handleCreatorFiltering={handleCreatorFiltering}
+        northFilter={northFilter}
+        handleNorthFiltering={handleNorthFiltering}
+        westFilter={westFilter}
+        handleWestFiltering={handleWestFiltering}
+        southFilter={southFilter}
+        handleSouthFiltering={handleSouthFiltering}
+        eastFilter={eastFilter}
+        handleEastFiltering={handleEastFiltering}
       />
       <div id="caption">
         Näytetään {filteredTargets.length}/{props.targets.length} kohdetta.
@@ -166,8 +220,8 @@ const TargetDives = (props) => {
         <thead>
           <tr id="target">
             <th width="2.5%"></th>
-            <th width="40%" colSpan="2">Kohde</th>
-            <th width="57.5%" colSpan="4">Sijainti</th>
+            <th width="40%" colSpan="2" id="caption">Kohde</th>
+            <th width="57.5%" colSpan="4" id="caption">Sijainti</th>
           </tr>
         </thead>
         <tbody>
@@ -185,12 +239,15 @@ TargetDives.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
+    events: state.events,
     targets: state.targets,
+    dives: state.dives,
     loggedUser: state.authentication.loggedUser
   }
 }
 
 const mapDispatchToProps = {
+  addDivesToTargets,
   setNotification
 }
 

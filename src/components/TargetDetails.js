@@ -6,12 +6,12 @@ const TargetDetails = (props) => {
 
   const linkToKyppi = (mj_id) => mj_id ? `${kyppiUrl}${mj_id}` : undefined
 
-  const noKidding = { "margins": "0px" }
+  const noMargins = { "margins": "0px" }
 
   if (props.target && props.target !== null) {
     const target = props.target
     return (
-      <Container id={target._id} style={noKidding}>
+      <Container id={target._id} style={noMargins}>
         <Row>
           <Col id="caption">
             Tyyppi:

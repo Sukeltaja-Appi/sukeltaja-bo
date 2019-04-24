@@ -8,7 +8,6 @@ const Notification = (props) => {
   if (props.notMessage === undefined || props.notMessage === null || props.notMessage === '') {
     return null
   } else {
-    console.log('Notmessage', props.notMessage)
     return (
       <div>
         <div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form } from 'react-bootstrap'
+import { Form, Col } from 'react-bootstrap'
 
 export const StartFilter = (props) => {
   return (
@@ -22,6 +22,21 @@ export const EndFilter = (props) => {
         value={props.endFilter} onChange={props.trigger} />
       <Form.Text className="text-muted">
         Rajaa päättymispäivän mukaan
+      </Form.Text>
+    </>
+  )
+}
+
+export const HasDivesFilter = (props) => {
+  return (
+    <>
+      <Form.Label>Sukelluksia tehty</Form.Label>
+      <div key={'inline-checkbox'} className="mb-3">
+        <Form.Check inline label="Kyllä" type="checkbox" checked={props.hasDives} onChange={props.hasTrigger} id={'inline-checkbox-yes'} />
+        <Form.Check inline label="Ei" type="checkbox" checked={props.noDives} onChange={props.noTrigger} id={'inline-checkbox-no'} />
+      </div>
+      <Form.Text className="text-muted">
+        Rajaa tehtyjen sukellusten mukaan
       </Form.Text>
     </>
   )
@@ -62,6 +77,30 @@ export const DescriptionFilter = (props) => {
       <Form.Text className="text-muted">
         Rajaa tapahtuman kuvauksen osalla
       </Form.Text>
+    </>
+  )
+}
+
+export const LocationFilter = (props) => {
+  return (
+    <>
+      <Form.Group as={Col}>
+        <Form.Label>{props.title}</Form.Label>
+        <Form.Control type="number" step="0.1" min="-90.0" max="90.0"
+        placeholder="Esim 60,0" name="latitudeFilter"
+        value={props.latitudeFilter} onChange={props.latitudeTrigger} />
+      <Form.Text className="text-muted">
+        Rajaa aluetta leveyspiirillä desimaaleina
+      </Form.Text>
+      </Form.Group>
+      <Form.Group as={Col}>
+        <Form.Control type="number" step="0.1" min="-180.0" max="180.0"
+        placeholder="Esim 25,0" name="longitudeFilter"
+        value={props.longitudeFilter} onChange={props.longitudeTrigger} />
+      <Form.Text className="text-muted">
+        Rajaa aluetta pituuspiirillä desimaaleina
+      </Form.Text>
+      </Form.Group>
     </>
   )
 }
