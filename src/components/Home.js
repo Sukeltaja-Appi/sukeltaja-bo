@@ -38,9 +38,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   //loginUser,
   //reLoginUser,
-  setNotification,
-  //initializeBlogs,
-  //initializeUsers
+  setNotification
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

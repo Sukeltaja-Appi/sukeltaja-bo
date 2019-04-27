@@ -1,5 +1,6 @@
 import React from 'react'
 import { render, cleanup, fireEvent, getByPlaceholderText } from 'react-testing-library'
+import App from '../components/App'
 import DivingEvents from '../components/DivingEvents'
 import { Provider } from 'react-redux'
 import store from '../store'

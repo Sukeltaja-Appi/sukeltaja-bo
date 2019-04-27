@@ -2,16 +2,28 @@ import React from 'react'
 import { connect } from 'react-redux'
 import decimalToDMS from './coordinates'
 
-// Need to switch the json description to a props so we can use this for other exports also
-const dataHeaders = require('../utils/eventHeaders.json')
-
-// We're trying to make a link for downloading the json data in csv format:
-
+// We're making a link for downloading the json data in csv format:
 const JsonToCSV = (props) => {
 
   if (props.content !== undefined && props.content !== null) {
 
-    console.log('Making', props.filename)
+    console.log('Making a file for', props.contentType)
+
+    let dataHeaders = {}
+    let filename = ''
+    switch (props.contentType) {
+      case 'events':
+        dataHeaders = require('../utils/eventHeaders.json')
+        filename = 'sukellustapahtumat.csv'
+        break
+      case 'targets':
+        dataHeaders = require('../utils/targetHeaders.json')
+        filename = 'kohteidensukellukset.csv'
+        break
+      default:
+        break
+    }
+
 
     const sep = props.sep // Field separator
     const dec = props.dec // Decimal separator
@@ -28,8 +40,13 @@ const JsonToCSV = (props) => {
     data.push(headers)
 
     // Then the actual rows of data
-    props.content.forEach(jsonObj => {
+    let havingArray = false
+    let arrayIndex = 0
+    let arrayMax = 0
+    for (let o = 0; o < props.content.length; !havingArray ? o++ : null) {
+      let jsonObj = props.content[o]
       let dataRow = ''
+      // eslint-disable-next-line no-loop-func, cause I really really really want to do this
       dataHeaders.forEach(header => {
         let val = ''
         const quo = (header["type"] === "Number" ? '' : '"')
@@ -43,7 +60,13 @@ const JsonToCSV = (props) => {
             const arrKey = header["key"].split('.')
             const obj = jsonObj[arrKey[0]]
             const objAttr = obj[arrKey[1]]
-            if (objAttr !== undefined && objAttr != null) {
+            if (arrKey[2] !== undefined) {
+              // It's an array of objects
+              havingArray = true
+              let arr = Array.from(obj)
+              arrayMax = arr.length - 1
+              val = arr[arrayIndex][arrKey[2]]
+            } else if (objAttr !== undefined && objAttr != null) {
               // The attribute was eventually found
               val = objAttr
             }
@@ -68,13 +91,17 @@ const JsonToCSV = (props) => {
       })
       dataRow = dataRow.concat('\n')
       data.push(dataRow)
-    })
-
+      if (arrayIndex >= arrayMax) {
+        havingArray = false
+        arrayIndex = 0
+      } else {
+        arrayIndex++
+      }
+    }
     const downloadLink = () => {
       const contentType = 'text/csv;charset=utf-8'
       let blob = new Blob(data, { type: contentType })
       let urlForCSV = window.URL.createObjectURL(blob)
-      const filename = props.filename
       const prompt = "Lataa CSV"
       return React.createElement('a', { href: urlForCSV, type: contentType, download: filename }, prompt)
     }

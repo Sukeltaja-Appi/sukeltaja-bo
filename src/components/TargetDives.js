@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { Table } from 'react-bootstrap'
 import { DateTime, Settings } from 'luxon'
 import PropTypes from 'prop-types'
-import { addDivesToTargets } from '../reducers/targetReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import Target from './Target'
 import FilterTargetsForm from './FilterTargetsForm'
@@ -28,7 +27,7 @@ const TargetDives = (props) => {
   const [eastFilter, setEastFilter] = useState('')
 
   const initStuff = async () => {
-    await props.addDivesToTargets(props.events, props.targets)
+    // Do stuff if needed
   }
 
   useEffect(() => {
@@ -151,8 +150,8 @@ const TargetDives = (props) => {
       (target && target.longitude <= eastFilter))
   }
 
-  const filteredTargets = props.targets.filter(target =>
-    filterByDives(target) &&
+  const filteredTargets = props.targetDives.filter(target =>
+    //filterByDives(target) &&
     filterByStartdate(target) &&
     filterByEnddate(target) &&
     filterByTarget(target) &&
@@ -181,7 +180,7 @@ const TargetDives = (props) => {
   const jsonToCSV = () => {
     if (filteredTargets !== undefined && filteredTargets !== null) {
       return (
-        <JsonToCSV content={filteredTargets} sep={';'} dec={','} filename={'kohteidensukellukset.csv'} />
+        <JsonToCSV contentType={'targets'} content={filteredTargets} sep={';'} dec={','} />
       )
     } else {
       return null
@@ -239,15 +238,13 @@ TargetDives.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    events: state.events,
     targets: state.targets,
-    dives: state.dives,
+    targetDives: state.targetDives,
     loggedUser: state.authentication.loggedUser
   }
 }
 
 const mapDispatchToProps = {
-  addDivesToTargets,
   setNotification
 }
 

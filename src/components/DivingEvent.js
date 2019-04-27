@@ -8,18 +8,6 @@ const DivingEvent = (props) => {
 
   const [showEventDetails, setShowEventDetails] = useState(false)
 
-  // The following belongs after <Target... It is commented out because we don't get all the data anymore
-  // with Events.
-  // <Dives dives={props.divingEvent.dives} />
-
-  //<tr onClick={() => setShowTarget(!showTarget)}
-  //aria-controls={props.divingEvent._id}
-  //aria-expanded={showTarget}>
-
-  // <Collapse in={showTarget}>
-  // <Target target={props.divingEvent.target} id={props.divingEvent._id} />
-  // </Collapse>
-
   const divingEvent = props.divingEvent
   const gotDescription = (
     divingEvent.description !== undefined && divingEvent.description !== null && divingEvent.description !== ''

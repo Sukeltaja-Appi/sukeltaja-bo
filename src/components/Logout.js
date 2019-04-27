@@ -14,7 +14,7 @@ const Logout = (props) => {
       console.log('Logging out user', props.loggedUser.username)
       await props.logoutUser()
       window.localStorage.removeItem(storageKeyUser)
-      props.setNotification('success', 'Olet kirjautunut ulos', 5)
+      await props.setNotification('success', 'Olet kirjautunut ulos', 5)
       return
     } catch (exception) {
       props.setNotification('danger', 'Kautta Neptunuksen! Uloskirjautuminen meni pieleen!', 10)

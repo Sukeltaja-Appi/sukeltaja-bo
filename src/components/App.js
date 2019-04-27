@@ -5,7 +5,8 @@ import { Navbar, Nav, Container } from 'react-bootstrap'
 import { storageKeyUser } from '../utils/config'
 import { initializeTargets } from '../reducers/targetReducer'
 import { initializeEvents } from '../reducers/eventReducer'
-import { initializeDives } from '../reducers/diveReducer'
+import { mapDivesToTargets } from '../reducers/divesReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import Notification from './Notification'
 import Login from './Login'
 import Logout from './Logout'
@@ -31,14 +32,13 @@ const App = (props) => {
   const initializeAtStartUp = async () => {
     console.log('Initialize at App')
     // Any initializations at login should be done here async at login if necessary
+    props.setNotification('success', 'Tervetuloa! Muista hengittää rauhallisesti!', 5)
     if (props.events === undefined || props.events === null || props.events.length === 0) {
       await props.initializeEvents()
+      await props.mapDivesToTargets()
     }
     if (props.targets === undefined || props.targets === null || props.targets.length === 0) {
       await props.initializeTargets()
-    }
-    if (props.dives === undefined || props.dives === null || props.dives.length === 0) {
-      await props.initializeDives()
     }
     //await props.initializeUsers()
   }
@@ -118,7 +118,7 @@ const mapStateToProps = (state) => {
   return {
     targets: state.targets,
     events: state.events,
-    dives: state.dives,
+    targetDives: state.targetDives,
     loggedUser: state.authentication.loggedUser
   }
 }
@@ -126,7 +126,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   initializeTargets,
   initializeEvents,
-  initializeDives
+  mapDivesToTargets,
+  setNotification
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

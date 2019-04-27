@@ -24,8 +24,6 @@ const Login = (props) => {
   const initializeAtStartUp = async () => {
     //console.log('Initialize at Login')
     // Any initializations at login should be done here async at login if necessary
-    //await props.initializeEvents()
-    //await props.initializeUsers()
   }
 
   useEffect(() => {
@@ -52,7 +50,7 @@ const Login = (props) => {
     try {
       await props.loginUser(username, password)
       initializeAtStartUp()
-      await props.setNotification('success', 'Tervetuloa! Muista hengittää rauhallisesti!', 5)
+      window.location.href = "/"
     } catch (exception) {
       await props.setNotification('danger', 'Käyttäjätunnus tai salasana on virheellinen', 5)
     }
@@ -82,6 +80,7 @@ const Login = (props) => {
     )
   } else {
     if (window.location.pathname !== "/") {
+      console.log("Redirecting to /")
       return (
         <Redirect to="/"></Redirect>
       )

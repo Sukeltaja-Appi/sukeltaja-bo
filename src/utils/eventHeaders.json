@@ -2,8 +2,8 @@
 [
   { "label": "Tapahtuma", "key": "title", "type": "String" },
   { "label": "Kuvaus", "key": "description", "type": "String" },
-  { "label": "Alkupäivä", "key": "startdate", "type": "Date" },
-  { "label": "Loppupäivä", "key": "enddate", "type": "Date" },
+  { "label": "Alkuaika", "key": "startdate", "type": "Date" },
+  { "label": "Loppuaika", "key": "enddate", "type": "Date" },
   { "label": "Perustaja", "key": "creator.username", "type": "String" },
   { "label": "Pääkäyttäjät", "key": "admins", "type": "Count" },
   { "label": "Muut osallistujat", "key": "participants", "type": "Count"},

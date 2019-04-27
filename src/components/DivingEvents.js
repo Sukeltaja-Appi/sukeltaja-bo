@@ -24,7 +24,7 @@ const DivingEvents = (props) => {
   const [creatorFilter, setCreatorFilter] = useState('')
 
   const initStuff = async () => {
-    //await props.initializeEvents()
+    // If somenthing needs to be done when page loaded
   }
 
   useEffect(() => {
@@ -133,7 +133,7 @@ const DivingEvents = (props) => {
   const jsonToCSV = () => {
     if (filteredEvents !== undefined && filteredEvents !== null) {
       return (
-        <JsonToCSV content={filteredEvents} sep={';'} dec={','} filename={'sukellustapahtumat.csv'} />
+        <JsonToCSV contentType={'events'} content={filteredEvents} sep={';'} dec={','} />
       )
     } else {
       return null

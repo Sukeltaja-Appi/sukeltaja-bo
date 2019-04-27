@@ -5,7 +5,7 @@ const Dives = ({ dives }) => {
   if (dives && dives.length > 0) {
 
     const rows = () => dives.map((dive, index) =>
-      <Dive key={dive._id} dive={dive} odd={index%2} />
+      <Dive key={`${dive._id}${index}`} dive={dive} odd={index%2} />
     )
     return (
       <>
