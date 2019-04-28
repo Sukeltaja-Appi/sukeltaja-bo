@@ -52,6 +52,7 @@ const Login = (props) => {
       initializeAtStartUp()
       window.location.href = "/"
     } catch (exception) {
+      console.log('Exception trying to login', username)
       await props.setNotification('danger', 'Käyttäjätunnus tai salasana on virheellinen', 5)
     }
   }

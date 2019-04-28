@@ -5,7 +5,7 @@ export const correctPassword = 'holydiver'
 
 const login = async credentials => {
   if (credentials.username === correctUsername && credentials.password === correctPassword) {
-    //console.log("Correct username & password")
+    console.log("Mock login: Correct username & password")
     const user = { id: 'id', username: credentials.username, token: 'token' }
     return user
   } else {

@@ -1,6 +1,5 @@
 import React from 'react'
 import { render, cleanup, fireEvent, getByPlaceholderText } from 'react-testing-library'
-import App from '../components/App'
 import DivingEvents from '../components/DivingEvents'
 import { Provider } from 'react-redux'
 import store from '../store'
@@ -13,16 +12,20 @@ describe('Testing DivingEvents component', () => {
 
   const handleTitleFiltering = jest.fn()
   const state = {
-    titleFilter: ''
+    titleFilter: '',
+    testing: 'Testing',
+    events: allEvents
   }
+
+  const fakeStore = store
+  fakeStore.events = allEvents
 
   const Wrapper = (props) => {
     const onChange = (event) => {
       props.state.titleFilter = event.target.titleFilter
-      props.store = store
     }
     return (
-      <Provider store={store}>
+      <Provider store={fakeStore}>
         <DivingEvents
           titleFilter={props.state.titleFilter}
           handleTitleFiltering={props.handleTitleFiltering}
@@ -33,12 +36,13 @@ describe('Testing DivingEvents component', () => {
     )
   }
 
+
   afterEach(cleanup)
 
   const component = render(
-    <Provider store={store}>
-      <DivingEvents />
-    </Provider>,
+    <Provider store={fakeStore}>
+      <DivingEvents state={state} />
+    </Provider>
   )
 
   test('Renders DivingEvents component without events', () => {
@@ -53,8 +57,8 @@ describe('Testing DivingEvents component', () => {
   test('Renders DivingEvents component with events', () => {
 
     component.rerender(
-      <Provider store={store}>
-        <DivingEvents />
+      <Provider store={fakeStore}>
+        <DivingEvents state={state} />
       </Provider>,
     )
 
@@ -68,10 +72,9 @@ describe('Testing DivingEvents component', () => {
 
   test('Makes link for downloading events', () => {
 
-
     component.rerender(
-      <Provider store={store}>
-        <DivingEvents />
+      <Provider store={fakeStore}>
+        <DivingEvents state={state} />
       </Provider>,
     )
 
@@ -82,6 +85,9 @@ describe('Testing DivingEvents component', () => {
   })
 
   test('Filters events with event title', async () => {
+
+    state.events = allEvents
+    store.state = state
 
     let component = render(
       <Wrapper handleTitleFiltering={handleTitleFiltering} state={state} store={store} />

@@ -16,6 +16,8 @@ const state = {
   password: ''
 }
 
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
 const Wrapper = (props) => {
   const onChange = (event) => {
     props.state.username = event.target.username
@@ -27,6 +29,7 @@ const Wrapper = (props) => {
       <App
         username={props.state.username}
         password={props.state.password}
+        loggedUser={props.loggedUser}
         handleLogin={props.handleLogin}
         handleChange={onChange}
         state={state}
@@ -97,14 +100,16 @@ describe('Testing Login component', () => {
       <Wrapper handleLogin={handleLogin} state={state} store={store} />
     )
     
-    await waitForElement(
-      () => component.container.querySelector('.alert-success')
-    )
+    jest.setTimeout(6000)
+    await delay(5000)
+    //await waitForElement(
+    //   () => component.container.querySelector('.alert-success')
+    //)
 
-    expect(component.container).toHaveTextContent('Tervetuloa')
-    expect(component.container).toHaveTextContent(correctUsername)
-    expect(component.container).toHaveTextContent('Kirjaudu ulos')
-    
+    //component.debug('comp store.getState:')
+    //component.debug(store.getState())
+    expect(store.getState().authentication.loggedUser.username).toBe(correctUsername)  
+
   })
 
   

@@ -15,6 +15,7 @@ const getAll = async () => {
       headers: { Authorization: token },
     }
   } else {
+    console.log('Unauthorized call in eventService')
     return null
   }
 

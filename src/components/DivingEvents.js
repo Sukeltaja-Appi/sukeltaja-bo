@@ -13,6 +13,15 @@ const DivingEvents = (props) => {
 
   Settings.defaultLocale = 'fi'
 
+  let allEvents = {}
+  if (props.state === undefined || props.state.testing === undefined) {
+    allEvents = props.events
+  } else {
+    // Sorry, unable to run tests with events directly under props
+    console.log('Testing with props.state.events')
+    allEvents = props.state.events
+  }
+
   const [currentPage, setCurrentPage] = useState(1)
   const [startFilter, setStartFilter] = useState('')
   const [useStart, setUseStart] = useState('')
@@ -105,7 +114,7 @@ const DivingEvents = (props) => {
       (divingEvent.creator && divingEvent.creator.username.toUpperCase().includes(creatorFilter.toUpperCase())))
   }
 
-  const filteredEvents = props.events.filter(divingEvent =>
+  const filteredEvents = allEvents.filter(divingEvent =>
     filterByStartdate(divingEvent) &&
     filterByEnddate(divingEvent) &&
     filterByTitle(divingEvent) &&

@@ -8,7 +8,7 @@ export const loginUser = (username, password) => {
       password: password
     })
     await window.localStorage.setItem(storageKeyUser, JSON.stringify(user))
-    console.log("Reducer:", user)
+    //console.log("Reducer:", user)
     await dispatch({
       type: 'LOGIN_USER',
       data: {
