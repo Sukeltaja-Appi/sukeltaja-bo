@@ -4,7 +4,7 @@ import { Pagination } from 'react-bootstrap'
 
 const Paginator = (props) => {
 
-  const current = parseInt(props.current)
+  const current = parseInt(props.current, 10)
   const pages = props.pages
   let firstNum = 1
   let lastNum = pages
