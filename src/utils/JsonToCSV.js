@@ -1,24 +1,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import decimalToDMS from './coordinates'
+import { eventsfilename, targetdivesfilename } from './config'
 
 // We're making a link for downloading the json data in csv format:
 const JsonToCSV = (props) => {
 
   if (props.content !== undefined && props.content !== null) {
 
-    console.log('Making a file for', props.contentType)
+    //console.log('Making a file for', props.contentType)
 
     let dataHeaders = {}
     let filename = ''
     switch (props.contentType) {
       case 'events':
         dataHeaders = require('../utils/eventHeaders.json')
-        filename = 'sukellustapahtumat.csv'
+        filename = eventsfilename
         break
       case 'targets':
         dataHeaders = require('../utils/targetHeaders.json')
-        filename = 'kohteidensukellukset.csv'
+        filename = targetdivesfilename
         break
       default:
         break

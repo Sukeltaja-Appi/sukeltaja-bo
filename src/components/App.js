@@ -87,10 +87,10 @@ const App = (props) => {
                       <Link style={navLinkStyle} to="/">Alkuun</Link>
                     </Nav.Link>
                     <Nav.Link as="span">
-                      <Link style={navLinkStyle} to="/targets">Kohteet</Link>
+                      <Link style={navLinkStyle} to="/targets">Kohteiden sukellukset</Link>
                     </Nav.Link>
                     <Nav.Link as="span">
-                      <Link style={navLinkStyle} to="/events">Tapahtumat</Link>
+                      <Link style={navLinkStyle} to="/events">Sukellustapahtumat</Link>
                     </Nav.Link>
                     <Navbar.Text as="span">
                       <Logout />

@@ -18,13 +18,11 @@ const TargetDives = (props) => {
   const [useStart, setUseStart] = useState('')
   const [endFilter, setEndFilter] = useState('')
   const [useEnd, setUseEnd] = useState('')
-  const [hasDivesFilter, setHasDivesFilter] = useState(true)
-  const [noDivesFilter, setNoDivesFilter] = useState(false)
   const [targetFilter, setTargetFilter] = useState('')
-  const [northFilter, setNorthFilter] = useState('')
-  const [westFilter, setWestFilter] = useState('')
-  const [southFilter, setSouthFilter] = useState('')
-  const [eastFilter, setEastFilter] = useState('')
+  const [northFilter, setNorthFilter] = useState(70.1) // Finland northest point
+  const [westFilter, setWestFilter] = useState(19.0) // Finland most western point (at sea)
+  const [southFilter, setSouthFilter] = useState(59.4) // Finland southest point (at sea)
+  const [eastFilter, setEastFilter] = useState(31.6) // Finland most eastern point
 
   const initStuff = async () => {
     // Do stuff if needed
@@ -72,14 +70,6 @@ const TargetDives = (props) => {
     }
   }
 
-  const handleHasDivesFiltering = () => {
-    setHasDivesFilter(!hasDivesFilter)
-    setCurrentPage(1)
-  }
-  const handleNoDivesFiltering = () => {
-    setNoDivesFilter(!noDivesFilter)
-    setCurrentPage(1)
-  }
   const handleTargetFiltering = (event) => {
     setTargetFilter(event.target.value)
     setCurrentPage(1)
@@ -117,10 +107,6 @@ const TargetDives = (props) => {
     }
   }
 
-  const filterByDives = (target) => {
-    return ((hasDivesFilter === true && target.dives !== undefined) ||
-      (noDivesFilter === true && target.dives === undefined))
-  }
   const filterByStartdate = (target) => {
     return ((startFilter.length === 0) ||
       ((target.dives !== undefined && new Date(target.firstDive) >= new Date(useStart))))
@@ -151,7 +137,6 @@ const TargetDives = (props) => {
   }
 
   const filteredTargets = props.targetDives.filter(target =>
-    //filterByDives(target) &&
     filterByStartdate(target) &&
     filterByEnddate(target) &&
     filterByTarget(target) &&
@@ -195,10 +180,6 @@ const TargetDives = (props) => {
         handleStartFiltering={handleStartFiltering}
         endFilter={endFilter}
         handleEndFiltering={handleEndFiltering}
-        hasDivesFilter={hasDivesFilter}
-        handleHasDivesFiltering={handleHasDivesFiltering}
-        noDivesFilter={noDivesFilter}
-        handleNoDivesFiltering={handleNoDivesFiltering}
         targetFilter={targetFilter}
         handleTargetFiltering={handleTargetFiltering}
         northFilter={northFilter}
@@ -211,7 +192,7 @@ const TargetDives = (props) => {
         handleEastFiltering={handleEastFiltering}
       />
       <div id="caption">
-        Näytetään {filteredTargets.length}/{props.targets.length} kohdetta.
+        Näytetään {filteredTargets.length}/{props.targetDives.length} kohteesta, joissa sukelluksia.
         &nbsp;
         {jsonToCSV()}
       </div>

@@ -13,14 +13,7 @@ const DivingEvents = (props) => {
 
   Settings.defaultLocale = 'fi'
 
-  let allEvents = {}
-  if (props.state === undefined || props.state.testing === undefined) {
-    allEvents = props.events
-  } else {
-    // Sorry, unable to run tests with events directly under props
-    console.log('Testing with props.state.events')
-    allEvents = props.state.events
-  }
+  const allEvents = props.events
 
   const [currentPage, setCurrentPage] = useState(1)
   const [startFilter, setStartFilter] = useState('')

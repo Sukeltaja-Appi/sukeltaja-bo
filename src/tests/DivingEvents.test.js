@@ -2,11 +2,11 @@ import React from 'react'
 import { render, cleanup, fireEvent, getByPlaceholderText } from 'react-testing-library'
 import DivingEvents from '../components/DivingEvents'
 import { Provider } from 'react-redux'
-import store from '../store'
 import 'jest-dom/extend-expect'
 jest.mock('../services/eventService')
 import { allEvents } from '../services/__mocks__/eventService'
 import { formatDate } from '../utils/dates'
+import { eventsfilename } from '../utils/config'
 
 describe('Testing DivingEvents component', () => {
 
@@ -17,8 +17,15 @@ describe('Testing DivingEvents component', () => {
     events: allEvents
   }
 
-  const fakeStore = store
-  fakeStore.events = allEvents
+  const authentication = {}
+  authentication.loggedUser = {}
+
+  const fakeStore = {
+    events: allEvents,
+    authentication: authentication,
+    subscribe: function dummy() { return null },
+    dispatch: function dummy() { return null },
+    getState: function getState() { return { events: allEvents, authentication: authentication } } }//store
 
   const Wrapper = (props) => {
     const onChange = (event) => {
@@ -80,17 +87,17 @@ describe('Testing DivingEvents component', () => {
 
     const dlLink = component.container.querySelector('a')
     const dlLinkHref = dlLink.getAttribute('download')
-    expect(dlLinkHref).toContain('sukellustapahtumat.csv')
+    expect(dlLinkHref).toContain(eventsfilename)
 
   })
 
   test('Filters events with event title', async () => {
 
     state.events = allEvents
-    store.state = state
+    //store.state = state
 
     let component = render(
-      <Wrapper handleTitleFiltering={handleTitleFiltering} state={state} store={store} />
+      <Wrapper handleTitleFiltering={handleTitleFiltering} state={state} store={fakeStore} />
     )
 
     // Last word from the first event's title:
@@ -107,7 +114,7 @@ describe('Testing DivingEvents component', () => {
     fireEvent.change(titleFilter, { target: { value: toContainInEnd } })
 
     component.rerender(
-      <Wrapper handleTitleFiltering={handleTitleFiltering} state={state} store={store} />
+      <Wrapper handleTitleFiltering={handleTitleFiltering} state={state} store={fakeStore} />
     )
 
     expect(component.container).not.toHaveTextContent(notToContainInEnd)

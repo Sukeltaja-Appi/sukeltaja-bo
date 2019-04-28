@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, Row, Col } from 'react-bootstrap'
-import { StartFilter, EndFilter, HasDivesFilter, LocationFilter, TargetFilter} from './FilterFields'
+import { StartFilter, EndFilter, LocationFilter, TargetFilter} from './FilterFields'
 
 const FilterTargetsForm = (props) => {
 
@@ -19,14 +19,10 @@ const FilterTargetsForm = (props) => {
             <EndFilter value={props.endFilter} trigger={props.handleEndFiltering} />
           </Col>
           <Col>
-            <HasDivesFilter hasDives={props.hasDivesFilter} hasTrigger={props.handleHasDivesFiltering}
-              noDives={props.noDivesFilter} noTrigger={props.handleNoDivesFiltering} />
+            <TargetFilter value={props.targetFilter} trigger={props.handleTargetFiltering} />
           </Col>
         </Row>
         <Row>
-          <Col>
-            <TargetFilter value={props.targetFilter} trigger={props.handleTargetFiltering} />
-          </Col>
           <Col>
             <LocationFilter title={'Alueen luoteisnurkka'} 
               latitudeFilter={props.northFilter} latitudeTrigger={props.handleNorthFiltering}
