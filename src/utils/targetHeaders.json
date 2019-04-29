@@ -6,10 +6,5 @@
   { "label": "Kohde, syvyys", "key": "depth", "type": "String"},
   { "label": "Kohde, materiaali", "key": "material", "type": "String"},
   { "label": "Kohde, hylyt-tunnus", "key": "hylyt_id", "type": "Number"},
-  { "label": "Kohde, mj-tunnus", "key": "mj_id", "type": "String"},
-  { "label": "Sukellus, sukeltaja", "key": "dives.dive.username", "type": "String"},
-  { "label": "Sukellus, alkuaika", "key": "dives.dive.startdate", "type": "Date" },
-  { "label": "Sukellus, loppuaika", "key": "dives.dive.enddate", "type": "Date" },
-  { "label": "Sukellus, leveyspiiri", "key": "dives.dive.latitude", "type": "Latitude"},
-  { "label": "Sukellus, pituuspiiri", "key": "dives.dive.longitude", "type": "Longitude"}
+  { "label": "Kohde, mj-tunnus", "key": "mj_id", "type": "String"}
   ]

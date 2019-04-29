@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Table } from 'react-bootstrap'
-import { DateTime, Settings } from 'luxon'
 import PropTypes from 'prop-types'
 import { setNotification } from '../reducers/notificationReducer'
 import Target from './Target'
-import FilterTargetDivesForm from './FilterTargetDivesForm'
+import FilterTargetsForm from './FilterTargetsForm'
 import JsonToCSV from '../utils/JsonToCSV'
 import Paginator from './Paginator'
 
-const TargetDives = (props) => {
-
-  Settings.defaultLocale = 'fi'
+const Targets = (props) => {
 
   const [currentPage, setCurrentPage] = useState(1)
-  const [startFilter, setStartFilter] = useState('')
-  const [useStart, setUseStart] = useState('')
-  const [endFilter, setEndFilter] = useState('')
-  const [useEnd, setUseEnd] = useState('')
   const [targetFilter, setTargetFilter] = useState('')
   const [northFilter, setNorthFilter] = useState(70.1) // Finland northest point
   const [westFilter, setWestFilter] = useState(19.0) // Finland most western point (at sea)
@@ -32,41 +25,11 @@ const TargetDives = (props) => {
     initStuff()
   }, [])
 
-  function isValidDate(d) {
-    return d instanceof Date && !isNaN(d);
-  }
-
   const handlePageSelect = (event) => {
     try {
       setCurrentPage(parseInt(event.target.id))
     } catch (error) {
       // Do nothing
-    }
-  }
-
-  const handleStartFiltering = (event) => {
-    try {
-      let startdate = DateTime.fromFormat(event.target.value, 'd.M.yyyy', 'fi-FI').toJSDate()
-      if (isValidDate(startdate)) {
-        setUseStart(startdate)
-      }
-      setStartFilter(event.target.value)
-      setCurrentPage(1)
-    } catch (error) {
-      console.log("Error with startdate", event.target.value)
-    }
-  }
-  const handleEndFiltering = (event) => {
-    try {
-      let enddate = DateTime.fromFormat(event.target.value, 'd.M.yyyy', 'fi-FI')
-        .plus({ days: 1 }).plus({ minutes: -1 }).toJSDate()
-      if (isValidDate(enddate)) {
-        setUseEnd(enddate)
-      }
-      setEndFilter(event.target.value)
-      setCurrentPage(1)
-    } catch (error) {
-      console.log("Error with enddate", event.target.value)
     }
   }
 
@@ -107,14 +70,6 @@ const TargetDives = (props) => {
     }
   }
 
-  const filterByStartdate = (target) => {
-    return ((startFilter.length === 0) ||
-      ((target.dives !== undefined && new Date(target.firstDive) >= new Date(useStart))))
-  }
-  const filterByEnddate = (target) => {
-    return ((endFilter.length === 0) ||
-    ((target.dives !== undefined && new Date(target.lastDive) >= new Date(useEnd))))
-  }
   const filterByTarget = (target) => {
     return ((targetFilter.length === 0) ||
       (target && target.name.toUpperCase().includes(targetFilter.toUpperCase())))
@@ -136,9 +91,7 @@ const TargetDives = (props) => {
       (target && target.longitude <= eastFilter))
   }
 
-  const filteredTargets = props.targetDives.filter(target =>
-    filterByStartdate(target) &&
-    filterByEnddate(target) &&
+  const filteredTargets = props.targets.filter(target =>
     filterByTarget(target) &&
     filterByNorth(target) &&
     filterByWest(target) &&
@@ -154,7 +107,7 @@ const TargetDives = (props) => {
     return (
       filteredTargets.map((target, index) => {
         if (index >= offset && index < (offset + itemsOnPage)) {
-          return <Target key={target._id} target={target} elementID={target._id} dives={target.dives}/>
+          return <Target key={target._id} target={target} elementID={target._id}/>
         } else {
           return null
         }
@@ -165,7 +118,7 @@ const TargetDives = (props) => {
   const jsonToCSV = () => {
     if (filteredTargets !== undefined && filteredTargets !== null) {
       return (
-        <JsonToCSV contentType={'targetDives'} content={filteredTargets} sep={';'} dec={','} />
+        <JsonToCSV contentType={'targets'} content={filteredTargets} sep={';'} dec={','} />
       )
     } else {
       return null
@@ -174,12 +127,8 @@ const TargetDives = (props) => {
 
   return (
     <div>
-      <h2>Kohteiden sukellukset</h2>
-      <FilterTargetDivesForm
-        startFilter={startFilter}
-        handleStartFiltering={handleStartFiltering}
-        endFilter={endFilter}
-        handleEndFiltering={handleEndFiltering}
+      <h2>Kaikki kohteet</h2>
+      <FilterTargetsForm
         targetFilter={targetFilter}
         handleTargetFiltering={handleTargetFiltering}
         northFilter={northFilter}
@@ -192,7 +141,7 @@ const TargetDives = (props) => {
         handleEastFiltering={handleEastFiltering}
       />
       <div id="caption">
-        Näytetään {filteredTargets.length}/{props.targetDives.length} kohteesta, joissa sukelluksia.
+        Näytetään {filteredTargets.length}/{props.targets.length} kohdetta.
         &nbsp;
         {jsonToCSV()}
       </div>
@@ -212,7 +161,7 @@ const TargetDives = (props) => {
     </div>
   )
 }
-TargetDives.propTypes = {
+Targets.propTypes = {
   setNotification: PropTypes.func.isRequired,
   loggedUser: PropTypes.object
 }
@@ -220,7 +169,6 @@ TargetDives.propTypes = {
 const mapStateToProps = (state) => {
   return {
     targets: state.targets,
-    targetDives: state.targetDives,
     loggedUser: state.authentication.loggedUser
   }
 }
@@ -229,4 +177,4 @@ const mapDispatchToProps = {
   setNotification
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TargetDives)
+export default connect(mapStateToProps, mapDispatchToProps)(Targets)

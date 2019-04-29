@@ -13,6 +13,7 @@ import Logout from './Logout'
 import Home from './Home'
 import DivingEvents from './DivingEvents'
 import TargetDives from './TargetDives';
+import Targets from './Targets';
 
 const App = (props) => {
 
@@ -87,7 +88,10 @@ const App = (props) => {
                       <Link style={navLinkStyle} to="/">Alkuun</Link>
                     </Nav.Link>
                     <Nav.Link as="span">
-                      <Link style={navLinkStyle} to="/targets">Kohteiden sukellukset</Link>
+                      <Link style={navLinkStyle} to="/targets">Kohteet</Link>
+                    </Nav.Link>
+                    <Nav.Link as="span">
+                      <Link style={navLinkStyle} to="/targetDives">Kohteiden sukellukset</Link>
                     </Nav.Link>
                     <Nav.Link as="span">
                       <Link style={navLinkStyle} to="/events">Sukellustapahtumat</Link>
@@ -103,7 +107,8 @@ const App = (props) => {
               <div>
                 <Notification />
                 <Route exact path="/" render={() => <Home />} />
-                <Route exact path="/targets" render={() => <TargetDives />} />
+                <Route exact path="/targets" render={() => <Targets />} />
+                <Route exact path="/targetDives" render={() => <TargetDives />} />
                 <Route exact path="/events" render={() => <DivingEvents />} />
               </div>
             </div>
