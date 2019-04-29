@@ -1,6 +1,5 @@
 import { storageKeyUser } from '../utils/config'
 import loginService from '../services/loginService'
-//import blogService from '../services/blogService'
 
 export const loginUser = (username, password) => {
   return async dispatch => {
@@ -8,9 +7,9 @@ export const loginUser = (username, password) => {
       username: username,
       password: password
     })
-    // // await blogService.setUser(user)
     await window.localStorage.setItem(storageKeyUser, JSON.stringify(user))
-    dispatch({
+    //console.log("Reducer:", user)
+    await dispatch({
       type: 'LOGIN_USER',
       data: {
         loggedUser: user
@@ -21,7 +20,6 @@ export const loginUser = (username, password) => {
 
 export const reLoginUser = (user) => {
   return async dispatch => {
-    //await blogService.setUser(user)
     dispatch({
       type: 'RELOGIN_USER',
       data: {
@@ -34,7 +32,6 @@ export const reLoginUser = (user) => {
 export const logoutUser = () => {
   return async dispatch => {
     // Clear possible other states
-    //await blogService.setUser(null)
     dispatch({
       type: 'LOGOUT_USER',
       data: {
@@ -47,7 +44,7 @@ export const logoutUser = () => {
 const authenticationReducer = (state = { loggedUser: null }, action) => {
   switch (action.type) {
     case 'LOGIN_USER':
-      return action.data
+    return action.data
     case 'RELOGIN_USER':
       return action.data
     case 'LOGOUT_USER':

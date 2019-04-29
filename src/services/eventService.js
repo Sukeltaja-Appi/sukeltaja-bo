@@ -1,25 +1,27 @@
 import axios from 'axios'
-const baseURL = 'api/events/unauth'
-//const baseURL = 'https://sukeltaja.herokuapp.com/api/events/unauth'
+import { storageKeyUser } from '../utils/config'
+
+//const baseURL = 'api/events/unauth'
+//const baseURL = 'http://localhost:3001/api/events/unauth'
+const baseURL = 'https://sukeltaja.herokuapp.com/api/events/bo'
 
 const getAll = async () => {
-  const response = await axios.get(baseURL)
+
+  let config = ''
+  const loggedUserJSON = window.localStorage.getItem(storageKeyUser)
+  if (loggedUserJSON && loggedUserJSON.length > 0 && loggedUserJSON !== 'null') {
+    const token = `bearer ${JSON.parse(loggedUserJSON).token}`
+    config = {
+      headers: { Authorization: token },
+    }
+  } else {
+    console.log('Unauthorized call in eventService')
+    return null
+  }
+
+  const response = await axios.get(baseURL, config)
+  console.log(response.data.length, 'events')
   return response.data
 }
-/*
-const create = newObject => {
-  const request = axios.post(baseURL, newObject)
-  return request.then(response => response.data)
-}
 
-const update = (id, newObject) => {
-  const request = axios.put(`${baseURL}/${id}`, newObject)
-  return request.then(response => response.data)
-}
-
-const remove = (id) => {
-  const request = axios.delete(`${baseURL}/${id}`)
-  return request.then(response => response.data)
-}
-*/
-export default { getAll } //, create, update, remove}
+export default { getAll }

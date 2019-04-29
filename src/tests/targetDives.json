@@ -1,0 +1,56 @@
+[
+  {
+    "_id": "5c7ab36d3482b337ec587966",
+    "name": "Österfjärden",
+    "latitude": 62.493274411790686,
+    "longitude": 21.205085377344478,
+    "type": "hylky",
+    "material": "puu",
+    "mj_id": "1000030997",
+    "dives": {
+      "startdate": "",
+      "enddate": "",
+      "latitude": "",
+      "longitude": "",
+      "user": {
+        "_id": "",
+        "username": ""
+      },
+      "username": ""
+    }
+  },
+  {
+    "_id": "5c7ab36d3482b337ec587967",
+    "name": "Onas eteläranta",
+    "latitude": 60.19101527746628,
+    "longitude": 25.527448831912793,
+    "type": "hylky",
+    "material": "puu",
+    "mj_id": "1042"
+  },
+  {
+    "_id": "5c7ab36d3482b337ec587968",
+    "name": "Paasinsalmi 3",
+    "latitude": 61.22645479420381,
+    "longitude": 28.782842201510174,
+    "type": "hylky",
+    "material": "puu",
+    "mj_id": "1000028614"
+  },
+  {
+    "_id": "5c7ab36d3482b337ec587969",
+    "name": "Vahermanjärvi itäranta",
+    "latitude": 60.569277415637124,
+    "longitude": 23.99645909134661,
+    "type": "ruuhi",
+    "material": "puu",
+    "mj_id": "2483"
+  },
+  {
+    "_id": "5c7ab36d3482b337ec58796a",
+    "name": "Ramsinsalmi",
+    "latitude": 60.19016613863949,
+    "longitude": 25.08865534305081,
+    "mj_id": "1000028653"
+  }
+]

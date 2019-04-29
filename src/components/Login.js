@@ -21,20 +21,19 @@ const Login = (props) => {
     }
   }
 
-  const fillTanks = async () => {
-    await console.log("Filling tanks...")
+  const initializeAtStartUp = async () => {
+    //console.log('Initialize at Login')
     // Any initializations at login should be done here async at login if necessary
-    //await props.initializeBlogs()
-    //await props.initializeUsers()
   }
 
   useEffect(() => {
-    console.log("Checking if we have a token...")
+    // First check from local storage if user is already logged
     const user = storageUserToUser()
     if (user !== undefined && user !== null) {
-      console.log("Storage user was", user)
+      // A user token was found
+      // console.log("Storage user was", user)
       props.reLoginUser(user)
-      fillTanks()
+      initializeAtStartUp()
     }
   }, [])
 
@@ -50,10 +49,11 @@ const Login = (props) => {
     event.preventDefault()
     try {
       await props.loginUser(username, password)
-      fillTanks()
-      props.setNotification('success', 'Tervetuloa! Muista hengittää rauhallisesti!', 5)
+      initializeAtStartUp()
+      window.location.href = "/"
     } catch (exception) {
-      props.setNotification('danger', 'Käyttäjätunnus tai salasana on virheellinen', 5)
+      console.log('Exception trying to login', username)
+      await props.setNotification('danger', 'Käyttäjätunnus tai salasana on virheellinen', 5)
     }
   }
 
@@ -81,6 +81,7 @@ const Login = (props) => {
     )
   } else {
     if (window.location.pathname !== "/") {
+      console.log("Redirecting to /")
       return (
         <Redirect to="/"></Redirect>
       )
@@ -103,9 +104,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   loginUser,
   reLoginUser,
-  setNotification,
-  //initializeBlogs,
-  //initializeUsers
+  setNotification
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

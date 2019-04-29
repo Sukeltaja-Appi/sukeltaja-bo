@@ -1,15 +1,19 @@
+
 [
-  { "label": "Tapahtuma", "key": "title" },
-  { "label": "Kuvaus", "key": "description" },
-  { "label": "Alkupäivä", "key": "startdate" },
-  { "label": "Loppupäivä", "key": "enddate" },
-  { "label": "Perustaja", "key": "creator.username" },
-  { "label": "Pääkäyttäjät", "key": "admins.username"},
-  { "label": "Osallistujat", "key": "participants.username"},
-  { "label": "Kohde", "key": "target.name"},
-  { "label": "Tyyppi", "key": "target.type"},
-  { "label": "Materiaali", "key": "target.material"},
-  { "label": "MJ-tunnus", "key": "target.mj_id"},
-  { "label": "Leveyspiiri", "key": "target.latitude"},
-  { "label": "Pituuspiiri", "key": "target.longitude"}
+  { "label": "Tapahtuma", "key": "title", "type": "String" },
+  { "label": "Kuvaus", "key": "description", "type": "String" },
+  { "label": "Alkuaika", "key": "startdate", "type": "Date" },
+  { "label": "Loppuaika", "key": "enddate", "type": "Date" },
+  { "label": "Perustaja", "key": "creator.username", "type": "String" },
+  { "label": "Pääkäyttäjät", "key": "admins", "type": "Count" },
+  { "label": "Muut osallistujat", "key": "participants", "type": "Count"},
+  { "label": "Kohde, nimi", "key": "target.name", "type": "String"},
+  { "label": "Kohde, leveyspiiri", "key": "target.latitude", "type": "Latitude"},
+  { "label": "Kohde, pituuspiiri", "key": "target.longitude", "type": "Longitude"},
+  { "label": "Kohde, tyyppi", "key": "target.type", "type": "String"},
+  { "label": "Kohde, syvyys", "key": "target.depth", "type": "String"},
+  { "label": "Kohde, materiaali", "key": "target.material", "type": "String"},
+  { "label": "Kohde, hylyt-tunnus", "key": "target.hylyt_id", "type": "Number"},
+  { "label": "Kohde, mj-tunnus", "key": "target.mj_id", "type": "String"},
+  { "label": "Sukellukset", "key": "dives", "type": "Count"}
 ]

@@ -1,0 +1,10 @@
+[
+  { "label": "Kohde, nimi", "key": "name", "type": "String"},
+  { "label": "Kohde, leveyspiiri", "key": "latitude", "type": "Latitude"},
+  { "label": "Kohde, pituuspiiri", "key": "longitude", "type": "Longitude"},
+  { "label": "Kohde, tyyppi", "key": "type", "type": "String"},
+  { "label": "Kohde, syvyys", "key": "depth", "type": "String"},
+  { "label": "Kohde, materiaali", "key": "material", "type": "String"},
+  { "label": "Kohde, hylyt-tunnus", "key": "hylyt_id", "type": "Number"},
+  { "label": "Kohde, mj-tunnus", "key": "mj_id", "type": "String"}
+  ]
