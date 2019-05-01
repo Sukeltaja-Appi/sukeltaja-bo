@@ -9,6 +9,7 @@ import { clearEvents } from '../reducers/eventReducer'
 import { clearDives } from '../reducers/divesReducer'
 import { clearTargets } from '../reducers/targetReducer'
 import { clearUsers } from '../reducers/userReducer'
+import { clearBOUsers } from '../reducers/bouserReducer'
 
 const Logout = (props) => {
 
@@ -22,6 +23,7 @@ const Logout = (props) => {
       await props.clearDives()
       await props.clearTargets()
       await props.clearUsers()
+      await props.clearBOUsers()
       await props.setNotification('success', 'Olet kirjautunut ulos', 5)
       return
     } catch (exception) {
@@ -65,6 +67,7 @@ const mapDispatchToProps = {
   clearDives,
   clearTargets,
   clearUsers,
+  clearBOUsers,
   setNotification
 }
 

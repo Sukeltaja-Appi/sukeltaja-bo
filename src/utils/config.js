@@ -8,15 +8,17 @@ export const targetsfilename = 'kohteet.csv'
 export const usersfilename = 'kayttajat.csv'
 
 // URL and APIs
-export const baseURL = 'https://sukeltaja.herokuapp.com/'
+//export const baseURL = 'https://sukeltaja.herokuapp.com/'
+export const baseURL = 'http://localhost:3001/'
 export const eventsAPI = 'api/events/bo'
 export const targetsAPI = 'api/targets'
 export const loginAPI = 'api/login/BO'
 export const usersAPI = 'api/users'
+export const bousersAPI = 'api/bousers'
 
 export default {
   storageKeyUser,
   kyppiUrl,
   eventsfilename, targetdivesfilename, targetsfilename, usersfilename,
-  baseURL, eventsAPI, targetsAPI, loginAPI, usersAPI
+  baseURL, eventsAPI, targetsAPI, loginAPI, usersAPI, bousersAPI
 }

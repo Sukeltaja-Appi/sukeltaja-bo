@@ -1,21 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Collapse } from 'react-bootstrap'
 import Dive from './Dive'
 
-const Dives = ({ dives }) => {
+const Dives = (props) => {
+
+  const dives = props.dives
+
+  const [showDives, setShowDives] = useState(false)
+
+  const noMargins = { "margins": "0px" }
+
+  //<Container id={props.elementId} style={noMargins}>
+  //</Container>
+
   if (dives && dives.length > 0) {
 
     const rows = () => dives.map((dive, index) =>
-      <Dive key={`${dive._id}${index}`} dive={dive} odd={index%2} />
+      <Dive key={`${dive._id}${index}`} dive={dive} odd={index % 2} />
     )
     return (
       <>
-        <tr width="100%">
-          <td width="2.5%"></td>
-          <td width="40%" colSpan="2" id="caption">Sukeltaja</td>
-          <td width="27.5%" colSpan="2" id="caption">Alkuaika</td>
-          <td width="30.0%" colSpan="2" id="caption">Loppuaika</td>
+        <tr onClick={() => setShowDives(!showDives)}
+          aria-controls={props.elementId}
+          aria-expanded={showDives} width="100%">
+          <td width="1%"><i className={showDives ? 'fas fa-caret-down' : 'fas fa-caret-right'}></i></td>
+          <td colSpan="2" id="caption">Sukeltaja</td>
+          <td colSpan="2" id="caption">Alkuaika</td>
+          <td colSpan="2" id="caption">Loppuaika</td>
         </tr>
-        {rows()}
+        <Collapse in={showDives}>
+          <tr id={props.elementId} style={noMargins}>
+            <td colSpan="7" style={noMargins}>
+              <table style={noMargins} width="100%">
+                <tbody>
+                  {rows()}
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </Collapse>
       </>
     )
   } else {

@@ -7,15 +7,17 @@ import { initializeTargets } from '../reducers/targetReducer'
 import { initializeEvents } from '../reducers/eventReducer'
 import { mapDivesToTargets } from '../reducers/divesReducer'
 import { initializeUsers } from '../reducers/userReducer'
+import { initializeBOUsers } from '../reducers/bouserReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import Notification from './Notification'
 import Login from './Login'
 import Logout from './Logout'
 import Home from './Home'
 import DivingEvents from './DivingEvents'
-import TargetDives from './TargetDives';
-import Targets from './Targets';
-import Users from './Users';
+import TargetDives from './TargetDives'
+import Targets from './Targets'
+import Users from './Users'
+import BOUsers from './BOUsers'
 
 const App = (props) => {
 
@@ -45,6 +47,9 @@ const App = (props) => {
     }
     if (props.users === undefined || props.users === null || props.users.length === 0) {
       await props.initializeUsers()
+    }
+    if (props.bousers === undefined || props.bousers === null || props.bousers.length === 0) {
+      await props.initializeBOUsers()
     }
   }
 
@@ -101,7 +106,10 @@ const App = (props) => {
                       <Link style={navLinkStyle} to="/events">Sukellustapahtumat</Link>
                     </Nav.Link>
                     <Nav.Link as="span">
-                      <Link style={navLinkStyle} to="/users">Käyttäjät</Link>
+                      <Link style={navLinkStyle} to="/users">Sukeltajat</Link>
+                    </Nav.Link>
+                    <Nav.Link as="span">
+                      <Link style={navLinkStyle} to="/bousers">Backofficerit</Link>
                     </Nav.Link>
                     <Navbar.Text as="span">
                       <Logout />
@@ -118,6 +126,7 @@ const App = (props) => {
                 <Route exact path="/targetDives" render={() => <TargetDives />} />
                 <Route exact path="/events" render={() => <DivingEvents />} />
                 <Route exact path="/users" render={() => <Users />} />
+                <Route exact path="/bousers" render={() => <BOUsers />} />
               </div>
             </div>
           </div>
@@ -133,6 +142,7 @@ const mapStateToProps = (state) => {
     events: state.events,
     targetDives: state.targetDives,
     users: state.users,
+    bousers: state.bousers,
     loggedUser: state.authentication.loggedUser
   }
 }
@@ -142,6 +152,7 @@ const mapDispatchToProps = {
   initializeEvents,
   mapDivesToTargets,
   initializeUsers,
+  initializeBOUsers,
   setNotification
 }
 

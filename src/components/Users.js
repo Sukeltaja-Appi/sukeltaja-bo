@@ -81,7 +81,7 @@ const Users = (props) => {
 
   return (
     <div>
-      <h2>Käyttäjät</h2>
+      <h2>Sukeltajat</h2>
       <FilterUsersForm
         usernameFilter={usernameFilter}
         handleUsernameFiltering={handleUsernameFiltering}
