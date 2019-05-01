@@ -4,7 +4,7 @@ export const initializeEvents = () => {
   return async dispatch => {
     let events = await eventService.getAll()
     events = events.sort((a, b) => new Date(b.startdate) - new Date(a.startdate))
-    console.log('Initialized events')
+    //console.log('Initialized events')
     dispatch({
       type: 'INIT_EVENTS',
       data: events

@@ -1,0 +1,7 @@
+[
+  { "label": "Käyttäjä, käyttäjänimi", "key": "username", "type": "String"},
+  { "label": "Käyttäjä, sähköposti", "key": "email", "type": "String"},
+  { "label": "Tapahtumat", "key": "events", "type": "Count" },
+  { "label": "Sukellukset", "key": "dives", "type": "Count" },
+  { "label": "Viestit", "key": "messages", "type": "Count"}
+  ]

@@ -6,7 +6,7 @@ export const initializeTargets = () => {
     // Sort the targets by 'name:mj_id'
     targets = targets.sort((a, b) =>
       `${a.name}:${a.mj_id}`.toUpperCase().localeCompare(`${b.name}:${b.mj_id}`.toUpperCase()))
-    console.log('Initialized targets')
+    //console.log('Initialized targets')
     dispatch({
       type: 'INIT_TARGETS',
       data: targets
