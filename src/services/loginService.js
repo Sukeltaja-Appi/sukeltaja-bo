@@ -1,10 +1,10 @@
 import axios from 'axios'
-//const baseURL = 'api/login/BO'
-//const baseURL = 'http://localhost:3001/api/login/BO'
-const baseURL = 'https://sukeltaja.herokuapp.com/api/login/BO'
+import { baseURL, loginAPI } from '../utils/config'
+
+const serviceURL = `${baseURL}${loginAPI}`
 
 const login = async credentials => {
-  const response = await axios.post(baseURL, credentials)
+  const response = await axios.post(serviceURL, credentials)
   return response.data
 }
 

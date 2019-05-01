@@ -1,56 +1,138 @@
 [
   {
-    "_id": "5c7ab36d3482b337ec587966",
-    "name": "Österfjärden",
-    "latitude": 62.493274411790686,
-    "longitude": 21.205085377344478,
+    "_id": "5c7ab36d3482b337ec587978",
+    "mj_id": "1000018849",
+    "longitude": 24.72194986505101,
+    "latitude": 60.14763182225569,
     "type": "hylky",
     "material": "puu",
-    "mj_id": "1000030997",
-    "dives": {
-      "startdate": "",
-      "enddate": "",
-      "latitude": "",
-      "longitude": "",
-      "user": {
-        "_id": "",
-        "username": ""
+    "name": "Nuottalahti",
+    "dives": [
+      {
+        "_id": "5cb458ae64e1bf00046cf872",
+        "startdate": "2019-04-15T10:10:53.929Z",
+        "user": {
+          "_id": "5c858b1558577a000479e519",
+          "username": "SepiSukeltaja"
+        },
+        "latitude": 60.176444981474,
+        "longitude": 24.736710995099827,
+        "enddate": "2019-04-15T10:11:01.158Z",
+        "username": "SepiSukeltaja"
       },
-      "username": ""
-    }
-  },
-  {
-    "_id": "5c7ab36d3482b337ec587967",
-    "name": "Onas eteläranta",
-    "latitude": 60.19101527746628,
-    "longitude": 25.527448831912793,
-    "type": "hylky",
-    "material": "puu",
-    "mj_id": "1042"
-  },
-  {
-    "_id": "5c7ab36d3482b337ec587968",
-    "name": "Paasinsalmi 3",
-    "latitude": 61.22645479420381,
-    "longitude": 28.782842201510174,
-    "type": "hylky",
-    "material": "puu",
-    "mj_id": "1000028614"
-  },
-  {
-    "_id": "5c7ab36d3482b337ec587969",
-    "name": "Vahermanjärvi itäranta",
-    "latitude": 60.569277415637124,
-    "longitude": 23.99645909134661,
-    "type": "ruuhi",
-    "material": "puu",
-    "mj_id": "2483"
+      {
+        "_id": "5cb4581d64e1bf00046cf871",
+        "startdate": "2019-04-15T10:08:29.471Z",
+        "user": {
+          "_id": "5c858b1558577a000479e519",
+          "username": "SepiSukeltaja"
+        },
+        "latitude": 60.176445025939984,
+        "longitude": 24.736772182136658,
+        "enddate": "2019-04-15T10:08:32.753Z",
+        "username": "SepiSukeltaja"
+      },
+      {
+        "_id": "5cb457f764e1bf00046cf870",
+        "startdate": "2019-04-15T10:07:51.012Z",
+        "user": {
+          "_id": "5c858b1558577a000479e519",
+          "username": "SepiSukeltaja"
+        },
+        "latitude": 60.176413536780714,
+        "longitude": 24.736639835897584,
+        "enddate": "2019-04-15T10:07:53.033Z",
+        "username": "SepiSukeltaja"
+      }
+    ]
   },
   {
     "_id": "5c7ab36d3482b337ec58796a",
-    "name": "Ramsinsalmi",
-    "latitude": 60.19016613863949,
+    "mj_id": "1000028653",
     "longitude": 25.08865534305081,
-    "mj_id": "1000028653"
+    "latitude": 60.19016613863949,
+    "name": "Ramsinsalmi",
+    "dives": [
+      {
+        "_id": "5c8d56e8b463710004c1a0b5",
+        "startdate": "2019-03-16T20:04:56.029Z",
+        "enddate": "2019-03-16T20:05:48.601Z",
+        "user": {
+          "_id": "5c50563f2da79c31a0a4e7fe",
+          "username": "KalleKapteeni"
+        },
+        "latitude": 60.2030644,
+        "longitude": 25.1206767,
+        "username": "KalleKapteeni"
+      }
+    ]
+  },
+  {
+    "_id": "5c7ab36e3482b337ec587fe7",
+    "mj_id": "1000031063",
+    "longitude": 23.91263914854663,
+    "latitude": 67.53503441815307,
+    "type": "hylky",
+    "material": "puu",
+    "name": "Saivojärvi 2",
+    "dives": [
+      {
+        "_id": "5c8590db58577a000479e530",
+        "startdate": "2019-03-10T22:34:04.566Z",
+        "enddate": "2019-03-10T22:34:06.681Z",
+        "user": {
+          "_id": "5c50563f2da79c31a0a4e7fe",
+          "username": "KalleKapteeni"
+        },
+        "latitude": 60.203063,
+        "longitude": 25.1206516,
+        "username": "KalleKapteeni"
+      }
+    ]
+  },
+  {
+    "_id": "5c7ab36d3482b337ec587c43",
+    "mj_id": "1000028224",
+    "longitude": 24.067573965862987,
+    "latitude": 59.802167654705094,
+    "name": "Wasa",
+    "dives": [
+      {
+        "_id": "5c858bd558577a000479e523",
+        "startdate": "2019-03-10T22:12:38.787Z",
+        "enddate": "2019-03-10T22:12:42.684Z",
+        "user": {
+          "_id": "5c50563f2da79c31a0a4e7fe",
+          "username": "KalleKapteeni"
+        },
+        "latitude": 60.2030583,
+        "longitude": 25.1206611,
+        "username": "KalleKapteeni"
+      },
+      {
+        "_id": "5c858bd558577a000479e523",
+        "startdate": "2019-03-10T22:12:38.787Z",
+        "enddate": "2019-03-10T22:12:42.684Z",
+        "user": {
+          "_id": "5c50563f2da79c31a0a4e7fe",
+          "username": "KalleKapteeni"
+        },
+        "latitude": 60.2030583,
+        "longitude": 25.1206611,
+        "username": "KalleKapteeni"
+      },
+      {
+        "_id": "5c858bd358577a000479e522",
+        "startdate": "2019-03-10T22:12:35.267Z",
+        "enddate": "2019-03-10T22:12:41.851Z",
+        "user": {
+          "_id": "5c858b1558577a000479e519",
+          "username": "SepiSukeltaja"
+        },
+        "latitude": 60.20310635856787,
+        "longitude": 25.120727492715808,
+        "username": "SepiSukeltaja"
+      }
+    ]
   }
 ]

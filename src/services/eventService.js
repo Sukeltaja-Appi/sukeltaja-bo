@@ -1,9 +1,7 @@
 import axios from 'axios'
-import { storageKeyUser } from '../utils/config'
+import { storageKeyUser, baseURL, eventsAPI } from '../utils/config'
 
-//const baseURL = 'api/events/unauth'
-//const baseURL = 'http://localhost:3001/api/events/unauth'
-const baseURL = 'https://sukeltaja.herokuapp.com/api/events/bo'
+const serviceURL = `${baseURL}${eventsAPI}`
 
 const getAll = async () => {
 
@@ -19,7 +17,7 @@ const getAll = async () => {
     return null
   }
 
-  const response = await axios.get(baseURL, config)
+  const response = await axios.get(serviceURL, config)
   console.log(response.data.length, 'events')
   return response.data
 }
