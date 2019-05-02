@@ -14,6 +14,19 @@ export const UsernameField = (props) => {
   )
 }
 
+export const PasswordField = (props) => {
+  return (
+    <>
+      <Form.Label>Salasana</Form.Label>
+      <Form.Control type="password" placeholder="Salasana" name="passwordField"
+        defaultValue={props.passwordField} onChange={props.trigger} />
+      <Form.Text className="text-muted">
+        Syötä salasana
+      </Form.Text>
+    </>
+  )
+}
+
 export const EmailField = (props) => {
   return (
     <>

@@ -22,6 +22,25 @@ const getAll = async () => {
   return response.data
 }
 
+const add = async (username, password, admin) => {
+  console.log('bouserService: add', username)
+  let config = ''
+  const loggedUserJSON = window.localStorage.getItem(storageKeyUser)
+  if (loggedUserJSON && loggedUserJSON.length > 0 && loggedUserJSON !== 'null') {
+    const token = `bearer ${JSON.parse(loggedUserJSON).token}`
+    config = {
+      headers: { Authorization: token },
+    }
+    console.log('bouserService: new', username)
+    const response = await axios.post(serviceURL, { username: username, password: password, admin: admin }, config)
+    console.log(response.data)
+    return response.data
+  } else {
+    console.log('Unauthorized call in bouserService')
+    return null
+  }
+}
+
 const update = async (bouser) => {
   console.log('bouserService: update', bouser)
   let config = ''
@@ -31,15 +50,9 @@ const update = async (bouser) => {
     config = {
       headers: { Authorization: token },
     }
-    if (bouser._id === 'newBOUser') {
-      console.log('bouserService: new', bouser)
-      const response = await axios.post(serviceURL, bouser, config)
-      console.log(response.data)
-    } else {
-      console.log('bouserService: old', bouser)
-      const response = await axios.put(serviceURL, bouser, config)
-      console.log(response.data)
-    }
+    console.log('bouserService: old', bouser)
+    const response = await axios.put(serviceURL, bouser, config)
+    console.log(response.data)
   } else {
     console.log('Unauthorized call in bouserService')
     return null
@@ -61,4 +74,4 @@ const remove = async (bouser) => {
     return null
   }
 }
-export default { getAll, update, remove }
+export default { getAll, add, update, remove }

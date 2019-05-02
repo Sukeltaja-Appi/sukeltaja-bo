@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Collapse } from 'react-bootstrap'
 import UpdateBOUserForm from './UpdateBOUserForm'
-import { updateBOUser, deleteBOUser, initializeBOUsers } from '../reducers/bouserReducer'
+import { addBOUser, updateBOUser, deleteBOUser, initializeBOUsers } from '../reducers/bouserReducer'
 
 const BOUser = (props) => {
 
@@ -10,33 +10,36 @@ const BOUser = (props) => {
 
   const [showBOUserDetails, setShowBOUserDetails] = useState(false)
   const [usernameField, setUsernameField] = useState(bouser.username)
+  const [passwordField, setPasswordField] = useState()
   const [adminField, setAdminField] = useState(bouser.admin)
 
   const handleUsernameField = (event) => {
     setUsernameField(event.target.value)
   }
+  const handlePasswordField = (event) => {
+    setPasswordField(event.target.value)
+  }
   const handleAdminField = (event) => {
     setAdminField(event.target.value)
   }
 
-  const updateBouser = async () => {
-    console.log('Update bouser', usernameField, adminField)
-    bouser.username = usernameField
-    bouser.admin = adminField
-    await updateBOUser(bouser)
-  }
-  const deleteBouser = async () => {
-    await deleteBOUser(bouser)
-  }
-  const initializeBousers = async () => {
-    await initializeBOUsers()
+  const handleBOUserAdd = (event) => {
+    try {
+      console.log('Handle add, id =', event.target.value, 'username =', usernameField, 'admin =', adminField)
+      addBOUser(usernameField, passwordField, adminField)
+      initializeBOUsers()
+    } catch (error) {
+      console.log('Error handling add', error, event.target.value)
+    }
   }
 
   const handleBOUserUpdate = (event) => {
     try {
       console.log('Handle update, id =', event.target.value, 'username =', usernameField, 'admin =', adminField)
-      updateBouser()
-      initializeBousers()
+      bouser.username = usernameField
+      bouser.admin = adminField
+      updateBOUser(bouser)
+      initializeBOUsers()
     } catch (error) {
       console.log('Error handling update', error, event.target.value)
     }
@@ -46,8 +49,8 @@ const BOUser = (props) => {
     try {
       if (window.confirm(`Haluatko varmasti poistaa käyttäjän ${usernameField}?`)) {
         console.log('Handle delete, id =', event.target.value, 'username =', usernameField, 'admin =', adminField)
-        deleteBouser()
-        initializeBousers()
+        deleteBOUser()
+        initializeBOUsers()
       }
     } catch (error) {
       console.log('Error handling delete', error, event.target.value)
@@ -62,11 +65,13 @@ const BOUser = (props) => {
             <UpdateBOUserForm bouserid={bouser._id}
               usernameField={usernameField}
               handleUsernameField={handleUsernameField}
+              passwordField={passwordField}
+              handlePasswordField={handlePasswordField}
               adminField={adminField}
               handleAdminField={handleAdminField}
+              handleBOUserAdd={handleBOUserAdd}
               handleBOUserUpdate={handleBOUserUpdate}
-              handleBOUserDelete={handleBOUserDelete}
-              buttonText={bouser._id === 'newBOUser' ? 'Lisää' : 'Päivitä'} />
+              handleBOUserDelete={handleBOUserDelete} />
           </td>
         </tr>
       </Collapse>
@@ -112,7 +117,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  updateBOUser, deleteBOUser, initializeBOUsers
+  addBOUser, updateBOUser, deleteBOUser, initializeBOUsers
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BOUser)
