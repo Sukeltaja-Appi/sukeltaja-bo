@@ -13,7 +13,7 @@ const UpdateBOUserForm = (props) => {
     } else {
       return (
         <Button variant="primary" type="button" value={props.bouserid}
-          onClick={props.handleBOUserAdd}>Lisää</Button>
+          onClick={props.handleBOUserCreate}>Lisää</Button>
       )
     }
   }

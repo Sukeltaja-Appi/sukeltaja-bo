@@ -12,14 +12,14 @@ export const initializeBOUsers = () => {
   }
 }
 
-export const addBOUser = (username, password, admin) => {
+export const createBOUser = (username, password, admin) => {
   console.log('At the reducer trying to add bouser', username)
   return async dispatch => {
-    console.log('bouserReducer:add', username)
-    const response = await bouserService.update(username, password, admin)
+    console.log('bouserReducer:create', username)
+    const newBOUser = bouserService.create(username, password, admin)
     dispatch({
       type: 'ADD_BOUSER',
-      data: response.data
+      data: newBOUser
     })
   }
 }
@@ -59,7 +59,7 @@ const bouserReducer = (state = [], action) => {
     case 'INIT_BOUSERS':
       return action.data
     case 'ADD_BOUSER':
-      return action.data
+      return [...state, action.data]
     case 'UPDATE_BOUSER':
       return action.data
     case 'DELETE_BOUSER':

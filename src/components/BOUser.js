@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Collapse } from 'react-bootstrap'
 import UpdateBOUserForm from './UpdateBOUserForm'
-import { addBOUser, updateBOUser, deleteBOUser, initializeBOUsers } from '../reducers/bouserReducer'
+import { createBOUser, updateBOUser, deleteBOUser, initializeBOUsers } from '../reducers/bouserReducer'
 
 const BOUser = (props) => {
 
@@ -23,11 +23,10 @@ const BOUser = (props) => {
     setAdminField(event.target.value)
   }
 
-  const handleBOUserAdd = (event) => {
+  const handleBOUserCreate = (event) => {
     try {
       console.log('Handle add, id =', event.target.value, 'username =', usernameField, 'admin =', adminField)
-      addBOUser(usernameField, passwordField, adminField)
-      initializeBOUsers()
+      createBOUser(usernameField, passwordField, adminField)
     } catch (error) {
       console.log('Error handling add', error, event.target.value)
     }
@@ -69,7 +68,7 @@ const BOUser = (props) => {
               handlePasswordField={handlePasswordField}
               adminField={adminField}
               handleAdminField={handleAdminField}
-              handleBOUserAdd={handleBOUserAdd}
+              handleBOUserCreate={handleBOUserCreate}
               handleBOUserUpdate={handleBOUserUpdate}
               handleBOUserDelete={handleBOUserDelete} />
           </td>
@@ -117,7 +116,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  addBOUser, updateBOUser, deleteBOUser, initializeBOUsers
+  createBOUser, updateBOUser, deleteBOUser, initializeBOUsers
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BOUser)
