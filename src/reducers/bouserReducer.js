@@ -13,10 +13,11 @@ export const initializeBOUsers = () => {
 }
 
 export const createBOUser = (username, password, admin) => {
-  console.log('At the reducer trying to add bouser', username)
+  //console.log('At the reducer trying to add bouser', username)
   return async dispatch => {
-    console.log('bouserReducer:create', username)
-    const newBOUser = bouserService.create(username, password, admin)
+    //console.log('bouserReducer:create:', username)
+    const newBOUser = await bouserService.create(username, password, admin)
+    //console.log('bouserReducer:new bouser:', newBOUser)
     dispatch({
       type: 'ADD_BOUSER',
       data: newBOUser
@@ -25,14 +26,22 @@ export const createBOUser = (username, password, admin) => {
 }
 
 export const updateBOUser = bouser => {
-  console.log('At the reducer trying to update bouser', bouser)
+  //console.log('At the reducer trying to update bouser', bouser)
   return async dispatch => {
     console.log('bouserReducer:update', bouser)
     const response = await bouserService.update(bouser)
-    dispatch({
-      type: 'UPDATE_BOUSER',
-      data: bouser
-    })
+    console.log('bouserReducer:response', response)
+    if (response.status === 204) {
+      dispatch({
+        type: 'UPDATE_BOUSER',
+        data: bouser
+      })
+    } else {
+      console.log('Something went wrong when updating a bo user')
+      dispatch({
+        type: 'UPDATE_FAILED'
+      })
+    }
   }
 }
 
@@ -59,11 +68,17 @@ const bouserReducer = (state = [], action) => {
     case 'INIT_BOUSERS':
       return action.data
     case 'ADD_BOUSER':
-      return [...state, action.data]
+      state = [...state, action.data]
+      state.sort((a, b) => a.username.toUpperCase().localeCompare(b.username.toUpperCase()))
+      return state
     case 'UPDATE_BOUSER':
-      return action.data
+      state = state.map((bouser) => {
+        return (bouser._id === action.data._id ? action.data : bouser)
+      })
+      state.sort((a, b) => a.username.toUpperCase().localeCompare(b.username.toUpperCase()))
+      return state
     case 'DELETE_BOUSER':
-      return action.data
+      return state.filter(bouser => bouser._id !== action.data._id)
     case 'CLEAR_BOUSERS':
       return null
     default:

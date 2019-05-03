@@ -5,7 +5,7 @@ export const UsernameField = (props) => {
   return (
     <>
       <Form.Label>Käyttäjätunnus</Form.Label>
-      <Form.Control type="text" placeholder="Käyttäjänimi" name="usernameField"
+      <Form.Control type="text" placeholder="Käyttäjätunnus" name="usernameField"
         defaultValue={props.usernameField} onChange={props.trigger} />
       <Form.Text className="text-muted">
         Syötä käyttäjätunnus
@@ -22,6 +22,19 @@ export const PasswordField = (props) => {
         defaultValue={props.passwordField} onChange={props.trigger} />
       <Form.Text className="text-muted">
         Syötä salasana
+      </Form.Text>
+    </>
+  )
+}
+
+export const VerifyField = (props) => {
+  return (
+    <>
+      <Form.Label>Varmista salasana</Form.Label>
+      <Form.Control type="password" placeholder="Salasana uudestaan" name="verifyField"
+        defaultValue={props.verifyField} onChange={props.trigger} />
+      <Form.Text className="text-muted">
+        Syötä salasana uudestaan
       </Form.Text>
     </>
   )

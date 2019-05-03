@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import { UsernameField, PasswordField, VerifyField, AdminField } from './InputFields'
 
-const UpdateBOUserForm = (props) => {
+const CreateBOUserForm = (props) => {
 
   return (
     <div>
@@ -26,13 +26,10 @@ const UpdateBOUserForm = (props) => {
         <Row>
           <Col>
             <Button variant="success" type="button" value={props.bouserid}
-              onClick={props.handleBOUserUpdate}>Päivitä</Button>
+              onClick={props.handleBOUserCreate}>Lisää</Button>
             &nbsp;
             <Button variant="primary" type="button" value={props.bouserid}
               onClick={props.handleBOUserCancel}>Peru</Button>
-            &nbsp;
-            <Button variant="danger" type="button" value={props.bouserid}
-              onClick={props.handleBOUserDelete}>Poista</Button>
           </Col>
           <Col>
           </Col>
@@ -45,4 +42,4 @@ const UpdateBOUserForm = (props) => {
 
 }
 
-export default UpdateBOUserForm
+export default CreateBOUserForm

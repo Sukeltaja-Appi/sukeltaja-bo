@@ -35,7 +35,7 @@ const BOUsers = (props) => {
     <div>
       <h2>Back Office käyttäjät</h2>
       <div id="caption">
-        Näytetään {bousersCount}/{bousersCount} back office käyttäjää.
+        Näytetään {bousersCount}/{bousersCount} Back Office käyttäjää.
       </div>
       <Table bordered hover size="sm">
         <thead>
@@ -46,8 +46,8 @@ const BOUsers = (props) => {
           </tr>
         </thead>
         <tbody>
-          {usersToDisplay()}
           <BOUser key={'newBOUser'} bouser={{"_id": "newBOUser", "admin": false}} />
+          {usersToDisplay()}
         </tbody>
       </Table>
     </div>

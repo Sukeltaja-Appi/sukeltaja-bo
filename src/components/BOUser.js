@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Collapse } from 'react-bootstrap'
 import UpdateBOUserForm from './UpdateBOUserForm'
+import CreateBOUserForm from './CreateBOUserForm'
 import { createBOUser, updateBOUser, deleteBOUser, initializeBOUsers } from '../reducers/bouserReducer'
 
 const BOUser = (props) => {
@@ -10,7 +11,8 @@ const BOUser = (props) => {
 
   const [showBOUserDetails, setShowBOUserDetails] = useState(false)
   const [usernameField, setUsernameField] = useState(bouser.username)
-  const [passwordField, setPasswordField] = useState()
+  const [passwordField, setPasswordField] = useState('')
+  const [verifyField, setVerifyField] = useState('')
   const [adminField, setAdminField] = useState(bouser.admin)
 
   const handleUsernameField = (event) => {
@@ -19,62 +21,63 @@ const BOUser = (props) => {
   const handlePasswordField = (event) => {
     setPasswordField(event.target.value)
   }
+  const handleVerifyField = (event) => {
+    setVerifyField(event.target.value)
+  }
   const handleAdminField = (event) => {
     setAdminField(event.target.value)
   }
 
+  const clearFields = () => {
+    setUsernameField('')
+    setPasswordField('')
+    setAdminField(false)
+    setShowBOUserDetails(false)
+  }
+
+  const handleBOUserCancel = (event) => {
+    event.preventDefault()
+    clearFields()
+  }
+
   const handleBOUserCreate = (event) => {
-    try {
-      console.log('Handle add, id =', event.target.value, 'username =', usernameField, 'admin =', adminField)
-      createBOUser(usernameField, passwordField, adminField)
-    } catch (error) {
-      console.log('Error handling add', error, event.target.value)
+    event.preventDefault()
+    if (passwordField === verifyField) {
+      try {
+        props.createBOUser(usernameField, passwordField, adminField)
+        clearFields()
+      } catch (error) {
+        console.log('Error handling create', error, event.target.value)
+      }
     }
   }
 
   const handleBOUserUpdate = (event) => {
-    try {
-      console.log('Handle update, id =', event.target.value, 'username =', usernameField, 'admin =', adminField)
-      bouser.username = usernameField
-      bouser.admin = adminField
-      updateBOUser(bouser)
-      initializeBOUsers()
-    } catch (error) {
-      console.log('Error handling update', error, event.target.value)
+    event.preventDefault()
+    if (passwordField === verifyField) {
+      try {
+        console.log('Handle update, id =', event.target.value, 'username =', usernameField, 'admin =', adminField)
+        bouser.username = usernameField
+        bouser.password = passwordField
+        bouser.admin = adminField
+        props.updateBOUser(bouser)
+        setShowBOUserDetails(false)
+      } catch (error) {
+        console.log('Error handling update', error, event.target.value)
+      }
     }
   }
 
   const handleBOUserDelete = (event) => {
+    event.preventDefault()
     try {
       if (window.confirm(`Haluatko varmasti poistaa käyttäjän ${usernameField}?`)) {
         console.log('Handle delete, id =', event.target.value, 'username =', usernameField, 'admin =', adminField)
-        deleteBOUser()
-        initializeBOUsers()
+        props.deleteBOUser(bouser)
       }
     } catch (error) {
       console.log('Error handling delete', error, event.target.value)
     }
-  }
-
-  const details = () => {
-    return (
-      <Collapse in={showBOUserDetails}>
-        <tr id={bouser._id}>
-          <td colSpan="7">
-            <UpdateBOUserForm bouserid={bouser._id}
-              usernameField={usernameField}
-              handleUsernameField={handleUsernameField}
-              passwordField={passwordField}
-              handlePasswordField={handlePasswordField}
-              adminField={adminField}
-              handleAdminField={handleAdminField}
-              handleBOUserCreate={handleBOUserCreate}
-              handleBOUserUpdate={handleBOUserUpdate}
-              handleBOUserDelete={handleBOUserDelete} />
-          </td>
-        </tr>
-      </Collapse>
-    )
   }
 
   if (bouser._id === 'newBOUser') {
@@ -87,7 +90,23 @@ const BOUser = (props) => {
           <td>Lisää uusi Back Office käyttäjä</td>
           <td>&nbsp;</td>
         </tr>
-        {details()}
+        <Collapse in={showBOUserDetails}>
+          <tr id={bouser._id}>
+            <td colSpan="7">
+              <CreateBOUserForm bouserid={bouser._id}
+                usernameField={usernameField}
+                handleUsernameField={handleUsernameField}
+                passwordField={passwordField}
+                handlePasswordField={handlePasswordField}
+                verifyField={verifyField}
+                handleVerifyField={handleVerifyField}
+                adminField={adminField}
+                handleAdminField={handleAdminField}
+                handleBOUserCancel={handleBOUserCancel}
+                handleBOUserCreate={handleBOUserCreate} />
+            </td>
+          </tr>
+        </Collapse>
       </>
     )
   } else {
@@ -98,9 +117,26 @@ const BOUser = (props) => {
           aria-expanded={showBOUserDetails}>
           <td><i className={showBOUserDetails ? 'fas fa-user-edit' : 'fas fa-user'}></i></td>
           <td>{bouser.username}</td>
-          <td>{bouser.admin ? 'Pääkäyttäjä' : ''}</td>
+          <td>{adminField ? 'Pääkäyttäjä' : ''}</td>
         </tr>
-        {details()}
+        <Collapse in={showBOUserDetails}>
+          <tr id={bouser._id}>
+            <td colSpan="7">
+              <UpdateBOUserForm bouserid={bouser._id}
+                usernameField={usernameField}
+                handleUsernameField={handleUsernameField}
+                passwordField={passwordField}
+                handlePasswordField={handlePasswordField}
+                verifyField={verifyField}
+                handleVerifyField={handleVerifyField}
+                adminField={adminField}
+                handleAdminField={handleAdminField}
+                handleBOUserCancel={handleBOUserCancel}
+                handleBOUserUpdate={handleBOUserUpdate}
+                handleBOUserDelete={handleBOUserDelete} />
+            </td>
+          </tr>
+        </Collapse>
       </>
     )
   }
