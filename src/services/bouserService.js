@@ -41,22 +41,26 @@ const create = async (username, password, admin) => {
 }
 
 const update = async (bouser) => {
-  console.log('bouserService: update', bouser)
+  //console.log('bouserService: update', bouser)
   let config = getConfig()
   if (config !== null) {
-    console.log('config ok')
     const response = await axios.put(serviceURL, bouser, config)
-    console.log('put response status:', response.status, 'data:', response.data)
     return response
   }
   return null
 }
 
 const remove = async (bouser) => {
+  //console.log('delete bouser:', bouser)
   let config = getConfig()
   if (config !== null) {
-    const response = await axios.delete(`${serviceURL}/${bouser._id}`, config)
-    return response
+    try {
+      const response = await axios.delete(`${serviceURL}/${bouser._id}`, config)
+      return response
+    } catch (error) {
+      console.log(error)
+      return null
+    }
   }
   return null
 }

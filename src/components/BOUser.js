@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Collapse } from 'react-bootstrap'
 import UpdateBOUserForm from './UpdateBOUserForm'
@@ -14,6 +14,19 @@ const BOUser = (props) => {
   const [passwordField, setPasswordField] = useState('')
   const [verifyField, setVerifyField] = useState('')
   const [adminField, setAdminField] = useState(bouser.admin)
+  const [isAdmin, setIsAdmin] = useState(bouser.admin)
+
+  useEffect(() => {
+    if (document.getElementById(`isAdmin${bouser._id}`)) {
+      document.getElementById(`isAdmin${bouser._id}`).innerHTML = (isAdmin ? 'Pääkäyttäjä' : 'Ei pääkäyttäjä')
+    }
+    if (document.getElementById(`delete${props.bouser._id}`)) {
+      document.getElementById(`delete${props.bouser._id}`).disabled = isAdmin
+    }
+    if (document.getElementById(`delhint${props.bouser._id}`)) {
+      document.getElementById(`delhint${props.bouser._id}`).innerHTML = (isAdmin ? 'Et voi poistaa pääkäyttäjää' : '')
+    }
+  })
 
   const handleUsernameField = (event) => {
     setUsernameField(event.target.value)
@@ -47,23 +60,24 @@ const BOUser = (props) => {
         props.createBOUser(usernameField, passwordField, adminField)
         clearFields()
       } catch (error) {
-        console.log('Error handling create', error, event.target.value)
+        //console.log('Error handling create', error, event.target.value)
       }
     }
   }
 
-  const handleBOUserUpdate = (event) => {
+  const handleBOUserUpdate = async (event) => {
     event.preventDefault()
     if (passwordField === verifyField) {
       try {
-        console.log('Handle update, id =', event.target.value, 'username =', usernameField, 'admin =', adminField)
+        //console.log('Handle update, id =', event.target.value, 'username =', usernameField, 'admin =', adminField)
         bouser.username = usernameField
         bouser.password = passwordField
-        bouser.admin = adminField
-        props.updateBOUser(bouser)
+        bouser.admin = (adminField === 'true')
+        await props.updateBOUser(bouser)
+        setIsAdmin(adminField === 'true')
         setShowBOUserDetails(false)
       } catch (error) {
-        console.log('Error handling update', error, event.target.value)
+        //console.log('Error handling update', error, event.target.value)
       }
     }
   }
@@ -72,11 +86,12 @@ const BOUser = (props) => {
     event.preventDefault()
     try {
       if (window.confirm(`Haluatko varmasti poistaa käyttäjän ${usernameField}?`)) {
-        console.log('Handle delete, id =', event.target.value, 'username =', usernameField, 'admin =', adminField)
+        //console.log('Handle delete, id =', event.target.value, 'username =', usernameField, 'admin =', adminField)
         props.deleteBOUser(bouser)
+        setShowBOUserDetails(false)
       }
     } catch (error) {
-      console.log('Error handling delete', error, event.target.value)
+      //console.log('Error handling delete', error, event.target.value)
     }
   }
 
@@ -117,7 +132,7 @@ const BOUser = (props) => {
           aria-expanded={showBOUserDetails}>
           <td><i className={showBOUserDetails ? 'fas fa-user-edit' : 'fas fa-user'}></i></td>
           <td>{bouser.username}</td>
-          <td>{adminField ? 'Pääkäyttäjä' : ''}</td>
+          <td><span id={`isAdmin${bouser._id}`}></span></td>
         </tr>
         <Collapse in={showBOUserDetails}>
           <tr id={bouser._id}>

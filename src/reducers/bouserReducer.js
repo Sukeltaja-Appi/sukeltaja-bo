@@ -28,9 +28,7 @@ export const createBOUser = (username, password, admin) => {
 export const updateBOUser = bouser => {
   //console.log('At the reducer trying to update bouser', bouser)
   return async dispatch => {
-    console.log('bouserReducer:update', bouser)
     const response = await bouserService.update(bouser)
-    console.log('bouserReducer:response', response)
     if (response.status === 204) {
       dispatch({
         type: 'UPDATE_BOUSER',
@@ -46,14 +44,30 @@ export const updateBOUser = bouser => {
 }
 
 export const deleteBOUser = (bouser) => {
-  console.log('At the reducer', bouser)
-  return async dispatch => {
-    console.log('bouserReducer:delete', bouser)
-    await bouserService.remove(bouser)
-    dispatch({
-      type: 'DELETE_BOUSER',
-      data: bouser
-    })
+  //console.log('At the reducer', bouser)
+  if (!bouser.admin) {
+    // Not allowed to delete admins
+    return async dispatch => {
+      //console.log('bouserReducer:delete', bouser)
+      const response = await bouserService.remove(bouser)
+      if (response.status === 204) {
+        dispatch({
+          type: 'DELETE_BOUSER',
+          data: bouser
+        })
+      } else {
+        console.log('Something went wrong when deleting a bo user')
+        dispatch({
+          type: 'DELETE_FAILED'
+        })
+      }
+    }
+  } else {
+    return async dispatch => {
+      dispatch({
+        type: 'DELETE_FAILED'
+      })
+    }
   }
 }
 

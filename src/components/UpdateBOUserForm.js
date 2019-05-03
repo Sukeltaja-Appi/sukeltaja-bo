@@ -31,8 +31,10 @@ const UpdateBOUserForm = (props) => {
             <Button variant="primary" type="button" value={props.bouserid}
               onClick={props.handleBOUserCancel}>Peru</Button>
             &nbsp;
-            <Button variant="danger" type="button" value={props.bouserid}
+            <Button variant="danger" type="button" value={props.bouserid} id={`delete${props.bouserid}`}
               onClick={props.handleBOUserDelete}>Poista</Button>
+            &nbsp;
+            <Form.Text className="text-muted"id={`delhint${props.bouserid}`}></Form.Text>
           </Col>
           <Col>
           </Col>
