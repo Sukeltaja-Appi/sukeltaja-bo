@@ -8,17 +8,65 @@ import { createBOUser, updateBOUser, deleteBOUser, initializeBOUsers } from '../
 const BOUser = (props) => {
 
   const bouser = props.bouser
+  const currentuser = (props.bouser._id === props.loggedUser.id)
+  const newuser = (bouser._id === 'newBOUser')
 
   const [showBOUserDetails, setShowBOUserDetails] = useState(false)
-  const [usernameField, setUsernameField] = useState(bouser.username)
+  const [usernameField, setUsernameField] = useState(bouser.username || '')
   const [passwordField, setPasswordField] = useState('')
   const [verifyField, setVerifyField] = useState('')
   const [adminField, setAdminField] = useState(bouser.admin)
   const [isAdmin, setIsAdmin] = useState(bouser.admin)
 
-  useEffect(() => {
+  const nameInUse = () => { return (props.bousers.some(bou => bou.username === usernameField.trim())) }
+
+  const controlUsername = () => {
+    if (document.getElementById(`usernamehint${bouser._id}`)) {
+      if (newuser) {
+        if (usernameField.trim() === '') {
+          document.getElementById(`usernamehint${bouser._id}`).innerHTML = 'Syötä käyttäjätunnus'
+        } else {
+          document.getElementById(`usernamehint${bouser._id}`).innerHTML =
+            (nameInUse() ? 'Tämä käyttäjätunnus on jo käytössä' : 'Tämä käyttäjätunnus on vapaana')
+        }
+      } else {
+        document.getElementById(`usernamehint${bouser._id}`).innerHTML = 'Käyttäjätunnusta ei voi vaihtaa'
+      }
+    }
+  }
+  const controlPassword = () => {
+    if (document.getElementById(`passwordhint${bouser._id}`) && document.getElementById(`verifyhint${bouser._id}`)) {
+      if (passwordField === '' && verifyField === '') {
+        if (newuser) {
+          document.getElementById(`passwordhint${bouser._id}`).innerHTML = 'Syötä salasana'
+          document.getElementById(`verifyhint${bouser._id}`).innerHTML = 'Syötä salasana uudestaan'
+        } else {
+          document.getElementById(`passwordhint${bouser._id}`).innerHTML =
+            'Syötä uusi salasana, jos haluat vaihtaa salasanan'
+          document.getElementById(`verifyhint${bouser._id}`).innerHTML =
+            'Syötä salasana uudestaan, jos haluat vaihtaa salasanan'
+        }
+      } else {
+        if (passwordField !== verifyField) {
+          document.getElementById(`passwordhint${bouser._id}`).innerHTML = 'Salasanat eivät täsmää'
+          document.getElementById(`verifyhint${bouser._id}`).innerHTML = 'Salasanat eivät täsmää'
+        } else {
+          document.getElementById(`passwordhint${bouser._id}`).innerHTML = 'Salasanat täsmäävät'
+          document.getElementById(`verifyhint${bouser._id}`).innerHTML = 'Salasanat täsmäävät'
+        }
+      }
+    }
+  }
+  const controlAdmin = () => {
     if (document.getElementById(`isAdmin${bouser._id}`)) {
       document.getElementById(`isAdmin${bouser._id}`).innerHTML = (isAdmin ? 'Pääkäyttäjä' : 'Ei pääkäyttäjä')
+    }
+    if (document.getElementById(`setadmin${props.bouser._id}`)) {
+      document.getElementById(`setadmin${props.bouser._id}`).disabled = currentuser
+    }
+    if (document.getElementById(`adminhint${bouser._id}`)) {
+      document.getElementById(`adminhint${bouser._id}`).innerHTML =
+        (currentuser ? 'Et voi poistaa itseltäsi pääkäyttäjyyttä' : 'Valitse onko käyttäjä pääkäyttäjä')
     }
     if (document.getElementById(`delete${props.bouser._id}`)) {
       document.getElementById(`delete${props.bouser._id}`).disabled = isAdmin
@@ -26,6 +74,12 @@ const BOUser = (props) => {
     if (document.getElementById(`delhint${props.bouser._id}`)) {
       document.getElementById(`delhint${props.bouser._id}`).innerHTML = (isAdmin ? 'Et voi poistaa pääkäyttäjää' : '')
     }
+  }
+
+  useEffect(() => {
+    controlUsername()
+    controlPassword()
+    controlAdmin()
   })
 
   const handleUsernameField = (event) => {
@@ -43,24 +97,58 @@ const BOUser = (props) => {
 
   const clearFields = () => {
     setUsernameField('')
+    document.getElementById(`setusername${bouser._id}`).value = ''
     setPasswordField('')
+    document.getElementById(`setpassword${bouser._id}`).value = ''
+    setVerifyField('')
+    document.getElementById(`setverify${bouser._id}`).value = ''
     setAdminField(false)
+  }
+
+  const revertFields = () => {
+    setPasswordField('')
+    document.getElementById(`setpassword${bouser._id}`).value = ''
+    setVerifyField('')
+    document.getElementById(`setverify${bouser._id}`).value = ''
+    setAdminField(bouser.admin)
+    document.getElementById(`setadmin${bouser._id}`).value = bouser.admin
+  }
+
+  const handleToggleBOUserDetails = () => {
+    setShowBOUserDetails(!showBOUserDetails)
+    if (!showBOUserDetails) {
+      if (newuser) {
+        clearFields()
+      } else {
+        revertFields()
+      }
+    }
+  }
+
+  const handleNewBOUserCancel = (event) => {
+    event.preventDefault()
+    clearFields()
     setShowBOUserDetails(false)
   }
 
   const handleBOUserCancel = (event) => {
     event.preventDefault()
-    clearFields()
+    revertFields()
+    setShowBOUserDetails(false)
   }
 
   const handleBOUserCreate = (event) => {
     event.preventDefault()
     if (passwordField === verifyField) {
-      try {
-        props.createBOUser(usernameField, passwordField, adminField)
-        clearFields()
-      } catch (error) {
-        //console.log('Error handling create', error, event.target.value)
+      if (!nameInUse() && usernameField.trim() !== '') {
+        try {
+          props.createBOUser(usernameField.trim(), passwordField, adminField)
+          clearFields()
+        } catch (error) {
+          //console.log('Error handling create', error, event.target.value)
+        }
+      } else {
+        console.log('Username is taken or empty')
       }
     }
   }
@@ -72,9 +160,9 @@ const BOUser = (props) => {
         //console.log('Handle update, id =', event.target.value, 'username =', usernameField, 'admin =', adminField)
         bouser.username = usernameField
         bouser.password = passwordField
-        bouser.admin = (adminField === 'true')
+        bouser.admin = (adminField === 'true') // because it's a string
         await props.updateBOUser(bouser)
-        setIsAdmin(adminField === 'true')
+        setIsAdmin(adminField === 'true') // because it's a string
         setShowBOUserDetails(false)
       } catch (error) {
         //console.log('Error handling update', error, event.target.value)
@@ -95,10 +183,10 @@ const BOUser = (props) => {
     }
   }
 
-  if (bouser._id === 'newBOUser') {
+  if (newuser) {
     return (
       <>
-        <tr onClick={() => setShowBOUserDetails(!showBOUserDetails)}
+        <tr onClick={() => handleToggleBOUserDetails()}
           aria-controls={bouser._id}
           aria-expanded={showBOUserDetails}>
           <td><i className='fas fa-user-plus'></i></td>
@@ -117,7 +205,7 @@ const BOUser = (props) => {
                 handleVerifyField={handleVerifyField}
                 adminField={adminField}
                 handleAdminField={handleAdminField}
-                handleBOUserCancel={handleBOUserCancel}
+                handleNewBOUserCancel={handleNewBOUserCancel}
                 handleBOUserCreate={handleBOUserCreate} />
             </td>
           </tr>
@@ -127,7 +215,7 @@ const BOUser = (props) => {
   } else {
     return (
       <>
-        <tr onClick={() => setShowBOUserDetails(!showBOUserDetails)}
+        <tr onClick={() => handleToggleBOUserDetails()}
           aria-controls={bouser._id}
           aria-expanded={showBOUserDetails}>
           <td><i className={showBOUserDetails ? 'fas fa-user-edit' : 'fas fa-user'}></i></td>
@@ -139,7 +227,6 @@ const BOUser = (props) => {
             <td colSpan="7">
               <UpdateBOUserForm bouserid={bouser._id}
                 usernameField={usernameField}
-                handleUsernameField={handleUsernameField}
                 passwordField={passwordField}
                 handlePasswordField={handlePasswordField}
                 verifyField={verifyField}

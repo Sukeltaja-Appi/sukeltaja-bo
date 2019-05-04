@@ -16,12 +16,19 @@ export const createBOUser = (username, password, admin) => {
   //console.log('At the reducer trying to add bouser', username)
   return async dispatch => {
     //console.log('bouserReducer:create:', username)
-    const newBOUser = await bouserService.create(username, password, admin)
-    //console.log('bouserReducer:new bouser:', newBOUser)
-    dispatch({
-      type: 'ADD_BOUSER',
-      data: newBOUser
-    })
+    try {
+      const response = await bouserService.create(username, password, admin)
+      //console.log('bouserReducer:new bouser:', newBOUser)
+      dispatch({
+        type: 'CREATE_BOUSER',
+        data: response.data
+      })
+    } catch (error) {
+      console.log('Something went wrong when adding a bo user', error)
+      dispatch({
+        type: 'CREATE_FAILED'
+      })
+    }
   }
 }
 
@@ -81,7 +88,7 @@ const bouserReducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_BOUSERS':
       return action.data
-    case 'ADD_BOUSER':
+    case 'CREATE_BOUSER':
       state = [...state, action.data]
       state.sort((a, b) => a.username.toUpperCase().localeCompare(b.username.toUpperCase()))
       return state

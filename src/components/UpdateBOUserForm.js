@@ -9,18 +9,22 @@ const UpdateBOUserForm = (props) => {
       <Form>
         <Row>
           <Col>
-            <UsernameField usernameField={props.usernameField} trigger={props.handleUsernameField} />
+            <UsernameField usernameField={props.usernameField} trigger={props.handleUsernameField}
+             usernamehint={`usernamehint${props.bouserid}`} disabled={true} />
           </Col>
           <Col>
-            <AdminField adminField={props.adminField} trigger={props.handleAdminField} />
+            <AdminField adminField={props.adminField} trigger={props.handleAdminField}
+              adminhint={`adminhint${props.bouserid}`} setadmin={`setadmin${props.bouserid}`} />
           </Col>
         </Row>
         <Row>
-          <Col>
-            <PasswordField passwordField={props.passwordField} trigger={props.handlePasswordField} />
+        <Col>
+            <PasswordField passwordField={props.passwordField} trigger={props.handlePasswordField}
+              passwordhint={`passwordhint${props.bouserid}`} setpassword={`setpassword${props.bouserid}`} />
           </Col>
           <Col>
-            <VerifyField verifyField={props.verifyField} trigger={props.handleVerifyField} />
+            <VerifyField verifyField={props.verifyField} trigger={props.handleVerifyField}
+              verifyhint={`verifyhint${props.bouserid}`} setverify={`setverify${props.bouserid}`} />
           </Col>
         </Row>
         <Row>
@@ -34,7 +38,7 @@ const UpdateBOUserForm = (props) => {
             <Button variant="danger" type="button" value={props.bouserid} id={`delete${props.bouserid}`}
               onClick={props.handleBOUserDelete}>Poista</Button>
             &nbsp;
-            <Form.Text className="text-muted"id={`delhint${props.bouserid}`}></Form.Text>
+            <Form.Text className="text-muted" id={`delhint${props.bouserid}`}></Form.Text>
           </Col>
           <Col>
           </Col>

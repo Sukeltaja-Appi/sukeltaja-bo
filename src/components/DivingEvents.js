@@ -121,15 +121,19 @@ const DivingEvents = (props) => {
 
   const eventsToDisplay = () => {
     var offset = (currentPage - 1) * itemsOnPage
-    return (
-      filteredEvents.map((divingEvent, index) => {
-        if (index >= offset && index < (offset + itemsOnPage)) {
-          return <DivingEvent key={divingEvent._id} divingEvent={divingEvent} />
-        } else {
-          return null
-        }
-      })
-    )
+    if (filteredEvents !== undefined && filteredEvents !== null) {
+      return (
+        filteredEvents.map((divingEvent, index) => {
+          if (index >= offset && index < (offset + itemsOnPage)) {
+            return <DivingEvent key={divingEvent._id} divingEvent={divingEvent} />
+          } else {
+            return null
+          }
+        })
+      )
+    } else {
+      return null
+    }
   }
 
   const jsonToCSV = () => {

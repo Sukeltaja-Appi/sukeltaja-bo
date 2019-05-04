@@ -33,9 +33,13 @@ const create = async (username, password, admin) => {
   //console.log('bouserService: add', username)
   const config = getConfig()
   if (config !== null) {
-    const response = await axios.post(serviceURL, { username: username, password: password, admin: admin }, config)
-    //console.log(response.data)
-    return response.data
+    try {
+      const response = await axios.post(serviceURL, { username: username, password: password, admin: admin }, config)
+      return response
+    } catch (error) {
+      console.log('Error creating new bo user', error)
+      return error
+    }
   }
   return null
 }

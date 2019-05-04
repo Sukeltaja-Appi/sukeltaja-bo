@@ -9,18 +9,22 @@ const CreateBOUserForm = (props) => {
       <Form>
         <Row>
           <Col>
-            <UsernameField usernameField={props.usernameField} trigger={props.handleUsernameField} />
+            <UsernameField usernameField={props.usernameField} trigger={props.handleUsernameField}
+             usernamehint={`usernamehint${props.bouserid}`} disabled={false} setusername={`setusername${props.bouserid}`} />
           </Col>
           <Col>
-            <AdminField adminField={props.adminField} trigger={props.handleAdminField} />
+            <AdminField adminField={props.adminField} trigger={props.handleAdminField}
+              adminhint={`adminhint${props.bouserid}`} setadmin={`setadmin${props.bouserid}`} />
           </Col>
         </Row>
         <Row>
           <Col>
-            <PasswordField passwordField={props.passwordField} trigger={props.handlePasswordField} />
+            <PasswordField passwordField={props.passwordField} trigger={props.handlePasswordField}
+              passwordhint={`passwordhint${props.bouserid}`} setpassword={`setpassword${props.bouserid}`} />
           </Col>
           <Col>
-            <VerifyField verifyField={props.verifyField} trigger={props.handleVerifyField} />
+            <VerifyField verifyField={props.verifyField} trigger={props.handleVerifyField}
+              verifyhint={`verifyhint${props.bouserid}`} setverify={`setverify${props.bouserid}`} />
           </Col>
         </Row>
         <Row>
@@ -29,7 +33,7 @@ const CreateBOUserForm = (props) => {
               onClick={props.handleBOUserCreate}>Lisää</Button>
             &nbsp;
             <Button variant="primary" type="button" value={props.bouserid}
-              onClick={props.handleBOUserCancel}>Peru</Button>
+              onClick={props.handleNewBOUserCancel}>Peru</Button>
           </Col>
           <Col>
           </Col>
