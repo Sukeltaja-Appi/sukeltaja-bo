@@ -7,7 +7,7 @@ import { setNotification } from '../reducers/notificationReducer'
 
 const Home = (props) => {
 
-  let popularTargets = props.targetDives
+  //let popularTargets = props.targetDives
 
   /*
   if (popularTargets !== undefined && popularTargets !== null && popularTargets.length > 0) {
@@ -45,7 +45,7 @@ const Home = (props) => {
         })
       )
     } else {*/
-      return null
+      return ( <div>Tätä toiminnallisuutta ei ole vielä toteutettu</div> )
     //}
   }
 
