@@ -35,6 +35,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.8.0",
     "codacy-coverage": "^3.4.0",
     "deep-freeze": "0.0.1",
     "eslint-plugin-react-hooks": "0.0.0",
