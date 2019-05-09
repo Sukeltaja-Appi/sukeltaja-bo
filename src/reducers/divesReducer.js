@@ -44,10 +44,19 @@ export const mapDivesToTargets = () => {
 
 }
 
+export const clearDives = () => {
+  return {
+    type: 'CLEAR_DIVES'
+  }
+}
+
+
 const divesReducer = (state = [], action) => {
   switch (action.type) {
     case 'MAP_DIVES_TO_TARGETS':
       return action.data
+    case 'CLEAR_DIVES':
+      return null
     default:
       return state
   }

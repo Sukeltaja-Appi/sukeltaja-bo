@@ -6,15 +6,17 @@ import notificationReducer from './reducers/notificationReducer'
 import targetReducer from './reducers/targetReducer'
 import eventReducer from './reducers/eventReducer'
 import divesReducer from './reducers/divesReducer'
-//import userReducer from './reducers/userReducer'
+import userReducer from './reducers/userReducer'
+import bouserReducer from './reducers/bouserReducer'
 
 const reducer = combineReducers({
   authentication: authenticationReducer,
   notification: notificationReducer,
   targets: targetReducer,
   events: eventReducer,
-  targetDives: divesReducer
-  //users: userReducer
+  targetDives: divesReducer,
+  users: userReducer,
+  bousers: bouserReducer
 })
 
 const store = createStore(reducer, applyMiddleware(thunk))

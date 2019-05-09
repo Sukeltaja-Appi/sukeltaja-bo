@@ -14,9 +14,9 @@ const Dive = (props) => {
         <tr onClick={() => setShowDiveDetails(!showDiveDetails)}
           aria-controls={props.elementId}
           aria-expanded={showDiveDetails}
-          style={props.odd ? {backgroundColor: "#ffffff"} : {backgroundColor: "#eeeeee"}} >
+          style={props.odd ? { backgroundColor: "#ffffff" } : { backgroundColor: "#eeeeee" }} >
           <td>
-            <i className={showDiveDetails? 'fas fa-caret-down' : 'fas fa-caret-right'}></i>
+            <i className={showDiveDetails ? 'fas fa-caret-down' : 'fas fa-caret-right'}></i>
           </td>
           <td colSpan="2" id="dive">{dive.user.username}</td>
           <td colSpan="2" id="dive">

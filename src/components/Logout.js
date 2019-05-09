@@ -5,6 +5,11 @@ import PropTypes from 'prop-types'
 import { storageKeyUser } from '../utils/config'
 import { setNotification } from '../reducers/notificationReducer'
 import { logoutUser } from '../reducers/authenticationReducer'
+import { clearEvents } from '../reducers/eventReducer'
+import { clearDives } from '../reducers/divesReducer'
+import { clearTargets } from '../reducers/targetReducer'
+import { clearUsers } from '../reducers/userReducer'
+import { clearBOUsers } from '../reducers/bouserReducer'
 
 const Logout = (props) => {
 
@@ -14,6 +19,11 @@ const Logout = (props) => {
       console.log('Logging out user', props.loggedUser.username)
       await props.logoutUser()
       window.localStorage.removeItem(storageKeyUser)
+      await props.clearEvents()
+      await props.clearDives()
+      await props.clearTargets()
+      await props.clearUsers()
+      await props.clearBOUsers()
       await props.setNotification('success', 'Olet kirjautunut ulos', 5)
       return
     } catch (exception) {
@@ -53,6 +63,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   logoutUser,
+  clearEvents,
+  clearDives,
+  clearTargets,
+  clearUsers,
+  clearBOUsers,
   setNotification
 }
 

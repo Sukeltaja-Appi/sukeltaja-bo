@@ -20,7 +20,7 @@ const DivingEvent = (props) => {
   const dives = () => {
     if (gotDives) {
       return (
-        <Dives dives={divingEvent.dives} />
+        <Dives dives={divingEvent.dives} elementId={`divesOf${divingEvent}`} />
       )
     } else {
       return null

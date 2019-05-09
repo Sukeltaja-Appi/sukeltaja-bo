@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, fireEvent, getByPlaceholderText } from 'react-testing-library'
+import { render, cleanup, fireEvent, getByPlaceholderText, getByAltText } from 'react-testing-library'
 import DivingEvents from '../components/DivingEvents'
 import { Provider } from 'react-redux'
 import 'jest-dom/extend-expect'
@@ -11,6 +11,9 @@ import { eventsfilename } from '../utils/config'
 describe('Testing DivingEvents component', () => {
 
   const handleTitleFiltering = jest.fn()
+  const handleDescriptionFiltering = jest.fn()
+  const handleStartFiltering = jest.fn()
+  const handleEndFiltering = jest.fn()
   const state = {
     titleFilter: '',
     testing: 'Testing',
@@ -94,7 +97,6 @@ describe('Testing DivingEvents component', () => {
   test('Filters events with event title', async () => {
 
     state.events = allEvents
-    //store.state = state
 
     let component = render(
       <Wrapper handleTitleFiltering={handleTitleFiltering} state={state} store={fakeStore} />
@@ -122,4 +124,97 @@ describe('Testing DivingEvents component', () => {
 
   })
 
+  test('Filters events with event description', async () => {
+
+    state.events = allEvents
+
+    let component = render(
+      <Wrapper handleDescriptionFiltering={handleDescriptionFiltering} state={state} store={fakeStore} />
+    )
+
+    // First event's description:
+    const notToContainInEnd = allEvents[0].description
+    // Last event description
+    const toContainInEnd = allEvents[allEvents.length - 1].description
+
+    expect(component.container).toHaveTextContent(notToContainInEnd)
+    expect(component.container).toHaveTextContent(toContainInEnd)
+
+    const descriptionFilter = getByPlaceholderText(component.container, 'Tapahtuman kuvaus')
+    fireEvent.change(descriptionFilter, { target: { value: toContainInEnd } })
+
+    component.rerender(
+      <Wrapper handleDescriptionFiltering={handleDescriptionFiltering} state={state} store={fakeStore} />
+    )
+
+    expect(component.container).not.toHaveTextContent(notToContainInEnd)
+    expect(component.container).toHaveTextContent(toContainInEnd)
+
+  })
+  
+  test('Filters events with startdate', async () => {
+
+    state.events = allEvents
+
+    let component = render(
+      <Wrapper handleStartFiltering={handleStartFiltering} state={state} store={fakeStore} />
+    )
+
+    const sortedEvents = allEvents.sort((a, b) => new Date(b.startdate) - new Date(a.startdate))
+
+    // First event startdate
+    const toContainInEnd = sortedEvents[0].startdate
+    // Filter
+    const dateParts = sortedEvents[1].startdate.split('-')
+    const startdateCutOff = `${dateParts[2].substring(0, 2)}.${dateParts[1]}.${dateParts[0]}`
+    // Last event startdate
+    const notToContainInEnd = sortedEvents[sortedEvents.length - 1].startdate
+
+    expect(component.container).toHaveTextContent(formatDate(toContainInEnd))
+    expect(component.container).toHaveTextContent(formatDate(notToContainInEnd))
+
+    const startdateFilter = getByAltText(component.container, 'Alkaen')
+    fireEvent.change(startdateFilter, { target: { value: startdateCutOff } })
+
+    component.rerender(
+      <Wrapper handleStartFiltering={handleStartFiltering} state={state} store={fakeStore} />
+    )
+
+    expect(component.container).toHaveTextContent(formatDate(toContainInEnd))
+    expect(component.container).not.toHaveTextContent(formatDate(notToContainInEnd))
+
+  })
+  
+  test('Filters events with enddate', async () => {
+
+    state.events = allEvents
+
+    let component = render(
+      <Wrapper handleEndFiltering={handleEndFiltering} state={state} store={fakeStore} />
+    )
+
+    const sortedEvents = allEvents.sort((a, b) => new Date(b.startdate) - new Date(a.startdate))
+
+    // First event startdate
+    const notToContainInEnd = sortedEvents[0].enddate
+    // Filter
+    const dateParts = sortedEvents[sortedEvents.length - 3].enddate.split('-')
+    const enddateCutOff = `${dateParts[2].substring(0, 2)}.${dateParts[1]}.${dateParts[0]}`
+    // Last event startdate
+    const toContainInEnd = sortedEvents[sortedEvents.length - 1].startdate
+
+    expect(component.container).toHaveTextContent(formatDate(notToContainInEnd))
+    expect(component.container).toHaveTextContent(formatDate(toContainInEnd))
+
+    const enddateFilter = getByAltText(component.container, 'Päättyen')
+    fireEvent.change(enddateFilter, { target: { value: enddateCutOff } })
+
+    component.rerender(
+      <Wrapper handleEndFiltering={handleEndFiltering} state={state} store={fakeStore} />
+    )
+
+    expect(component.container).toHaveTextContent(formatDate(toContainInEnd))
+    expect(component.container).not.toHaveTextContent(formatDate(notToContainInEnd))
+
+  })
 })

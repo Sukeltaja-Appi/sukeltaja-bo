@@ -6,14 +6,18 @@ import { storageKeyUser } from '../utils/config'
 import { initializeTargets } from '../reducers/targetReducer'
 import { initializeEvents } from '../reducers/eventReducer'
 import { mapDivesToTargets } from '../reducers/divesReducer'
+import { initializeUsers } from '../reducers/userReducer'
+import { initializeBOUsers } from '../reducers/bouserReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import Notification from './Notification'
 import Login from './Login'
 import Logout from './Logout'
 import Home from './Home'
 import DivingEvents from './DivingEvents'
-import TargetDives from './TargetDives';
-import Targets from './Targets';
+import TargetDives from './TargetDives'
+import Targets from './Targets'
+import Users from './Users'
+import BOUsers from './BOUsers'
 
 const App = (props) => {
 
@@ -31,7 +35,7 @@ const App = (props) => {
   }
 
   const initializeAtStartUp = async () => {
-    console.log('Initialize at App')
+    //console.log('Initialize at App')
     // Any initializations at login should be done here async at login if necessary
     props.setNotification('success', 'Tervetuloa! Muista hengittää rauhallisesti!', 5)
     if (props.events === undefined || props.events === null || props.events.length === 0) {
@@ -41,7 +45,12 @@ const App = (props) => {
     if (props.targets === undefined || props.targets === null || props.targets.length === 0) {
       await props.initializeTargets()
     }
-    //await props.initializeUsers()
+    if (props.users === undefined || props.users === null || props.users.length === 0) {
+      await props.initializeUsers()
+    }
+    if (props.bousers === undefined || props.bousers === null || props.bousers.length === 0) {
+      await props.initializeBOUsers()
+    }
   }
 
   useEffect(() => {
@@ -96,6 +105,12 @@ const App = (props) => {
                     <Nav.Link as="span">
                       <Link style={navLinkStyle} to="/events">Sukellustapahtumat</Link>
                     </Nav.Link>
+                    <Nav.Link as="span">
+                      <Link style={navLinkStyle} to="/users">Sukeltajat</Link>
+                    </Nav.Link>
+                    <Nav.Link as="span">
+                      <Link style={navLinkStyle} to="/bousers">Backofficerit</Link>
+                    </Nav.Link>
                     <Navbar.Text as="span">
                       <Logout />
                     </Navbar.Text>
@@ -110,6 +125,8 @@ const App = (props) => {
                 <Route exact path="/targets" render={() => <Targets />} />
                 <Route exact path="/targetDives" render={() => <TargetDives />} />
                 <Route exact path="/events" render={() => <DivingEvents />} />
+                <Route exact path="/users" render={() => <Users />} />
+                <Route exact path="/bousers" render={() => <BOUsers />} />
               </div>
             </div>
           </div>
@@ -124,6 +141,8 @@ const mapStateToProps = (state) => {
     targets: state.targets,
     events: state.events,
     targetDives: state.targetDives,
+    users: state.users,
+    bousers: state.bousers,
     loggedUser: state.authentication.loggedUser
   }
 }
@@ -132,6 +151,8 @@ const mapDispatchToProps = {
   initializeTargets,
   initializeEvents,
   mapDivesToTargets,
+  initializeUsers,
+  initializeBOUsers,
   setNotification
 }
 

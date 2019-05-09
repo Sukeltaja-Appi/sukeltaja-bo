@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { storageKeyUser, baseURL, eventsAPI } from '../utils/config'
+import { storageKeyUser, baseURL, usersAPI } from '../utils/config'
 
-const serviceURL = `${baseURL}${eventsAPI}`
+const serviceURL = `${baseURL}${usersAPI}`
 
 const getAll = async () => {
 
@@ -13,12 +13,12 @@ const getAll = async () => {
       headers: { Authorization: token },
     }
   } else {
-    console.log('Unauthorized call in eventService')
+    console.log('Unauthorized call in userService')
     return null
   }
-
   const response = await axios.get(serviceURL, config)
-  //console.log(response.data.length, 'events')
+  //console.log(response.data.length, 'users')
+  //console.log(response.data)
   return response.data
 }
 

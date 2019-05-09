@@ -154,7 +154,7 @@ const TargetDives = (props) => {
     return (
       filteredTargets.map((target, index) => {
         if (index >= offset && index < (offset + itemsOnPage)) {
-          return <Target key={target._id} target={target} elementID={target._id} dives={target.dives}/>
+          return <Target key={target._id} target={target} elementId={`divesOf${target._id}`} dives={target.dives}/>
         } else {
           return null
         }

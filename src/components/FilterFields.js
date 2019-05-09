@@ -6,7 +6,7 @@ export const StartFilter = (props) => {
     <>
       <Form.Label>Alkaen</Form.Label>
       <Form.Control type="text" placeholder="pp.kk.vvvv" name="startdateFilter"
-        value={props.startFilter} onChange={props.trigger} />
+        value={props.startFilter} onChange={props.trigger} alt="Alkaen" />
       <Form.Text className="text-muted">
         Rajaa alkamispäivän mukaan
       </Form.Text>
@@ -19,7 +19,7 @@ export const EndFilter = (props) => {
     <>
       <Form.Label>Päättyen</Form.Label>
       <Form.Control type="text" placeholder="pp.kk.vvvv" name="enddateFilter"
-        value={props.endFilter} onChange={props.trigger} />
+        value={props.endFilter} onChange={props.trigger} alt="Päättyen" />
       <Form.Text className="text-muted">
         Rajaa päättymispäivän mukaan
       </Form.Text>
@@ -27,6 +27,7 @@ export const EndFilter = (props) => {
   )
 }
 
+/* Not in use at the moment
 export const HasDivesFilter = (props) => {
   return (
     <>
@@ -41,6 +42,7 @@ export const HasDivesFilter = (props) => {
     </>
   )
 }
+*/
 
 export const CreatorFilter = (props) => {
   return (
@@ -113,6 +115,32 @@ export const TargetFilter = (props) => {
         value={props.targetFilter} onChange={props.trigger} />
       <Form.Text className="text-muted">
         Rajaa kohteen nimen osalla
+      </Form.Text>
+    </>
+  )
+}
+
+export const UsernameFilter = (props) => {
+  return (
+    <>
+      <Form.Label>Käyttäjä</Form.Label>
+      <Form.Control type="text" placeholder="Käyttäjänimi" name="usernameFilter"
+        value={props.usernameFilter} onChange={props.trigger} />
+      <Form.Text className="text-muted">
+        Rajaa käyttäjänimen osalla
+      </Form.Text>
+    </>
+  )
+}
+
+export const EmailFilter = (props) => {
+  return (
+    <>
+      <Form.Label>Sähköposti</Form.Label>
+      <Form.Control type="text" placeholder="joku@jossain.com" name="emailFilter"
+        value={props.emailFilter} onChange={props.trigger} />
+      <Form.Text className="text-muted">
+        Rajaa sähköpostiosoitteen osalla
       </Form.Text>
     </>
   )
