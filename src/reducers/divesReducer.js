@@ -2,6 +2,7 @@ import eventService from '../services/eventService'
 
 export const mapDivesToTargets = () => {
   return async dispatch => {
+    let diveStats = {}
     let targetDives = {}
     let events2 = await eventService.getAll()
     // Targets doesn't give us dives. We'll have to scrape them from events.
@@ -36,9 +37,41 @@ export const mapDivesToTargets = () => {
       })
       //console.log('targetDives', targetDives)
     }
+    diveStats.targetDives = targetDives
+    // All time top targets
+    let allTime = targetDives
+    allTime = await allTime.filter((atTarget) => {
+      return atTarget.dives !== undefined && atTarget.dives !== null && atTarget.dives.length > 0
+    })
+    allTime = await allTime.sort((a, b) => b.dives.length - a.dives.length)
+    allTime = allTime.slice(0, 5)
+    diveStats.allTimeTopTargets = allTime
+    // Past year top targets
+    let aYearAgo = new Date()
+    aYearAgo.setFullYear(aYearAgo.getFullYear() - 1)
+    let pastYear = targetDives
+    pastYear = await pastYear.filter((pyTarget) => {
+      pyTarget.dives = pyTarget.dives.filter((dive) => {
+        return new Date(dive.startdate) > aYearAgo
+      })
+      return pyTarget.dives !== undefined && pyTarget.dives !== null && pyTarget.dives.length > 0
+    })
+    pastYear = await pastYear.sort((a, b) => b.dives.length - a.dives.length)
+    pastYear = pastYear.slice(0, 5)
+    diveStats.pastYearTopTargets = pastYear
+    // Recent events
+    let recent = events2.filter((event) => new Date(event.startdate) < new Date())
+    recent = recent.sort((a, b) => new Date(b.startdate) - new Date(a.startdate))
+    recent = recent.slice(0, 5)
+    diveStats.recentDivingEvents = recent
+    // Upcoming events
+    let upcoming = events2.filter((event) => new Date(event.startdate) >= new Date())
+    upcoming = upcoming.sort((a, b) => new Date(a.startdate) - new Date(b.startdate))
+    upcoming = upcoming.slice(0, 5)
+    diveStats.upcomingDivingEvents = upcoming
     dispatch({
       type: 'MAP_DIVES_TO_TARGETS',
-      data: targetDives
+      data: diveStats
     })
   }
 

@@ -14,29 +14,36 @@ const Target = (props) => {
     const dives = () => {
       if (target.dives !== undefined) {
         return (
-            <Dives dives={target.dives} />
+          <Dives dives={target.dives} />
         )
       } else {
         return null
       }
     }
 
-    return (
-      <>
-        <tr onClick={() => setShowTargetDetails(!showTargetDetails)}
-            aria-controls={props.elementId} aria-expanded={showTargetDetails}
-            style={target.dives !== undefined ? {backgroundColor: "#ddddff"} : {backgroundColor: "#ffffff"}} >
-          <td>
-            <i className={showTargetDetails? 'fas fa-caret-down' : 'fas fa-caret-right'}></i>
-          </td>
-          <td colSpan="2">{target.name}</td>
-          <td colSpan="2">
-            {`${decimalToDMS(target.latitude)}`}{target.latitude > 0 ? ' N ' : ' S '}
-          </td>
-          <td colSpan="2">
-            {`${decimalToDMS(target.longitude)}`}{target.longitude > 0 ? ' E ' : ' W '}
-          </td>
+    if (props.noDetails) {
+      return (
+        <tr>
+          <td>{target.name}</td><td>{target.dives.length}</td>
         </tr>
+      )
+    } else {
+      return (
+        <>
+          <tr onClick={() => setShowTargetDetails(!showTargetDetails)}
+            aria-controls={props.elementId} aria-expanded={showTargetDetails}
+            style={target.dives !== undefined ? { backgroundColor: "#ddddff" } : { backgroundColor: "#ffffff" }} >
+            <td>
+              <i className={showTargetDetails ? 'fas fa-caret-down' : 'fas fa-caret-right'}></i>
+            </td>
+            <td colSpan="2">{target.name}</td>
+            <td colSpan="2">
+              {`${decimalToDMS(target.latitude)}`}{target.latitude > 0 ? ' N ' : ' S '}
+            </td>
+            <td colSpan="2">
+              {`${decimalToDMS(target.longitude)}`}{target.longitude > 0 ? ' E ' : ' W '}
+            </td>
+          </tr>
           <Collapse in={showTargetDetails}>
             <tr>
               <td colSpan="7" id={props.elementId}>
@@ -45,8 +52,9 @@ const Target = (props) => {
             </tr>
           </Collapse>
           {dives()}
-      </>
-    )
+        </>
+      )
+    }
   } else {
     return null
   }

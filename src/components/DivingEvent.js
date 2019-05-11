@@ -86,20 +86,29 @@ const DivingEvent = (props) => {
     }
   }
 
-  return (
-    <>
-      <tr onClick={() => setShowEventDetails(!showEventDetails)}
-        aria-controls={divingEvent._id}
-        aria-expanded={showEventDetails}>
-        <td>{detailCaret()}</td>
-        <td>{formatDate(props.divingEvent.startdate)}</td>
-        <td>{formatDate(props.divingEvent.enddate)}</td>
-        <td>{props.divingEvent.creator.username}</td>
-        <td colSpan="3">{props.divingEvent.title}</td>
+  if (props.noDetails) {
+    return (
+      <tr>
+        <td>{formatDate(props.divingEvent.startdate)}</td><td>{props.divingEvent.title}</td>
       </tr>
-      {details()}
-    </>
-  )
+    )
+  } else {
+    return (
+      <>
+        <tr onClick={() => setShowEventDetails(!showEventDetails)}
+          aria-controls={divingEvent._id}
+          aria-expanded={showEventDetails}>
+          <td>{detailCaret()}</td>
+          <td>{formatDate(props.divingEvent.startdate)}</td>
+          <td>{formatDate(props.divingEvent.enddate)}</td>
+          <td>{props.divingEvent.creator.username}</td>
+          <td colSpan="3">{props.divingEvent.title}</td>
+        </tr>
+        {details()}
+      </>
+    )
+    }
+
 
 }
 

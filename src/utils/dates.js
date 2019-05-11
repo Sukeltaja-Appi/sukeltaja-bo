@@ -58,3 +58,11 @@ export const inOneHour = () => {
     .toJSDate()
 }
 
+export const inTenMinutes = () => {
+  const { year, month, day, hour, minute } = DateTime.local()
+
+  return DateTime
+    .local(year, month, day, hour, minute)
+    .plus({ minutes: 10 })
+    .toJSDate()
+}

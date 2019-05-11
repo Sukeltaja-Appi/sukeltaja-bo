@@ -136,7 +136,7 @@ const TargetDives = (props) => {
       (target && target.longitude <= eastFilter))
   }
 
-  const filteredTargets = props.targetDives.filter(target =>
+  const filteredTargets = props.diveStats.targetDives.filter(target =>
     filterByStartdate(target) &&
     filterByEnddate(target) &&
     filterByTarget(target) &&
@@ -192,7 +192,7 @@ const TargetDives = (props) => {
         handleEastFiltering={handleEastFiltering}
       />
       <div id="caption">
-        Näytetään {filteredTargets.length}/{props.targetDives.length} kohteesta, joissa sukelluksia.
+        Näytetään {filteredTargets.length}/{props.diveStats.targetDives.length} kohteesta, joissa sukelluksia.
         &nbsp;
         {jsonToCSV()}
       </div>
@@ -220,7 +220,7 @@ TargetDives.propTypes = {
 const mapStateToProps = (state) => {
   return {
     targets: state.targets,
-    targetDives: state.targetDives,
+    diveStats: state.diveStats,
     loggedUser: state.authentication.loggedUser
   }
 }
