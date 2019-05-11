@@ -47,7 +47,7 @@ const DivingEvents = (props) => {
 
   const handleStartFiltering = (event) => {
     try {
-      let startdate = DateTime.fromFormat(event.target.value, 'd.L.yyyy', {locale: 'fi'}).toJSDate()
+      let startdate = DateTime.fromFormat(event.target.value, 'd.L.yyyy').toJSDate()
       if (isValidDate(startdate)) {
         setUseStart(startdate)
       }
@@ -58,7 +58,7 @@ const DivingEvents = (props) => {
   }
   const handleEndFiltering = (event) => {
     try {
-      let enddate = DateTime.fromFormat(event.target.value, 'd.L.yyyy', {locale: 'fi'})
+      let enddate = DateTime.fromFormat(event.target.value, 'd.L.yyyy')
         .plus({ days: 1 }).plus({ minutes: -1 }).toJSDate()
       if (isValidDate(enddate)) {
         setUseEnd(enddate)

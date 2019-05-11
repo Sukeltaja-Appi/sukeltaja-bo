@@ -37,8 +37,8 @@ export const mapDivesToTargets = () => {
       })
       //console.log('targetDives', targetDives)
     }
-    // All time top targets
     diveStats.targetDives = targetDives
+    // All time top targets
     let allTime = targetDives
     allTime = await allTime.filter((atTarget) => {
       return atTarget.dives !== undefined && atTarget.dives !== null && atTarget.dives.length > 0
@@ -59,6 +59,16 @@ export const mapDivesToTargets = () => {
     pastYear = await pastYear.sort((a, b) => b.dives.length - a.dives.length)
     pastYear = pastYear.slice(0, 5)
     diveStats.pastYearTopTargets = pastYear
+    // Recent events
+    let recent = events2.filter((event) => new Date(event.startdate) < new Date())
+    recent = recent.sort((a, b) => new Date(b.startdate) - new Date(a.startdate))
+    recent = recent.slice(0, 5)
+    diveStats.recentDivingEvents = recent
+    // Upcoming events
+    let upcoming = events2.filter((event) => new Date(event.startdate) >= new Date())
+    upcoming = upcoming.sort((a, b) => new Date(a.startdate) - new Date(b.startdate))
+    upcoming = upcoming.slice(0, 5)
+    diveStats.upcomingDivingEvents = upcoming
     dispatch({
       type: 'MAP_DIVES_TO_TARGETS',
       data: diveStats

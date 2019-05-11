@@ -114,9 +114,6 @@ const App = (props) => {
                     <Navbar.Text as="span">
                       <Logout />
                     </Navbar.Text>
-                    <Navbar.Brand as="span">
-                      <span><h3>&nbsp;Sukeltaja Back Office&nbsp;</h3></span>
-                    </Navbar.Brand>
                   </Nav>
                 </Navbar.Collapse>
               </Navbar>

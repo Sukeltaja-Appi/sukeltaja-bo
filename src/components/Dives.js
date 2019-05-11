@@ -25,8 +25,9 @@ const Dives = (props) => {
           aria-expanded={showDives} width="100%">
           <td width="1%"><i className={showDives ? 'fas fa-caret-down' : 'fas fa-caret-right'}></i></td>
           <td colSpan="2" id="caption">Sukeltaja</td>
-          <td colSpan="2" id="caption">Alkuaika</td>
-          <td colSpan="2" id="caption">Loppuaika</td>
+          <td colSpan="1" id="caption">Alkuaika</td>
+          <td colSpan="1" id="caption">Loppuaika</td>
+          <td colSpan="2" id="caption">Sijainti</td>
         </tr>
         <Collapse in={showDives}>
           <tr id={props.elementId} style={noMargins}>
