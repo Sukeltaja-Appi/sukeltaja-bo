@@ -9,6 +9,8 @@ import { targetdivesfilename } from '../utils/config'
 describe('Testing TargetDives component', () => {
 
   const targetDives = require('./targetDives.json')
+  let diveStats = {}
+  diveStats.targetDives = targetDives
 
   const handleStartFiltering = jest.fn()
   const handleEndFiltering = jest.fn()
@@ -32,11 +34,11 @@ describe('Testing TargetDives component', () => {
   authentication.loggedUser = {}
 
   const fakeStore = {
-    targetDives: targetDives,
+    diveStats: diveStats,
     authentication: authentication,
     subscribe: function dummy() { return null },
     dispatch: function dummy() { return null },
-    getState: function getState() { return { targetDives: targetDives, authentication: authentication } }
+    getState: function getState() { return { diveStats: diveStats, authentication: authentication } }
   }//store
 
   const Wrapper = (props) => {

@@ -6,7 +6,7 @@
     "axios": "^0.18.0",
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
-    "luxon": "^1.11.4",
+    "luxon": "^1.13.2",
     "react": "^16.8.2",
     "react-bootstrap": "^1.0.0-beta.5",
     "react-dom": "^16.8.2",
@@ -35,8 +35,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@babel/preset-react": "^7.0.0",
-    "babel-jest": "^24.8.0",
     "codacy-coverage": "^3.4.0",
     "deep-freeze": "0.0.1",
     "eslint-plugin-react-hooks": "0.0.0",

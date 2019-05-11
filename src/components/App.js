@@ -114,6 +114,9 @@ const App = (props) => {
                     <Navbar.Text as="span">
                       <Logout />
                     </Navbar.Text>
+                    <Navbar.Brand as="span">
+                      <span><h3>&nbsp;Sukeltaja Back Office&nbsp;</h3></span>
+                    </Navbar.Brand>
                   </Nav>
                 </Navbar.Collapse>
               </Navbar>
@@ -140,7 +143,7 @@ const mapStateToProps = (state) => {
   return {
     targets: state.targets,
     events: state.events,
-    targetDives: state.targetDives,
+    diveStats: state.diveStats,
     users: state.users,
     bousers: state.bousers,
     loggedUser: state.authentication.loggedUser

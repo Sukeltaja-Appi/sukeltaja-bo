@@ -14,7 +14,7 @@ const reducer = combineReducers({
   notification: notificationReducer,
   targets: targetReducer,
   events: eventReducer,
-  targetDives: divesReducer,
+  diveStats: divesReducer,
   users: userReducer,
   bousers: bouserReducer
 })

@@ -2,6 +2,7 @@ import eventService from '../services/eventService'
 
 export const mapDivesToTargets = () => {
   return async dispatch => {
+    let diveStats = {}
     let targetDives = {}
     let events2 = await eventService.getAll()
     // Targets doesn't give us dives. We'll have to scrape them from events.
@@ -36,9 +37,31 @@ export const mapDivesToTargets = () => {
       })
       //console.log('targetDives', targetDives)
     }
+    // All time top targets
+    diveStats.targetDives = targetDives
+    let allTime = targetDives
+    allTime = await allTime.filter((atTarget) => {
+      return atTarget.dives !== undefined && atTarget.dives !== null && atTarget.dives.length > 0
+    })
+    allTime = await allTime.sort((a, b) => b.dives.length - a.dives.length)
+    allTime = allTime.slice(0, 5)
+    diveStats.allTimeTopTargets = allTime
+    // Past year top targets
+    let aYearAgo = new Date()
+    aYearAgo.setFullYear(aYearAgo.getFullYear() - 1)
+    let pastYear = targetDives
+    pastYear = await pastYear.filter((pyTarget) => {
+      pyTarget.dives = pyTarget.dives.filter((dive) => {
+        return new Date(dive.startdate) > aYearAgo
+      })
+      return pyTarget.dives !== undefined && pyTarget.dives !== null && pyTarget.dives.length > 0
+    })
+    pastYear = await pastYear.sort((a, b) => b.dives.length - a.dives.length)
+    pastYear = pastYear.slice(0, 5)
+    diveStats.pastYearTopTargets = pastYear
     dispatch({
       type: 'MAP_DIVES_TO_TARGETS',
-      data: targetDives
+      data: diveStats
     })
   }
 
