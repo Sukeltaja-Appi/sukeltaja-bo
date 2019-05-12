@@ -20,11 +20,16 @@ const getConfig = () => {
 
 const getAll = async () => {
   const config = getConfig()
-  if (config !== null) {
-    const response = await axios.get(serviceURL, config)
-    //console.log(response.data.length, 'bousers')
-    //console.log(response.data)
-    return response.data
+  try {
+    if (config !== null) {
+      const response = await axios.get(serviceURL, config)
+      //console.log(response.data.length, 'bousers')
+      //console.log(response.data)
+      return response.data
+    }
+  } catch (error) {
+    //console.log('Perhaps not allowed to getAll bousers')
+    return null
   }
   return null
 }

@@ -18,6 +18,16 @@ const BOUsers = (props) => {
     initStuff()
   }, [])
 
+  /*
+  const newUser = () => {
+    if (loggedUser.) {
+
+    }
+  }
+  */
+
+  console.log('Logged User', props.loggedUser)
+
   const usersToDisplay = () => {
     if (bousers !== undefined && bousers !== null) {
       //console.log('Logged user', props.loggedUser)

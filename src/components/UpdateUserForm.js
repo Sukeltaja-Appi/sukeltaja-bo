@@ -4,6 +4,8 @@ import { UsernameField, EmailField} from './InputFields'
 
 const UpdateUserForm = (props) => {
 
+  // NOT IN USE YET
+
   return (
 
     <div>
