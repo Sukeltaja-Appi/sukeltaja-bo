@@ -9,11 +9,20 @@ import DivingEvent from './DivingEvent';
 
 const Home = (props) => {
 
-  const popularTargetsAllTime = props.diveStats.allTimeTopTargets
-  const popularTargetsPastYear = props.diveStats.pastYearTopTargets
-  const recentDivingEvents = props.diveStats.recentDivingEvents
-  const upcomingDivingEvents = props.diveStats.upcomingDivingEvents
+  let popularTargetsAllTime = []
+  let popularTargetsPastYear = []
+  let recentDivingEvents = []
+  let upcomingDivingEvents = []
 
+  if (props.diveStats !== undefined && props.diveStats != null) {
+
+    popularTargetsAllTime = props.diveStats.allTimeTopTargets
+    popularTargetsPastYear = props.diveStats.pastYearTopTargets
+    recentDivingEvents = props.diveStats.recentDivingEvents
+    upcomingDivingEvents = props.diveStats.upcomingDivingEvents
+
+  }
+  
   const displayPopTargsAllTime = () => {
     if (popularTargetsAllTime !== undefined && popularTargetsAllTime !== null && popularTargetsAllTime.length > 0) {
       return (

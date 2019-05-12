@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Navbar, Nav, Container } from 'react-bootstrap'
@@ -20,6 +20,8 @@ import Users from './Users'
 import BOUsers from './BOUsers'
 
 const App = (props) => {
+
+  const [isAdmin, setIsAdmin] = useState(false)
 
   const haveUser = () => {
     return (props.loggedUser !== undefined && props.loggedUser !== null)
@@ -49,7 +51,12 @@ const App = (props) => {
       await props.initializeUsers()
     }
     if (props.bousers === undefined || props.bousers === null || props.bousers.length === 0) {
-      await props.initializeBOUsers()
+      try {
+        await props.initializeBOUsers()
+        setIsAdmin(true)
+      } catch (error) {
+        setIsAdmin(false)
+      }
     }
   }
 
@@ -108,9 +115,11 @@ const App = (props) => {
                     <Nav.Link as="span">
                       <Link style={navLinkStyle} to="/users">Sukeltajat</Link>
                     </Nav.Link>
-                    <Nav.Link as="span">
-                      <Link style={navLinkStyle} to="/bousers">Backofficerit</Link>
-                    </Nav.Link>
+                    { isAdmin ?
+                      <Nav.Link as="span">
+                        <Link style={navLinkStyle} to="/bousers">Backofficerit</Link>
+                      </Nav.Link>
+                      : '' }
                     <Navbar.Text as="span">
                       <Logout />
                     </Navbar.Text>
@@ -126,7 +135,7 @@ const App = (props) => {
                 <Route exact path="/targetDives" render={() => <TargetDives />} />
                 <Route exact path="/events" render={() => <DivingEvents />} />
                 <Route exact path="/users" render={() => <Users />} />
-                <Route exact path="/bousers" render={() => <BOUsers />} />
+                { isAdmin ? <Route exact path="/bousers" render={() => <BOUsers />} /> : '' }
               </div>
             </div>
           </div>
