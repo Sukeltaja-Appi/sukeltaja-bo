@@ -55,7 +55,7 @@ const JsonToCSV = (props) => {
     for (let o = 0; o < props.content.length; !havingArray ? o++ : null) {
       let jsonObj = props.content[o]
       let dataRow = ''
-      // eslint-disable-next-line no-loop-func, cause I really really really want to do this
+      // eslint-disable-next-line no-loop-func
       dataHeaders.forEach(header => {
         let val = ''
         const quo = (header["type"] === "Number" ? '' : '"')
